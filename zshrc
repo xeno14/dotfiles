@@ -1,6 +1,6 @@
 # users generic .zshrc file for zsh(1)
 
-alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -g "$@"'
+#alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -g "$@"'
 
 ## Environment variable configuration
 #
