@@ -53,4 +53,8 @@ endif
 " acp
 " かなモードのときはpopupを無効にする？
 
-
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+	  \ 'separator': { 'left': '', 'right': '' },
+	  \ 'subseparator': { 'left': '>', 'right': '<' }
+      \ }
