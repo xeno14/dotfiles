@@ -50,11 +50,29 @@ endif
 "----------------------------------------------------
 " plugin
 "----------------------------------------------------
-" acp
-" かなモードのときはpopupを無効にする？
+"""" for acp
+" かなモードのときはpopupを無効にする
+noremap <C-S-j> :AcpDisable
+noremap <C-S-;> :AcpEnable
 
+
+"""" lightline
 let g:lightline = {
       \ 'colorscheme': 'wombat',
 	  \ 'separator': { 'left': '', 'right': '' },
-	  \ 'subseparator': { 'left': '>', 'right': '<' }
+	  \ 'subseparator': { 'left': '|', 'right': '|' }
       \ }
+
+
+"""" NeoBundle
+let g:neobundle_default_git_protocol='https'
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+call neobundle#rc(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+"repositories
+NeoBundle 'jcf/vim-latex'
+
+filetype plugin on
+NeoBundleCheck
