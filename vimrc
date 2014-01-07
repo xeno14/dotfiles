@@ -1,6 +1,6 @@
 "色分け
 syntax on
-
+set laststatus=2
 
 "----------------------------------------------------
 " バックアップ関係
@@ -52,8 +52,8 @@ endif
 "----------------------------------------------------
 """" for acp
 " かなモードのときはpopupを無効にする
-noremap <C-S-j> :AcpDisable
-noremap <C-S-;> :AcpEnable
+"noremap <C-a-e> :AcpEnable
+"noremap <C-a-e> :AcpDisable
 
 
 """" lightline
@@ -63,6 +63,8 @@ let g:lightline = {
 	  \ 'subseparator': { 'left': '|', 'right': '|' }
       \ }
 
+"""" previm
+let g:previm_open_cmd = 'open -a Firefox'
 
 """" NeoBundle
 let g:neobundle_default_git_protocol='https'
@@ -73,6 +75,9 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 "repositories
 NeoBundle 'jcf/vim-latex'
+NeoBundle 'sudar/vim-arduino-syntax'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'kannokanno/previm'
 
 filetype plugin on
 NeoBundleCheck
