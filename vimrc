@@ -1,6 +1,9 @@
-"色分け
+"----------------------------------------------------
+" 色分け
+"----------------------------------------------------
 syntax on
 set laststatus=2
+set t_Co=256
 
 "----------------------------------------------------
 " バックアップ関係
@@ -14,24 +17,27 @@ set writebackup
 "----------------------------------------------------
 " 表示関係
 "----------------------------------------------------
-" ルーラーを表示
 set ruler
 set number
 
 "----------------------------------------------------
 " インデント
 "----------------------------------------------------
-" オートインデントを有効にする
 set autoindent
 set smartindent
-" タブが対応する空白の数
 set tabstop=4
-" タブやバックスペースの使用等の編集操作をするときに、タブが対応する空白の数
 set softtabstop=4
-" インデントの各段階に使われる空白の数
 set shiftwidth=4
-" タブを挿入するとき、代わりに空白を使わない
 set noexpandtab
+
+"----------------------------------------------------
+" syntax
+"----------------------------------------------------
+"go
+if $GOROOT != ''
+	set rtp+=$GOROOT/misc/vim
+endif
+
 
 "----------------------------------------------------
 " オートコマンド
@@ -48,13 +54,11 @@ endif
 
 
 "----------------------------------------------------
-" plugin
+" プラグイン
 "----------------------------------------------------
-"""" for acp
-" かなモードのときはpopupを無効にする
-"noremap <C-a-e> :AcpEnable
-"noremap <C-a-e> :AcpDisable
-
+"neocomplete
+let g:neocomplete#enable_at_startup = 1 
+let g:neocomplete#enable_auto_select = 1
 
 """" lightline
 let g:lightline = {
@@ -74,10 +78,11 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 "repositories
-NeoBundle 'jcf/vim-latex'
+"NeoBundle 'jcf/vim-latex'
 NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kannokanno/previm'
+NeoBundle 'Shougo/neocomplete.vim'
 
 filetype plugin on
 NeoBundleCheck
