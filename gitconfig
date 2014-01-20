@@ -1,0 +1,40 @@
+[include]
+path = ~/.gitconfig.local
+
+[merge]
+ff = false
+
+[color]
+ui = auto
+
+[core]
+editor  = vim
+pager   = less -R
+
+#[push]
+#default = simple
+
+[alias]
+br      = branch
+cl      = clone
+cm      = commit
+co      = checkout
+cob     = checkout -b
+cod     = checkout develop
+com     = checkout master
+df      = diff
+dfc     = diff --cached
+dfs     = diff -C --stat
+gca     = gc --aggressive
+pl      = pull
+ps      = push
+pst     = push --tags
+sb      = show-branch
+sh      = show
+sm      = submodule
+smst    = submodule status
+smsync  = submodule sync
+st      = status
+l       = log
+lg      = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+lga     = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
