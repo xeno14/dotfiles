@@ -1,5 +1,8 @@
 # users generic .zshrc file for zsh(1)
 
+#
+# MacVim.app
+#
 if [ $(uname) = "Darwin" ]
 then
 	alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -g "$@"'
@@ -19,7 +22,8 @@ autoload colors
 colors
 PROMPT="[%n@%m] $ "
 PROMPT2="[%n@%m]$ "
-RPROMPT="%{${fg[yellow]}%}[%~]%{${reset_color}%}"
+# バージョン管理されているディレクトリにいれば表示，そうでなければ非表示
+RPROMPT="%1(v|%F{green}%1v%f|)%{${fg[yellow]}%}[%~]%{${reset_color}%}"
 
 
 
@@ -126,24 +130,35 @@ case "${TERM}" in
 esac
 
 # set terminal title including current directory
+# and current branch if the directory is git repo
 #
+
+autoload -Uz vcs_info
 case "${TERM}" in
 	kterm*|xterm*)
 		precmd() {
-			echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+			psvar=()
+			LANG=en_US.UTF-8 vcs_info
+			[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+			echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}${BRANCH}\007"
 		}
 		export LSCOLORS=gxfxcxdxbxegedabagacad
 		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 		zstyle ':completion:*' list-colors \
 			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+		zstyle ':vcs_info:*' formats '[%b]'
+		zstyle ':vcs_info:*' actionformats '[%b|%a]'
 		;;
 esac
+
 
 ## load user .zshrc configuration file
 #
 [ -f ~/.zshrc.mine ] && source ~/.zshrc.mine
 
-
+#
+# extract compressed files
+#
 function extract() {
 	case $1 in
 		*.tar.gz|*.tgz) tar xzvf $1;;
@@ -175,3 +190,5 @@ fi
 
 #g++ always allow c++0x
 alias g++="g++ -std=c++0x"
+
+
