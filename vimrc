@@ -29,6 +29,8 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set noexpandtab
+" インサートモード時にバックスペースを使う
+set backspace=indent,eol,start
 
 "----------------------------------------------------
 " syntax
@@ -60,17 +62,25 @@ endif
 let g:neocomplete#enable_at_startup = 1 
 let g:neocomplete#enable_auto_select = 1
 
-"""" lightline
+"" lightline
 let g:lightline = {
       \ 'colorscheme': 'wombat',
 	  \ 'separator': { 'left': '', 'right': '' },
 	  \ 'subseparator': { 'left': '|', 'right': '|' }
       \ }
 
-"""" previm
+" previm
 let g:previm_open_cmd = 'open -a Firefox'
 
-"""" NeoBundle
+" Outline
+command! -nargs=0 Outline call Outline()
+function! Outline()
+	:Unite -vertical -winwidth=30 outline -no-quit
+endfunction
+
+"----------------------------------------------------
+" Neobundle
+"----------------------------------------------------
 let g:neobundle_default_git_protocol='https'
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -83,13 +93,18 @@ NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'heavenshell/vim-sudden-death'
+NeoBundle 'jceb/vim-hier'
+
 
 filetype plugin on
 NeoBundleCheck
 
 
 "----------------------------------------------------
-" タブ
+" タブの操作
 "
 " http://qiita.com/wadako111/items/755e753677dd72d8036d
 "----------------------------------------------------
@@ -140,10 +155,11 @@ map <silent> [Tag]p :tabprevious<CR>
 " tp 前のタブ
 
 
+
 "----------------------------------------------------
 " 自分をリネームする
 "
-" usage:
+" usage
 " :Renameme('newname')
 "----------------------------------------------------
 command! -nargs=1 Renameme call Renameme(<args>)
@@ -151,3 +167,28 @@ function! Renameme(newname)
 	call rename(expand('%'),a:newname)
 	:execute ":e ".a:newname
 endfunction!
+
+
+
+"----------------------------------------------------
+" カレントディレクトリの移動 
+"
+" usage
+" :CD directory
+"	引数なしの場合、開いているファイルのディレクトリへ
+"----------------------------------------------------
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+
+    if a:bang == ''
+        pwd
+    endif
+endfunction
+
+" Change current directory.
+nnoremap <silent> <Space>cd :<C-u>CD<CR>
