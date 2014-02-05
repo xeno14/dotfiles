@@ -7,7 +7,7 @@ for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
 	fname=$(basename $i)
 
 	#自分にはリンク貼らない
-	if [ $fname != $(basename $0) ]; then
+	if [ $fname != $(basename $0) -a $fname != ".git" ]; then
 		target=$HOME
 
 		if [ $(echo $fname | cut -c1) == "." ]; then
@@ -17,7 +17,7 @@ for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
 		fi
 
 		#バックアップの作成
-		mv $target $target".bak"
+		mv $target $target".bak" 
 
 		#シンボリックリンクの作成
 		ln -s $i $target
@@ -25,7 +25,7 @@ for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
 		if [ $? -eq 0 ]; then
 			echo "Link: "$target" -> "$fname
 		else
-			echo "Link: Error has occured."
+			echo "Link: Error has occured. "$target" -> "$fname
 		fi
 	fi
 done
