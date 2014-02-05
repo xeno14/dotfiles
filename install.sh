@@ -7,7 +7,7 @@ for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
 	fname=$(basename $i)
 
 	#自分にはリンク貼らない
-	if [ $fname != $0 ]; then
+	if [ $fname != $(basename $0) -a -f $i ]; then
 		target=$HOME
 
 		if [ $(echo $fname | cut -c1) == "." ]; then
