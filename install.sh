@@ -7,7 +7,7 @@ for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
 	fname=$(basename $i)
 
 	#自分にはリンク貼らない
-	if [ $fname != $(basename $0) -a -f $i ]; then
+	if [ $fname != $(basename $0) ]; then
 		target=$HOME
 
 		if [ $(echo $fname | cut -c1) == "." ]; then
@@ -29,3 +29,13 @@ for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
 		fi
 	fi
 done
+
+#NeoBundleのインストール
+if [ ! -d $HOME/.vim/bundle ]; then
+	mkdir -p $HOME/.vim/bundle
+fi
+if [ ! -f $HOME/.vim/bundle/neobundle.vim ]; then
+	git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+else
+	"NeoBundle is already installed."
+fi
