@@ -1,27 +1,26 @@
 "----------------------------------------------------
-" 色分け
+" appearance
 "----------------------------------------------------
 syntax on
 set laststatus=2
 set t_Co=256
-
-"----------------------------------------------------
-" バックアップ関係
-"----------------------------------------------------
-" バックアップをとらない
-set nobackup
-" ファイルの上書きの前にバックアップを作る
-" (ただし、backup がオンでない限り、バックアップは上書きに成功した後削除される)
-set writebackup
-
-"----------------------------------------------------
-" 表示関係
-"----------------------------------------------------
 set ruler
 set number
+colorscheme desert
+"set cursorline
+
+
 
 "----------------------------------------------------
-" インデント
+" backup
+"----------------------------------------------------
+set nobackup
+set writebackup
+
+
+
+"----------------------------------------------------
+" indent
 "----------------------------------------------------
 set autoindent
 set smartindent
@@ -29,20 +28,20 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set noexpandtab
-" インサートモード時にバックスペースを使う
+" enable backspace when insert mode
 set backspace=indent,eol,start
 
 "----------------------------------------------------
 " syntax
 "----------------------------------------------------
-"go
+" go
 if $GOROOT != ''
 	set rtp+=$GOROOT/misc/vim
 endif
 
 
 "----------------------------------------------------
-" オートコマンド
+" autocmd
 "----------------------------------------------------
 if has("autocmd")
     " ファイルタイプ別インデント、プラグインを有効にする
@@ -56,27 +55,40 @@ endif
 
 
 "----------------------------------------------------
-" プラグイン
+" neocomplete
 "----------------------------------------------------
-"neocomplete
 let g:neocomplete#enable_at_startup = 1 
 let g:neocomplete#enable_auto_select = 1
 
-"" lightline
+
+
+"----------------------------------------------------
+" lightline
+"----------------------------------------------------
 let g:lightline = {
       \ 'colorscheme': 'wombat',
 	  \ 'separator': { 'left': '', 'right': '' },
 	  \ 'subseparator': { 'left': '|', 'right': '|' }
       \ }
 
+
+
+"----------------------------------------------------
 " previm
+"----------------------------------------------------
 let g:previm_open_cmd = 'open -a Firefox'
 
-" Outline
+
+
+"----------------------------------------------------
+" unite-outline
+"----------------------------------------------------
 command! -nargs=0 Outline call Outline()
 function! Outline()
 	:Unite -vertical -winwidth=30 outline -no-quit
 endfunction
+
+
 
 "----------------------------------------------------
 " Neobundle
@@ -87,28 +99,41 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
-"repositories
+
 "NeoBundle 'jcf/vim-latex'
-NeoBundle 'sudar/vim-arduino-syntax'
+NeoBundle 'heavenshell/vim-sudden-death'
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'jceb/vim-hier'
 NeoBundle 'kannokanno/previm'
+NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
-NeoBundle 'heavenshell/vim-sudden-death'
-NeoBundle 'jceb/vim-hier'
-
+NeoBundle 'Shougo/vimproc', {
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+  \ }
+NeoBundle 'Shougo/vimshell'
+NeoBundle 'sudar/vim-arduino-syntax'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'tomtom/tcomment_vim'
+"NeoBundle 'vim-scripts/errormarker.vim'
 
 filetype plugin on
 NeoBundleCheck
 
 
+
 "----------------------------------------------------
-" タブの操作
+" manipulation of tab
 "
 " http://qiita.com/wadako111/items/755e753677dd72d8036d
+" TODO 地味に使いにくいしコマンドモードでなんかしたい
 "----------------------------------------------------
-
 " Anywhere SID.
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -157,10 +182,11 @@ map <silent> [Tag]p :tabprevious<CR>
 
 
 "----------------------------------------------------
-" 自分をリネームする
+" Renameme
+"	rename the file you are opening
 "
 " usage
-" :Renameme('newname')
+"	:Renameme('newname')
 "----------------------------------------------------
 command! -nargs=1 Renameme call Renameme(<args>)
 function! Renameme(newname)
@@ -171,11 +197,12 @@ endfunction!
 
 
 "----------------------------------------------------
-" カレントディレクトリの移動 
+" CD
+"	change current directory
 "
 " usage
-" :CD directory
-"	引数なしの場合、開いているファイルのディレクトリへ
+"	:CD directory
+"	if no argument, change to the directory file opened is in
 "----------------------------------------------------
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
@@ -189,6 +216,60 @@ function! s:ChangeCurrentDir(directory, bang)
         pwd
     endif
 endfunction
-
 " Change current directory.
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
+
+
+
+"----------------------------------------------------
+" vimshell
+"----------------------------------------------------
+command! VS :VimShell
+command! VSpy :VimShellInteractive python
+command! VSss :VimShellSendString
+
+
+
+"----------------------------------------------------
+" quickrun
+"----------------------------------------------------
+let g:quickrun_config = {
+\	'_' : {
+\       'hook/close_quickfix/enable_success' : 1,
+\       'hook/close_buffer/enable_empty_data' : 1,
+\       'hook/time/enable' : 1,
+\       'outputter' : 'multi:buffer:quickfix',
+\       'runner' : 'vimproc',
+\       'runner/vimproc/updatetime' : 60
+\	},
+\	'cpp': {
+\		'type':
+\			executable('g++')     ? 'cpp/g++' :
+\			executable('clang++') ? 'cpp/clang++'  : ' ',
+\	},
+\   'cpp/g++' : {
+\       'cmdopt' : '-std=c++0x',
+\   },
+\}
+
+
+
+"----------------------------------------------------
+" errormarker.vim
+"----------------------------------------------------
+" let g:errormarker_errortext		= '!!'
+" let g:errormarker_errorgroup	= 'ERROR'
+" let g:errormarker_warningtext	= '??'
+" let g:errormarker_warninggroup	= 'Todo'
+
+
+
+"----------------------------------------------------
+" Unite
+"----------------------------------------------------
+let g:unite_source_session_enable_auto_save = 1
+let g:unite_source_history_yank_enable = 1
+let g:unite_source_file_mru_limit = 100000
+
+nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
+inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>

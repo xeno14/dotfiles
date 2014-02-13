@@ -1,10 +1,10 @@
 # users generic .zshrc file for zsh(1)
 
-#
-# MacVim.app
+## For MaxOS
 #
 if [ $(uname) = "Darwin" ]
 then
+	#alias to MacVim
 	alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -g "$@"'
 fi
 
@@ -22,7 +22,7 @@ autoload colors
 colors
 PROMPT="[%n@%m] $ "
 PROMPT2="[%n@%m]$ "
-# バージョン管理されているディレクトリにいれば表示，そうでなければ非表示
+# in git controled directory, show its branch
 RPROMPT="%1(v|%F{green}%1v%f|)%{${fg[yellow]}%}[%~]%{${reset_color}%}"
 
 
@@ -99,6 +99,12 @@ case "${OSTYPE}" in
 		;;
 esac
 
+case "${OSTYPE}" in
+	darwin*)
+		alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/MacVim'
+		;;
+esac
+
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
@@ -107,6 +113,10 @@ alias du="du -h"
 alias df="df -h"
 
 alias su="su -l"
+
+alias g++="g++ -std=c++0x"	#always allow c++11
+alias :q='exit'
+
 
 ## terminal configuration
 #
@@ -188,7 +198,5 @@ fi
 }
 #alias make="make; statusVoice"
 
-#g++ always allow c++0x
-alias g++="g++ -std=c++0x"
 
 
