@@ -11,7 +11,6 @@ set nowrap
 "change the color of columns past 80th
 execute "set colorcolumn=" . join(range(81, 9999), ',')
 hi ColorColumn ctermbg=235
-hi ColorColumn guibg=#606060
 
 
 "----------------------------------------------------
