@@ -56,41 +56,6 @@ if has("autocmd")
 endif
 
 
-"----------------------------------------------------
-" neocomplete
-"----------------------------------------------------
-let g:neocomplete#enable_at_startup = 1 
-let g:neocomplete#enable_auto_select = 1
-
-
-
-"----------------------------------------------------
-" lightline
-"----------------------------------------------------
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-	  \ 'separator': { 'left': '', 'right': '' },
-	  \ 'subseparator': { 'left': '|', 'right': '|' }
-      \ }
-
-
-
-"----------------------------------------------------
-" previm
-"----------------------------------------------------
-let g:previm_open_cmd = 'open -a Firefox'
-
-
-
-"----------------------------------------------------
-" unite-outline
-"----------------------------------------------------
-command! -nargs=0 Outline call Outline()
-function! Outline()
-	:Unite -vertical -winwidth=30 outline -no-quit
-endfunction
-
-
 
 "----------------------------------------------------
 " Neobundle
@@ -127,6 +92,44 @@ NeoBundle 'tomtom/tcomment_vim'
 
 filetype plugin on
 NeoBundleCheck
+
+
+
+"----------------------------------------------------
+" neocomplete
+"----------------------------------------------------
+let g:neocomplete#enable_at_startup = 1 
+let g:neocomplete#enable_auto_select = 1
+
+
+
+"----------------------------------------------------
+" lightline
+"----------------------------------------------------
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+	  \ 'separator': { 'left': '', 'right': '' },
+	  \ 'subseparator': { 'left': '|', 'right': '|' }
+      \ }
+
+
+
+"----------------------------------------------------
+" previm
+"----------------------------------------------------
+let g:previm_open_cmd = 'open -a Firefox'
+
+
+
+"----------------------------------------------------
+" unite-outline
+"----------------------------------------------------
+command! -nargs=0 Outline call Outline()
+function! Outline()
+	:Unite -vertical -winwidth=30 outline -no-quit
+endfunction
+
+
 
 
 
