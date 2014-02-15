@@ -7,7 +7,6 @@ set t_Co=256
 set ruler
 set number
 colorscheme desert
-set nowrap
 "change the color of columns past 80th
 execute "set colorcolumn=" . join(range(81, 9999), ',')
 hi ColorColumn ctermbg=235

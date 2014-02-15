@@ -116,6 +116,7 @@ alias su="su -l"
 
 alias g++="g++ -std=c++0x"	#always allow c++11
 alias :q='exit'
+alias :e='vim'
 
 
 ## terminal configuration
