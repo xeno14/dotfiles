@@ -277,3 +277,27 @@ let g:unite_source_file_mru_limit = 100000
 
 nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
 inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+
+
+
+
+"----------------------------------------------------
+" Insert include guard to the current file
+"----------------------------------------------------
+command!  -nargs=0 IncGuard call IncludeGuard()
+function! IncludeGuard()
+	"カレントファイル名を取得
+	let name = fnamemodify(expand('%'),':t')	
+
+	"大文字にする
+	let name = toupper(name)
+	
+	"がーど
+	let included = '__'.substitute(name,'\.','_','g').'_INCLUDED__'
+
+	"書き込み
+	let res_head = '#ifndef '.included."\n#define ".included."\n\n"
+	let res_foot = "\n".'#endif //'.included."\n"
+	silent! execute '1s/^/\=res_head'
+	silent! execute '$s/$/\=res_foot'
+endfunction
