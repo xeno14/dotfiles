@@ -10,6 +10,8 @@ colorscheme desert
 "change the color of columns past 80th
 execute "set colorcolumn=" . join(range(81, 9999), ',')
 hi ColorColumn ctermbg=235
+set incsearch
+set hlsearch
 
 
 "----------------------------------------------------
@@ -29,8 +31,9 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set noexpandtab
-" enable backspace when insert mode
-set backspace=indent,eol,start
+set backspace=indent,eol,start		"enable backspace
+
+
 
 "----------------------------------------------------
 " syntax
@@ -39,6 +42,7 @@ set backspace=indent,eol,start
 if $GOROOT != ''
 	set rtp+=$GOROOT/misc/vim
 endif
+
 
 
 "----------------------------------------------------
@@ -73,6 +77,7 @@ NeoBundle 'jceb/vim-hier'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/vimproc', {
@@ -131,12 +136,10 @@ endfunction
 
 
 
-
 "----------------------------------------------------
 " manipulation of tab
 "
 " http://qiita.com/wadako111/items/755e753677dd72d8036d
-" TODO 地味に使いにくいしコマンドモードでなんかしたい
 "----------------------------------------------------
 " Anywhere SID.
 function! s:SID_PREFIX()
@@ -187,7 +190,7 @@ map <silent> [Tag]p :tabprevious<CR>
 
 "----------------------------------------------------
 " Renameme
-"	rename the file you are opening
+"	rename the current file
 "
 " usage
 "	:Renameme('newname')
@@ -277,7 +280,6 @@ let g:unite_source_file_mru_limit = 100000
 
 nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
 inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
-
 
 
 
