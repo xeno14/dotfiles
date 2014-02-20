@@ -1,0 +1,1 @@
+/Users/xeno/setting/dotfiles/vim
