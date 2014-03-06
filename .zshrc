@@ -22,17 +22,18 @@ export LANG=ja_JP.UTF-8
 autoload colors
 colors
 
-function zle-line-init zle-keymap-select {
-    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-    RPS2=$PS1
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
+#show vi mode
+# function zle-line-init zle-keymap-select {
+#     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+#     RPS2=$PS1
+#     zle reset-prompt
+# }
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 
-PROMPT="%1(v|%F{green}%1v%f|)%{${fg[yellow]}%}[%~]%{${reset_color}%}"$'\n'"[%n@%m]$ "
+PROMPT="[%n@%m]$ "
 PROMPT2=PROMPT
-#RPROMPT="%1(v|%F{green}%1v%f|)%{${fg[yellow]}%}[%~]%{${reset_color}%}"
+RPROMPT="%1(v|%F{green}%1v%f|)%{${fg[yellow]}%}[%~]%{${reset_color}%}"
 
 
 
@@ -59,7 +60,8 @@ setopt noautoremoveslash
 setopt nolistbeep
 
 # Keybind configuration vi like
-bindkey -v
+#bindkey -v
+bindkey -e
 
 # historical backward/forward search with linehead string binded to ^P/^N
 autoload history-search-end

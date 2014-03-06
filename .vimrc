@@ -76,6 +76,7 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'kmnk/vim-unite-giti'
+NeoBundle 'mhinz/vim-startify'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite.vim'
@@ -295,7 +296,7 @@ function! IncludeGuard()
 	let name = toupper(name)
 	
 	"がーど
-	let included = '__'.substitute(name,'\.','_','g').'_INCLUDED__'
+	let included = substitute(name,'\.','_','g').'_INCLUDED__'
 
 	"書き込み
 	let res_head = '#ifndef '.included."\n#define ".included."\n\n"
