@@ -1,1 +1,1 @@
-/Users/xeno/setting/dotfiles/vim
+/Users/xeno/setting/dotfiles/.vim

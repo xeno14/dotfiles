@@ -1,10 +1,11 @@
+
 #--------------------------------------------------#
 # For MaxOS
 #--------------------------------------------------#
 if [ $(uname) = "Darwin" ]
 then
-	#alias to MacVim
 	alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -g "$@"'
+	alias tmux='/usr/local/Cellar/tmux/1.8/bin/tmux -2'
 fi
 
 
