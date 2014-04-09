@@ -1,16 +1,5 @@
 
 #--------------------------------------------------#
-# For MaxOS
-#--------------------------------------------------#
-if [ $(uname) = "Darwin" ]
-then
-	alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -g "$@"'
-	alias tmux='/usr/local/Cellar/tmux/1.8/bin/tmux -2'
-fi
-
-
-
-#--------------------------------------------------#
 # Environment variable configuration
 #--------------------------------------------------#
 export LANG=ja_JP.UTF-8
@@ -103,6 +92,17 @@ case "${OSTYPE}" in
 		;;
 esac
 
+# tmux
+case "${OSTYPE}" in
+	freebsd*|darwin*)
+		alias tmux='/usr/local/Cellar/tmux/1.8/bin/tmux -2'
+		;;
+	linux*)
+		alias tmux='tmux -2'
+		;;
+esac
+
+# gvim (for OSX)
 case "${OSTYPE}" in
 	darwin*)
 		alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/MacVim'
