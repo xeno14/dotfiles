@@ -8,7 +8,12 @@ set ruler
 set number
 colorscheme desert
 "change the color of columns past 80th
-execute "set colorcolumn=" . join(range(81, 9999), ',')
+if has("macunix")
+	execute "set colorcolumn=" . join(range(81, 9999), ',')
+elseif has("unix")
+	execute "set colorcolumn=81"
+endif
+
 hi ColorColumn ctermbg=235
 set incsearch
 set hlsearch
