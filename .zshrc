@@ -5,13 +5,13 @@
 export LANG=ja_JP.UTF-8
 
 
-
 #--------------------------------------------------#
 # Prompt
 #--------------------------------------------------#
 autoload colors
 colors
 
+## visualize vi mode
 function zle-line-init zle-keymap-select {
     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
     RPS2=$PS1
@@ -20,9 +20,50 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-PROMPT="%1(v|%F{green}%1v%f|)%{${fg[yellow]}%}[%~]%{${reset_color}%}"$'\n'"[%n@%m]$ "
+## git
+#
+autoload -Uz vcs_info
+# gitのみ有効にする
+zstyle ":vcs_info:*" enable git
+zstyle ":vcs_info:git:*" check-for-changes true
+zstyle ':vcs_info:*' formats '%b'	#branch 
+zstyle ':vcs_info:*' actionformats '%b|%a'
+
+function git_prompt () {
+	local branch
+	local res
+	res=""
+	if [[ -n "$vcs_info_msg_0_" ]]; then
+		branch=`print -nD $vcs_info_msg_0_`
+
+		#clean
+		if [[ -z $(git status -s) ]]; then
+			res+="%F{green}$branch%f"
+			#not clean
+		else
+			res+="%F{red}$branch%f"
+		fi
+		#ahead
+		local ahead
+		ahead=$(print -nD `git status -sb` | cut -d '[' -f2 | cut -d ']' -f1)
+		if [[ -n $ahead ]]; then
+			res+=":"
+			res+="%F{blue}$ahead%f"
+		fi
+	fi
+	print -n $res
+}
+
+setopt prompt_subst
+
+PROMPT=""
+PROMPT+='`git_prompt`'			#git status
+PROMPT+="%F{yellow}[%~]%f "		#current directory
+PROMPT+="
+"
+PROMPT+="[%n@%m]$ "
 PROMPT2=PROMPT
-#RPROMPT="%1(v|%F{green}%1v%f|)%{${fg[yellow]}%}[%~]%{${reset_color}%}"
+
 
 
 
@@ -153,23 +194,23 @@ esac
 # and current branch if the directory is git repo
 #
 
-autoload -Uz vcs_info
-case "${TERM}" in
-	kterm*|xterm*)
-		precmd() {
-			psvar=()
-			LANG=en_US.UTF-8 vcs_info
-			[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-			echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}${BRANCH}\007"
-		}
-		export LSCOLORS=gxfxcxdxbxegedabagacad
-		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-		zstyle ':completion:*' list-colors \
-			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-		zstyle ':vcs_info:*' formats '[%b]'
-		zstyle ':vcs_info:*' actionformats '[%b|%a]'
-		;;
-esac
+# autoload -Uz vcs_info
+# case "${TERM}" in
+# 	kterm*|xterm*|screen*)
+# 		precmd() {
+# 			psvar=()
+# 			LANG=en_US.UTF-8 vcs_info
+# 			[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+# 			echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}${BRANCH}\007"
+# 		}
+# 		export LSCOLORS=gxfxcxdxbxegedabagacad
+# 		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+# 		zstyle ':completion:*' list-colors \
+# 			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+# 		zstyle ':vcs_info:*' formats '[%b]'
+# 		zstyle ':vcs_info:*' actionformats '[%b|%a]'
+# 		;;
+# esac
 
 
 
