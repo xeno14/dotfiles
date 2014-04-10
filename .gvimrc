@@ -4,7 +4,11 @@
 colorscheme desert
 set columns=100
 set lines=55
-autocmd GUIEnter * set transparency=17
+
+#画面の透過
+if has("macunix")
+	autocmd GUIEnter * set transparency=17
+endif
 hi ColorColumn guibg=#606060
 
 
