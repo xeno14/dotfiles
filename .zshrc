@@ -42,19 +42,20 @@ function git_prompt () {
 		res+="%F{green}$branch%f"
 
 		#not clean
-		if [[ -n $(git status -s) ]]; then
-			#M,??の数を数える
-			local st
-			st=$(git status -s)
-			
+		#いまの実装だと遅い...
+		local st
+		st=$(git status -s)
+		if [[ -n $st ]]; then
+
+  			#M,??の数を数える
 			local num
-			num=$(echo $st | cut -d' ' -f2 | grep 'M' | wc -l | tr -d ' ')
-			[[ $num -gt 0 ]] && res+=" %F{red}M${num}%f"
+ 			num=$(echo $st | cut -d' ' -f2 | grep 'M' | wc -l | tr -d ' ')
+ 			[[ $num -gt 0 ]] && res+=" %F{red}M${num}%f"
 
 			num=$(echo $st | cut -d' ' -f1 | grep "??" | wc -l | tr -d ' ')
 			[[ $num -gt 0 ]] && res+=" %F{red}?${num}%f"
 
-			#ahead
+			# ahead
 			local ahead
 			git status -sb | read ahead
 			ahead=$(echo $ahead | grep ahead)
@@ -66,7 +67,7 @@ function git_prompt () {
 				res+="%F{blue}$ahead%f"
 				res+=""
 			fi
-		fi
+		 fi
 		res+=")"
 	fi
 	print -n $res
