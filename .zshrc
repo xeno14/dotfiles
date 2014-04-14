@@ -8,48 +8,67 @@ export LANG=ja_JP.UTF-8
 #--------------------------------------------------#
 # Prompt
 #--------------------------------------------------#
-autoload colors
-colors
+autoload -Uz colors; colors
+autoload -Uz vcs_info
+autoload -Uz is-at-least
 
 ## visualize vi mode
-function zle-line-init zle-keymap-select {
-    RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-    RPS2=$PS1
-    zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
+# function zle-line-init zle-keymap-select {
+#     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+#     RPS2=$PS1
+#     zle reset-prompt
+# }
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 
 ## git
 #
-autoload -Uz vcs_info
-# gitのみ有効にする
-zstyle ":vcs_info:*" enable git
-zstyle ":vcs_info:git:*" check-for-changes true
 zstyle ':vcs_info:*' formats '%b'	#branch 
 zstyle ':vcs_info:*' actionformats '%b|%a'
+
+# if is-at-least 4.3.10; then
+# 	zstyle ":vcs_info:git:*" check-for-changes true
+# fi
 
 function git_prompt () {
 	local branch
 	local res
 	res=""
+	LANG=en_US.UTF-8 vcs_info
 	if [[ -n "$vcs_info_msg_0_" ]]; then
 		branch=`print -nD $vcs_info_msg_0_`
 
-		#clean
-		if [[ -z $(git status -s) ]]; then
-			res+="%F{green}$branch%f"
-			#not clean
-		else
-			res+="%F{red}$branch%f"
-		fi
-		#ahead
-		local ahead
-		ahead=$(print -nD `git status -sb` | cut -d '[' -f2 | cut -d ']' -f1)
-		if [[ -n $ahead ]]; then
-			res+=":"
-			res+="%F{blue}$ahead%f"
-		fi
+		res+="("
+		res+="%F{green}$branch%f"
+
+		#not clean
+		#いまの実装だと遅い...
+		local st
+		st=$(git status -s)
+		if [[ -n $st ]]; then
+
+  			#M,??の数を数える
+			local num
+ 			num=$(echo $st | cut -d' ' -f2 | grep 'M' | wc -l | tr -d ' ')
+ 			[[ $num -gt 0 ]] && res+=" %F{red}M${num}%f"
+
+			num=$(echo $st | cut -d' ' -f1 | grep "??" | wc -l | tr -d ' ')
+			[[ $num -gt 0 ]] && res+=" %F{red}?${num}%f"
+
+			# ahead
+			local ahead
+			git status -sb | read ahead
+			ahead=$(echo $ahead | grep ahead)
+			if [[ -n $ahead ]]; then
+				ahead=${ahead#*ahead}
+				ahead=${ahead%]*}
+				ahead=$(echo $ahead | tr -d ' ')
+				res+=" ↑"
+				res+="%F{blue}$ahead%f"
+				res+=""
+			fi
+		 fi
+		res+=")"
 	fi
 	print -n $res
 }
@@ -57,8 +76,8 @@ function git_prompt () {
 setopt prompt_subst
 
 PROMPT=""
-PROMPT+='`git_prompt`'			#git status
 PROMPT+="%F{yellow}[%~]%f "		#current directory
+PROMPT+='`git_prompt`'			#git status
 PROMPT+="
 "
 PROMPT+="[%n@%m]$ "
@@ -194,23 +213,22 @@ esac
 # and current branch if the directory is git repo
 #
 
-# autoload -Uz vcs_info
-# case "${TERM}" in
-# 	kterm*|xterm*|screen*)
-# 		precmd() {
-# 			psvar=()
-# 			LANG=en_US.UTF-8 vcs_info
-# 			[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-# 			echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}${BRANCH}\007"
-# 		}
-# 		export LSCOLORS=gxfxcxdxbxegedabagacad
-# 		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# 		zstyle ':completion:*' list-colors \
-# 			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-# 		zstyle ':vcs_info:*' formats '[%b]'
-# 		zstyle ':vcs_info:*' actionformats '[%b|%a]'
-# 		;;
-# esac
+case "${TERM}" in
+	kterm*|xterm*|screen*)
+		# precmd() {
+		# 	psvar=()
+		# 	LANG=en_US.UTF-8 vcs_info
+		# 	[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+		# 	echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}${BRANCH}\007"
+		# }
+		export LSCOLORS=gxfxcxdxbxegedabagacad
+		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+		zstyle ':completion:*' list-colors \
+			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+		# zstyle ':vcs_info:*' formats '[%b]'
+		# zstyle ':vcs_info:*' actionformats '[%b|%a]'
+		;;
+esac
 
 
 
