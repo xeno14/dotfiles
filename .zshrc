@@ -108,6 +108,9 @@ setopt noautoremoveslash
 # no beep sound when complete list displayed
 setopt nolistbeep
 
+# not distinguish capital or not
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
 # Keybind configuration vi like
 bindkey -v
 
