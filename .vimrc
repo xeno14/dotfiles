@@ -50,10 +50,20 @@ set backspace=indent,eol,start		"enable backspace
 "----------------------------------------------------
 " syntax
 "----------------------------------------------------
+
 " go
 if $GOROOT != ''
 	set rtp+=$GOROOT/misc/vim
 endif
+
+
+
+"----------------------------------------------------
+" options
+"----------------------------------------------------
+
+"ヤンクでクリップボードにコピー
+set clipboard=unnamed,autoselect
 
 
 
@@ -118,13 +128,13 @@ NeoBundleCheck
 " neocomplete
 "----------------------------------------------------
 let g:neocomplete#enable_at_startup = 1 
-let g:neocomplete#enable_auto_select = 1
 
 
 
 "----------------------------------------------------
 " Neosnippet
 "----------------------------------------------------
+
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)

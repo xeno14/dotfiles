@@ -134,6 +134,14 @@ setopt share_history # share command history data
 autoload -U compinit
 compinit
 
+## enable cdr
+if is-at-least 4.3.11; then
+	autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+	add-zsh-hook chpwd chpwd_recent_dirs
+	zstyle ':chpwd:*' recent-dirs-max 5000
+	zstyle ':chpwd:*' recent-dirs-default yes
+	zstyle ':completion:*' recent-dirs-insert both
+fi
 
 
 #--------------------------------------------------#
@@ -218,18 +226,10 @@ esac
 
 case "${TERM}" in
 	kterm*|xterm*|screen*)
-		# precmd() {
-		# 	psvar=()
-		# 	LANG=en_US.UTF-8 vcs_info
-		# 	[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-		# 	echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}${BRANCH}\007"
-		# }
 		export LSCOLORS=gxfxcxdxbxegedabagacad
 		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 		zstyle ':completion:*' list-colors \
 			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-		# zstyle ':vcs_info:*' formats '[%b]'
-		# zstyle ':vcs_info:*' actionformats '[%b|%a]'
 		;;
 esac
 
@@ -257,4 +257,13 @@ function extract() {
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 
+
+#--------------------------------------------------#
+# zaw
+#--------------------------------------------------#
+if [ -f ~/.zsh/zaw/zaw.zsh ]; then
+	source ~/.zsh/zaw/zaw.zsh
+	bindkey '^@' zaw-cdr
+	bindkey '^xh' zaw-history
+fi
 
