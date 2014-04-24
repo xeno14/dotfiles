@@ -9,6 +9,8 @@ export LANG=ja_JP.UTF-8
 # Prompt
 #--------------------------------------------------#
 
+setopt prompt_subst
+
 ## visualize vi mode
 # function zle-line-init zle-keymap-select {
 #     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
@@ -18,10 +20,14 @@ export LANG=ja_JP.UTF-8
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 
-
+## zsh-vcs-prompt
+## https://github.com/yonchu/zsh-vcs-prompt
 source ~/.zsh/zsh-vcs-prompt/zshrc.sh
 ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
 
+
+## PROMPT
 PROMPT=""
 PROMPT+="%F{yellow}[%~]%f "		#current directory
 PROMPT+='$(vcs_super_info)'     #vcs
