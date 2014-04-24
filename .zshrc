@@ -8,9 +8,6 @@ export LANG=ja_JP.UTF-8
 #--------------------------------------------------#
 # Prompt
 #--------------------------------------------------#
-autoload -Uz colors; colors
-autoload -Uz vcs_info
-autoload -Uz is-at-least
 
 ## visualize vi mode
 # function zle-line-init zle-keymap-select {
@@ -21,63 +18,13 @@ autoload -Uz is-at-least
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 
-## git
-#
-zstyle ':vcs_info:*' formats '%b'	#branch 
-zstyle ':vcs_info:*' actionformats '%b|%a'
 
-# if is-at-least 4.3.10; then
-# 	zstyle ":vcs_info:git:*" check-for-changes true
-# fi
-
-function git_prompt () {
-	local branch
-	local res
-	res=""
-	LANG=en_US.UTF-8 vcs_info
-	if [[ -n "$vcs_info_msg_0_" ]]; then
-		branch=`print -nD $vcs_info_msg_0_`
-
-		res+="("
-		res+="%F{green}$branch%f"
-
-		#not clean
-		#いまの実装だと遅い...
-		local st
-		st=$(git status -s)
-		if [[ -n $st ]]; then
-
-  			#M,??の数を数える
-			local num
- 			num=$(echo $st | cut -d' ' -f2 | grep 'M' | wc -l | tr -d ' ')
- 			[[ $num -gt 0 ]] && res+=" %F{red}M${num}%f"
-
-			num=$(echo $st | cut -d' ' -f1 | grep "??" | wc -l | tr -d ' ')
-			[[ $num -gt 0 ]] && res+=" %F{red}?${num}%f"
-
-			# ahead
-			local ahead
-			git status -sb | read ahead
-			ahead=$(echo $ahead | grep ahead)
-			if [[ -n $ahead ]]; then
-				ahead=${ahead#*ahead}
-				ahead=${ahead%]*}
-				ahead=$(echo $ahead | tr -d ' ')
-				res+=" ↑"
-				res+="%F{blue}$ahead%f"
-				res+=""
-			fi
-		 fi
-		res+=")"
-	fi
-	print -n $res
-}
-
-setopt prompt_subst
+source ~/.zsh/zsh-vcs-prompt/zshrc.sh
+ZSH_VCS_PROMPT_ENABLE_CACHING='true'
 
 PROMPT=""
 PROMPT+="%F{yellow}[%~]%f "		#current directory
-PROMPT+='`git_prompt`'			#git status
+PROMPT+='$(vcs_super_info)'     #vcs
 PROMPT+="
 "
 PROMPT+="[%n@%m]$ "

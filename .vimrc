@@ -42,8 +42,8 @@ set smartindent
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set noexpandtab
-set backspace=indent,eol,start		"enable backspace
+set expandtab
+set backspace=indent,eol,start
 
 
 
@@ -63,7 +63,7 @@ endif
 "----------------------------------------------------
 
 "ヤンクでクリップボードにコピー
-set clipboard=unnamed,autoselect
+"set clipboard=unnamed,autoselect
 
 
 
@@ -128,6 +128,7 @@ NeoBundleCheck
 " neocomplete
 "----------------------------------------------------
 let g:neocomplete#enable_at_startup = 1 
+let g:neocomplete#enable_auto_select = 1
 
 
 
