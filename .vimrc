@@ -119,6 +119,10 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tomtom/tcomment_vim'
 "NeoBundle 'vim-scripts/errormarker.vim'
 
+NeoBundleLazy 'vim-jp/cpp-vim', {
+            \ 'autoload' : {'filetypes' : 'cpp'}
+            \ }
+
 filetype plugin on
 NeoBundleCheck
 
