@@ -8,9 +8,8 @@ export LANG=ja_JP.UTF-8
 #--------------------------------------------------#
 # Prompt
 #--------------------------------------------------#
-autoload -Uz colors; colors
-autoload -Uz vcs_info
-autoload -Uz is-at-least
+
+setopt prompt_subst
 
 ## visualize vi mode
 # function zle-line-init zle-keymap-select {
@@ -21,67 +20,21 @@ autoload -Uz is-at-least
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 
-## git
-#
-zstyle ':vcs_info:*' formats '%b'	#branch 
-zstyle ':vcs_info:*' actionformats '%b|%a'
+## zsh-vcs-prompt
+## https://github.com/yonchu/zsh-vcs-prompt
+source ~/.zsh/zsh-vcs-prompt/zshrc.sh
+ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
 
-# if is-at-least 4.3.10; then
-# 	zstyle ":vcs_info:git:*" check-for-changes true
-# fi
 
-function git_prompt () {
-	local branch
-	local res
-	res=""
-	LANG=en_US.UTF-8 vcs_info
-	if [[ -n "$vcs_info_msg_0_" ]]; then
-		branch=`print -nD $vcs_info_msg_0_`
-
-		res+="("
-		res+="%F{green}$branch%f"
-
-		#not clean
-		#いまの実装だと遅い...
-		local st
-		st=$(git status -s)
-		if [[ -n $st ]]; then
-
-  			#M,??の数を数える
-			local num
- 			num=$(echo $st | cut -d' ' -f2 | grep 'M' | wc -l | tr -d ' ')
- 			[[ $num -gt 0 ]] && res+=" %F{red}M${num}%f"
-
-			num=$(echo $st | cut -d' ' -f1 | grep "??" | wc -l | tr -d ' ')
-			[[ $num -gt 0 ]] && res+=" %F{red}?${num}%f"
-
-			# ahead
-			local ahead
-			git status -sb | read ahead
-			ahead=$(echo $ahead | grep ahead)
-			if [[ -n $ahead ]]; then
-				ahead=${ahead#*ahead}
-				ahead=${ahead%]*}
-				ahead=$(echo $ahead | tr -d ' ')
-				res+=" ↑"
-				res+="%F{blue}$ahead%f"
-				res+=""
-			fi
-		 fi
-		res+=")"
-	fi
-	print -n $res
-}
-
-setopt prompt_subst
-
+## PROMPT
 PROMPT=""
 PROMPT+="%F{yellow}[%~]%f "		#current directory
-PROMPT+='`git_prompt`'			#git status
+PROMPT+='$(vcs_super_info)'     #vcs
 PROMPT+="
 "
 PROMPT+="[%n@%m]$ "
-PROMPT2=PROMPT
+PROMPT2="$ "
 
 
 
@@ -134,6 +87,14 @@ setopt share_history # share command history data
 autoload -U compinit
 compinit
 
+## enable cdr
+if is-at-least 4.3.11; then
+	autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+	add-zsh-hook chpwd chpwd_recent_dirs
+	zstyle ':chpwd:*' recent-dirs-max 5000
+	zstyle ':chpwd:*' recent-dirs-default yes
+	zstyle ':completion:*' recent-dirs-insert both
+fi
 
 
 #--------------------------------------------------#
@@ -225,18 +186,10 @@ esac
 
 case "${TERM}" in
 	kterm*|xterm*|screen*)
-		# precmd() {
-		# 	psvar=()
-		# 	LANG=en_US.UTF-8 vcs_info
-		# 	[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-		# 	echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}${BRANCH}\007"
-		# }
 		export LSCOLORS=gxfxcxdxbxegedabagacad
 		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 		zstyle ':completion:*' list-colors \
 			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-		# zstyle ':vcs_info:*' formats '[%b]'
-		# zstyle ':vcs_info:*' actionformats '[%b|%a]'
 		;;
 esac
 
@@ -264,4 +217,13 @@ function extract() {
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 
+
+#--------------------------------------------------#
+# zaw
+#--------------------------------------------------#
+if [ -f ~/.zsh/zaw/zaw.zsh ]; then
+	source ~/.zsh/zaw/zaw.zsh
+	bindkey '^@' zaw-cdr
+	bindkey '^xh' zaw-history
+fi
 
