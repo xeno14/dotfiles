@@ -34,7 +34,7 @@ PROMPT+='$(vcs_super_info)'     #vcs
 PROMPT+="
 "
 PROMPT+="[%n@%m]$ "
-PROMPT2=PROMPT
+PROMPT2="$ "
 
 
 
