@@ -101,7 +101,7 @@ fi
 # Alias configuration
 #--------------------------------------------------#
 
-# expand aliases before completing
+## expand aliases before completing
 setopt complete_aliases # aliased ls needs if file/dir completions work
 
 alias where="command -v"
@@ -116,7 +116,7 @@ case "${OSTYPE}" in
 		;;
 esac
 
-# tmux
+## tmux
 case "${OSTYPE}" in
 	freebsd*|darwin*)
 		alias tmux='/usr/local/Cellar/tmux/1.8/bin/tmux -2'
@@ -126,10 +126,17 @@ case "${OSTYPE}" in
 		;;
 esac
 
-# gvim (for OSX)
+## gvim (for OSX)
 case "${OSTYPE}" in
 	darwin*)
 		alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/MacVim'
+		;;
+esac
+
+## smartgit
+case "${OSTYPE}" in
+	linux*)
+		alias smartgit='/opt/smartgithg-5_0_9/bin/smartgithg.sh > /dev/null 2>&1 &'
 		;;
 esac
 
