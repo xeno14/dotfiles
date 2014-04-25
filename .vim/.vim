@@ -1,1 +1,1 @@
-/Users/xeno/setting/dotfiles/.vim
+/home/ryo/setting/dotfiles/.vim
