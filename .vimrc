@@ -107,9 +107,10 @@ NeoBundle 'heavenshell/vim-sudden-death'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'kannokanno/previm'
-NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kmnk/vim-unite-giti'
-NeoBundle 'mhinz/vim-startify'
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'thinca/vim-splash'
+"NeoBundle 'mhinz/vim-startify'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
@@ -124,7 +125,7 @@ NeoBundle 'Shougo/vimproc', {
     \ 'unix' : 'make -f make_unix.mak',
   \ },
   \ }
-NeoBundle 'Shougo/vimshell'
+"NeoBundle 'Shougo/vimshell'
 NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tomtom/tcomment_vim'
@@ -321,15 +322,15 @@ let g:quickrun_config = {
 \			executable('clang++') ? 'cpp/clang++'  : ' ',
 \	},
 \   'cpp/g++' : {
-\       'cmdopt' : '-std=c++0x',
+\       'cmdopt' : '-std=c++11',
 \   },
 \   'tex': {
 \       'command': 'platex',
-\       'exec': ['%c -synctex=1 -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
+\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
 \   },
 \   'plaintex': {
 \       'command': 'platex',
-\       'exec': ['%c -synctex=1 -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
+\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
 \   },
 \}
 
@@ -377,3 +378,17 @@ function! IncludeGuard()
 	silent! execute '1s/^/\=res_head'
 	silent! execute '$s/$/\=res_foot'
 endfunction
+
+
+
+"----------------------------------------------------
+" Splash
+"----------------------------------------------------
+
+"" 画面の大きさによって分ける
+if &columns > 200
+    let g:splash#path = expand('~/.vim/splash/azusa_large.txt')
+else
+    let g:splash#path = expand('~/.vim/splash/azusa_small.txt')
+endif
+
