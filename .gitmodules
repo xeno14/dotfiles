@@ -1,3 +1,6 @@
 [submodule ".zsh/zsh-vcs-prompt"]
 	path = .zsh/zsh-vcs-prompt
 	url = https://github.com/yonchu/zsh-vcs-prompt
+[submodule ".zsh/zaw"]
+	path = .zsh/zaw
+	url = https://github.com/zsh-users/zaw
