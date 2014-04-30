@@ -65,6 +65,12 @@ endif
 "ヤンクでクリップボードにコピー
 "set clipboard=unnamed,autoselect
 
+"" pdfの開き方の指定
+let pdfopener = "xdg-open"
+if has("macunix")
+    let pdfopener = "open"
+endif
+
 
 
 "----------------------------------------------------
@@ -316,6 +322,14 @@ let g:quickrun_config = {
 \	},
 \   'cpp/g++' : {
 \       'cmdopt' : '-std=c++0x',
+\   },
+\   'tex': {
+\       'command': 'platex',
+\       'exec': ['%c -synctex=1 -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
+\   },
+\   'plaintex': {
+\       'command': 'platex',
+\       'exec': ['%c -synctex=1 -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
 \   },
 \}
 
