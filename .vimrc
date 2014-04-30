@@ -82,6 +82,10 @@ endif
 
 
 
+
+
+
+
 "----------------------------------------------------
 " Neobundle
 "----------------------------------------------------
@@ -97,6 +101,7 @@ NeoBundle 'heavenshell/vim-sudden-death'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'mhinz/vim-startify'
 NeoBundle 'Shougo/neocomplete.vim'
@@ -172,13 +177,6 @@ let g:lightline = {
 
 
 "----------------------------------------------------
-" previm
-"----------------------------------------------------
-let g:previm_open_cmd = 'open -a Firefox'
-
-
-
-"----------------------------------------------------
 " unite-outline
 "----------------------------------------------------
 command! -nargs=0 Outline call Outline()
@@ -188,6 +186,15 @@ endfunction
 
 
 
+"----------------------------------------------------
+" previm
+"----------------------------------------------------
+
+"" .md が module2 として認識されるので，markdownにしてやる
+augroup PrevimSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
 
 "----------------------------------------------------
 " manipulation of tab
