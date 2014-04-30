@@ -6,6 +6,15 @@
 #  
 
 
+echo "Execute this script at dotfiles folder"
+echo "Are you sure to execute? [y/n]"
+read ans
+
+if [ $ans != "y" ]; then
+    echo "aborted."
+    exit 1
+fi
+
 
 for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
 	fname=$(basename $i)
@@ -36,3 +45,7 @@ done
 #install NeoBundle
 mkdir -p $HOME/.vim/bundle
 git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+
+
+git submodule init
+git submodule update
