@@ -2,8 +2,8 @@
 " appearance
 "----------------------------------------------------
 colorscheme desert
-set columns=100
-set lines=55
+set columns=80
+set lines=60
 
 " 画面の透過
 if has("macunix")
@@ -20,8 +20,8 @@ hi ColorColumn guibg=#606060
 "----------------------------------------------------
 command! FullScreen call FullScreen()
 function! FullScreen()
-	:set columns=1000
-	:set lines=100
+	:set columns=9999
+	:set lines=9999
 endfunction
 
 
