@@ -20,6 +20,7 @@ set incsearch
 set hlsearch
 
 
+
 "----------------------------------------------------
 " backup
 "----------------------------------------------------
@@ -27,11 +28,13 @@ set nobackup
 set writebackup
 
 
+
 "----------------------------------------------------
 " encoding
 "----------------------------------------------------
 set encoding=utf-8
-set fileencodings=ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932,utf-8
+set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
+
 
 
 "----------------------------------------------------
@@ -62,10 +65,8 @@ endif
 " options
 "----------------------------------------------------
 
-"ヤンクでクリップボードにコピー
-"set clipboard=unnamed,autoselect
-
 "" pdfの開き方の指定
+"" quickrun 参照
 let pdfopener = "xdg-open"
 if has("macunix")
     let pdfopener = "open"
@@ -85,10 +86,6 @@ if has("autocmd")
         \   exe "normal g`\"" |
         \ endif
 endif
-
-
-
-
 
 
 
@@ -203,11 +200,14 @@ augroup PrevimSettings
     autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 augroup END
 
+
+
 "----------------------------------------------------
 " manipulation of tab
 "
 " http://qiita.com/wadako111/items/755e753677dd72d8036d
 "----------------------------------------------------
+
 " Anywhere SID.
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -262,6 +262,7 @@ map <silent> [Tag]p :tabprevious<CR>
 " usage
 "	:Renameme('newname')
 "----------------------------------------------------
+
 command! -nargs=1 Renameme call Renameme(<args>)
 function! Renameme(newname)
 	call rename(expand('%'),a:newname)
@@ -278,6 +279,7 @@ endfunction!
 "	:CD directory
 "	if no argument, change to the directory file opened is in
 "----------------------------------------------------
+
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -298,9 +300,9 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 "----------------------------------------------------
 " vimshell
 "----------------------------------------------------
-command! VS :VimShell
-command! VSpy :VimShellInteractive python
-command! VSss :VimShellSendString
+" command! VS :VimShell
+" command! VSpy :VimShellInteractive python
+" command! VSss :VimShellSendString
 
 
 

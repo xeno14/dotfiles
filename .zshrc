@@ -85,7 +85,7 @@ setopt share_history # share command history data
 
 ## Completion configuration
 autoload -U compinit
-compinit
+compinit -u
 
 ## enable cdr
 if is-at-least 4.3.11; then
@@ -95,6 +95,7 @@ if is-at-least 4.3.11; then
 	zstyle ':chpwd:*' recent-dirs-default yes
 	zstyle ':completion:*' recent-dirs-insert both
 fi
+
 
 
 #--------------------------------------------------#
@@ -149,7 +150,6 @@ alias df="df -h"
 
 alias su="su -l"
 
-alias g++="g++ -std=c++0x"	#always allow c++11
 alias :q='exit'
 alias :e='vim'
 
@@ -171,21 +171,6 @@ case "${TERM}" in
 		;;
 	cons25)
 		unset LANG
-		export LSCOLORS=gxfxcxdxbxegedabagacad
-		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-		zstyle ':completion:*' list-colors \
-			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-		;;
-esac
-
-
-
-# set terminal title including current directory
-# and current branch if the directory is git repo
-#
-
-case "${TERM}" in
-	kterm*|xterm*|screen*)
 		export LSCOLORS=gxfxcxdxbxegedabagacad
 		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 		zstyle ':completion:*' list-colors \
