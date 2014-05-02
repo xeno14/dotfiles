@@ -1,6 +1,7 @@
 .DS_Store
 *.swp
 .vim/bundle/*
+!.vim/bundle/neobundle.vim
 .vim/.netrwhist
 CMakeCache.txt
 CMakeFiles
