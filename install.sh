@@ -42,10 +42,6 @@ for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
 	fi
 done
 
-#install NeoBundle
-mkdir -p $HOME/.vim/bundle
-git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-
 
 git submodule init
 git submodule update
