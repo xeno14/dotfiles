@@ -30,7 +30,7 @@ ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
 ## PROMPT
 PROMPT=""
 PROMPT+="%F{yellow}[%~]%f "		#current directory
-PROMPT+='$(vcs_super_info)'     #vcs
+PROMPT+='$(vcs_super_info)'     #vcs info
 PROMPT+="
 "
 PROMPT+="[%n@%m]$ "
@@ -38,36 +38,38 @@ PROMPT2="$ "
 
 
 
-
 #--------------------------------------------------#
 # Options
 #--------------------------------------------------#
 
-# auto change directory
+## auto change directory
 setopt auto_cd
 
-# auto directory pushd that you can get dirs list by cd -[tab]
+## auto directory pushd that you can get dirs list by cd -[tab]
 setopt auto_pushd
 
-# command correct edition before each completion attempt
+## command correct edition before each completion attempt
 setopt correct
 
-# compacked complete list display
+## compacked complete list display
 setopt list_packed
 
-# no remove postfix slash of command line
+## no remove postfix slash of command line
 setopt noautoremoveslash
 
-# no beep sound when complete list displayed
+## no beep sound when complete list displayed
 setopt nolistbeep
 
-# not distinguish capital or not
+## match capital and lower both
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
-# Keybind configuration vi like
+## ignore
+zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~'
+
+## Keybind configuration vi like
 bindkey -v
 
-# historical backward/forward search with linehead string binded to ^P/^N
+## HISTORICAL BACKWARD/FORWARD SEARCH WITH LINEHEAD STRING BINDED TO ^P/^N
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
@@ -156,27 +158,12 @@ alias :e='vim'
 
 
 #--------------------------------------------------#
-# Terminal configuration
+# Color Configuration
 #--------------------------------------------------#
 
-unset LSCOLORS
-case "${TERM}" in
-	xterm)
-		export TERM=xterm-color
-		;;
-	kterm)
-		export TERM=kterm-color
-		# set BackSpace control character
-		stty erase
-		;;
-	cons25)
-		unset LANG
-		export LSCOLORS=gxfxcxdxbxegedabagacad
-		export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-		zstyle ':completion:*' list-colors \
-			'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-		;;
-esac
+export LSCOLORS=gxfxcxdxbxegedabagacad
+export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+zstyle ':completion:*' list-colors ${LS_COLORS}
 
 
 
