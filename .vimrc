@@ -82,6 +82,8 @@ if has("macunix")
     let pdfopener = "open"
 endif
 
+"" texのconcealを無効化（#^ω^）
+let g:tex_conceal=''
 
 
 "----------------------------------------------------
@@ -109,7 +111,6 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-"NeoBundle 'jcf/vim-latex'
 NeoBundle 'heavenshell/vim-sudden-death'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'jceb/vim-hier'
@@ -403,4 +404,46 @@ if &columns > 200
 else
     let g:splash#path = expand('~/.vim/splash/azusa_small.txt')
 endif
+
+
+
+"----------------------------------------------------
+" Temp
+"	open temporary file with a syntax
+"
+" usage
+"	:Temp filetype
+"
+" param
+"    filetype : file type (completion by syntax)
+"
+" example
+"   :Temp cpp
+"   :Temp tex
+"----------------------------------------------------
+
+function! Temp (file_t)
+    execute ':sp'
+
+    let fname=tempname()
+    execute ':edit '.fname
+
+    if a:file_t != ''
+        execute ':set filetype='.a:file_t
+    endif
+endfunction
+command! -nargs=? -bang -complete=syntax Temp call Temp('<args>') 
+
+
+
+"----------------------------------------------------
+" QuitYank
+"   exit with yank all lines in the file
+"----------------------------------------------------
+
+function! QuitYank ()
+    execute ':%yank'
+    execute ':q!'
+endfunction
+command! -nargs=0 QuitYank call QuitYank()
 
