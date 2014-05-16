@@ -18,16 +18,22 @@ set t_Co=256
 set ruler
 set number
 colorscheme desert
+
 "change the color of columns past 80th
-if has("macunix")
-	execute "set colorcolumn=" . join(range(81, 9999), ',')
-elseif has("unix")
-	execute "set colorcolumn=81"
+set textwidth=0
+if exists('&colorcolumn')
+    set colorcolumn=+1
+    autocmd FileType sh,c,cpp,perl,vim,ruby,python,haskell,scheme setlocal textwidth=80
 endif
 
-hi ColorColumn ctermbg=235
+
 set incsearch
 set hlsearch
+
+""" ハイライトの変更
+highlight QFError ctermbg=2
+highlight ColorColumn ctermbg=235 guibg=gray18
+
 
 
 
@@ -111,9 +117,9 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle 'heavenshell/vim-sudden-death'
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'jceb/vim-hier'
+" エラーのハイライト
+NeoBundle 'cohama/vim-hier'
 NeoBundle 'xeno1991/previm'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'tyru/open-browser.vim'
@@ -133,11 +139,10 @@ NeoBundle 'Shougo/vimproc', {
     \ 'unix' : 'make -f make_unix.mak',
   \ },
   \ }
-NeoBundle 'scrooloose/syntastic'
-"NeoBundle 'sudar/vim-arduino-syntax'
+"NeoBundle 'scrooloose/syntastic'
+NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tomtom/tcomment_vim'
-"NeoBundle 'vim-scripts/errormarker.vim'
 
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \ 'autoload' : {'filetypes' : 'cpp'}
@@ -343,11 +348,14 @@ let g:quickrun_config = {
 "----------------------------------------------------
 " synatastic 
 "----------------------------------------------------
-" let g:syntastic_enable_signs=1
-" let g:syntastic_error_symbol = '✗'
+" let g:syntastic_auto_jump = 2
 " let g:syntastic_auto_loc_list=2
 " let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_jump = 2
+"
+" let g:syntastic_error_symbol = '✗'
+"
+" let g:syntastic_enable_signs=1
+" let g:syntastic_enable_highlighting = 0
 "
 " let g:syntastic_cpp_compiler = 'g++'
 " let g:syntastic_cpp_compiler_options = '-std=c++11'
@@ -440,4 +448,6 @@ function! QuitYank ()
     execute ':q!'
 endfunction
 command! -nargs=0 QuitYank call QuitYank()
+
+
 
