@@ -133,8 +133,8 @@ NeoBundle 'Shougo/vimproc', {
     \ 'unix' : 'make -f make_unix.mak',
   \ },
   \ }
-"NeoBundle 'Shougo/vimshell'
-NeoBundle 'sudar/vim-arduino-syntax'
+NeoBundle 'scrooloose/syntastic'
+"NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tomtom/tcomment_vim'
 "NeoBundle 'vim-scripts/errormarker.vim'
@@ -274,11 +274,11 @@ map <silent> [Tag]p :tabprevious<CR>
 "	:Renameme('newname')
 "----------------------------------------------------
 
-command! -nargs=1 Renameme call Renameme(<args>)
 function! Renameme(newname)
 	call rename(expand('%'),a:newname)
 	:execute ":e ".a:newname
 endfunction!
+command! -nargs=1 -complete=file Renameme call Renameme('<args>')
 
 
 
@@ -305,15 +305,6 @@ function! s:ChangeCurrentDir(directory, bang)
 endfunction
 " Change current directory.
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
-
-
-
-"----------------------------------------------------
-" vimshell
-"----------------------------------------------------
-" command! VS :VimShell
-" command! VSpy :VimShellInteractive python
-" command! VSss :VimShellSendString
 
 
 
@@ -350,13 +341,16 @@ let g:quickrun_config = {
 
 
 "----------------------------------------------------
-" errormarker.vim
+" synatastic 
 "----------------------------------------------------
-" let g:errormarker_errortext		= '!!'
-" let g:errormarker_errorgroup	= 'ERROR'
-" let g:errormarker_warningtext	= '??'
-" let g:errormarker_warninggroup	= 'Todo'
-
+" let g:syntastic_enable_signs=1
+" let g:syntastic_error_symbol = '✗'
+" let g:syntastic_auto_loc_list=2
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_jump = 2
+"
+" let g:syntastic_cpp_compiler = 'g++'
+" let g:syntastic_cpp_compiler_options = '-std=c++11'
 
 
 "----------------------------------------------------
