@@ -1,5 +1,15 @@
 
 "----------------------------------------------------
+" include
+"----------------------------------------------------
+
+if filereadable(expand('~/.vimrc.local'))
+  source ~/.vimrc.local
+endif
+
+
+
+"----------------------------------------------------
 " appearance
 "----------------------------------------------------
 syntax on
@@ -8,16 +18,22 @@ set t_Co=256
 set ruler
 set number
 colorscheme desert
+
 "change the color of columns past 80th
-if has("macunix")
-	execute "set colorcolumn=" . join(range(81, 9999), ',')
-elseif has("unix")
-	execute "set colorcolumn=81"
+set textwidth=0
+if exists('&colorcolumn')
+    set colorcolumn=+1
+    autocmd FileType sh,c,cpp,perl,vim,ruby,python,haskell,scheme setlocal textwidth=80
 endif
 
-hi ColorColumn ctermbg=235
+
 set incsearch
 set hlsearch
+
+""" ハイライトの変更
+highlight QFError ctermbg=2
+highlight ColorColumn ctermbg=235 guibg=gray18
+
 
 
 
@@ -72,6 +88,8 @@ if has("macunix")
     let pdfopener = "open"
 endif
 
+"" texのconcealを無効化（#^ω^）
+let g:tex_conceal=''
 
 
 "----------------------------------------------------
@@ -99,10 +117,9 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-"NeoBundle 'jcf/vim-latex'
-NeoBundle 'heavenshell/vim-sudden-death'
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'jceb/vim-hier'
+" エラーのハイライト
+NeoBundle 'cohama/vim-hier'
 NeoBundle 'xeno1991/previm'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'tyru/open-browser.vim'
@@ -122,11 +139,10 @@ NeoBundle 'Shougo/vimproc', {
     \ 'unix' : 'make -f make_unix.mak',
   \ },
   \ }
-"NeoBundle 'Shougo/vimshell'
+"NeoBundle 'scrooloose/syntastic'
 NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tomtom/tcomment_vim'
-"NeoBundle 'vim-scripts/errormarker.vim'
 
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \ 'autoload' : {'filetypes' : 'cpp'}
@@ -263,11 +279,11 @@ map <silent> [Tag]p :tabprevious<CR>
 "	:Renameme('newname')
 "----------------------------------------------------
 
-command! -nargs=1 Renameme call Renameme(<args>)
 function! Renameme(newname)
 	call rename(expand('%'),a:newname)
 	:execute ":e ".a:newname
 endfunction!
+command! -nargs=1 -complete=file Renameme call Renameme('<args>')
 
 
 
@@ -294,15 +310,6 @@ function! s:ChangeCurrentDir(directory, bang)
 endfunction
 " Change current directory.
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
-
-
-
-"----------------------------------------------------
-" vimshell
-"----------------------------------------------------
-" command! VS :VimShell
-" command! VSpy :VimShellInteractive python
-" command! VSss :VimShellSendString
 
 
 
@@ -339,13 +346,19 @@ let g:quickrun_config = {
 
 
 "----------------------------------------------------
-" errormarker.vim
+" synatastic 
 "----------------------------------------------------
-" let g:errormarker_errortext		= '!!'
-" let g:errormarker_errorgroup	= 'ERROR'
-" let g:errormarker_warningtext	= '??'
-" let g:errormarker_warninggroup	= 'Todo'
-
+" let g:syntastic_auto_jump = 2
+" let g:syntastic_auto_loc_list=2
+" let g:syntastic_always_populate_loc_list = 1
+"
+" let g:syntastic_error_symbol = '✗'
+"
+" let g:syntastic_enable_signs=1
+" let g:syntastic_enable_highlighting = 0
+"
+" let g:syntastic_cpp_compiler = 'g++'
+" let g:syntastic_cpp_compiler_options = '-std=c++11'
 
 
 "----------------------------------------------------
@@ -393,4 +406,48 @@ if &columns > 200
 else
     let g:splash#path = expand('~/.vim/splash/azusa_small.txt')
 endif
+
+
+
+"----------------------------------------------------
+" Temp
+"	open temporary file with a syntax
+"
+" usage
+"	:Temp filetype
+"
+" param
+"    filetype : file type (completion by syntax)
+"
+" example
+"   :Temp cpp
+"   :Temp tex
+"----------------------------------------------------
+
+function! Temp (file_t)
+    execute ':sp'
+
+    let fname=tempname()
+    execute ':edit '.fname
+
+    if a:file_t != ''
+        execute ':set filetype='.a:file_t
+    endif
+endfunction
+command! -nargs=? -bang -complete=syntax Temp call Temp('<args>') 
+
+
+
+"----------------------------------------------------
+" QuitYank
+"   exit with yank all lines in the file
+"----------------------------------------------------
+
+function! QuitYank ()
+    execute ':%yank'
+    execute ':q!'
+endfunction
+command! -nargs=0 QuitYank call QuitYank()
+
+
 
