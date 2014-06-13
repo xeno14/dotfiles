@@ -462,3 +462,25 @@ endfunction
 command! -nargs=0 QuitYank call QuitYank()
 
 
+
+"----------------------------------------------------
+" Deadline 
+"   grep DEADLINE and show them in quickfix
+"----------------------------------------------------
+
+function! Deadline (dir)
+    let pwd=expand("%:h")
+    echo pwd
+
+    let targetdir=pwd
+
+    if a:dir != ''
+        let targetdir=a:dir
+    endif
+
+    execute ':cd '.a:dir
+    "recursive grep
+    execute ':vim DEADLINE **/* | copen'
+    execute ':cd '.pwd
+endfunction
+command! -nargs=? -bang -complete=dir Deadline call Deadline('<args>')
