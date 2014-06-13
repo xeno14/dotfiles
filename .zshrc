@@ -147,6 +147,7 @@ alias su="su -l"
 alias :q='exit'
 alias :e='vim'
 
+alias calc='emacs -f full-calc'
 
 
 #--------------------------------------------------#
