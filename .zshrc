@@ -188,7 +188,7 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 #--------------------------------------------------#
 if [ -f ~/.zsh/zaw/zaw.zsh ]; then
 	source ~/.zsh/zaw/zaw.zsh
-	bindkey '^@' zaw-cdr
+	bindkey '^@'  zaw-cdr
 	bindkey '^xh' zaw-history
     bindkey '^xp' zaw-process
 fi
