@@ -4,7 +4,6 @@
 #--------------------------------------------------#
 export LANG=ja_JP.UTF-8
 
-
 #--------------------------------------------------#
 # Prompt
 #--------------------------------------------------#
@@ -120,14 +119,7 @@ case "${OSTYPE}" in
 esac
 
 ## tmux
-case "${OSTYPE}" in
-	freebsd*|darwin*)
-		alias tmux='/usr/local/Cellar/tmux/1.8/bin/tmux -2'
-		;;
-	linux*)
-		alias tmux='tmux -2'
-		;;
-esac
+alias tmux='tmux -2'
 
 ## gvim (for OSX)
 case "${OSTYPE}" in
@@ -155,6 +147,7 @@ alias su="su -l"
 alias :q='exit'
 alias :e='vim'
 
+alias calc='emacs -f full-calc'
 
 
 #--------------------------------------------------#
@@ -195,7 +188,8 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 #--------------------------------------------------#
 if [ -f ~/.zsh/zaw/zaw.zsh ]; then
 	source ~/.zsh/zaw/zaw.zsh
-	bindkey '^@' zaw-cdr
+	bindkey '^@'  zaw-cdr
 	bindkey '^xh' zaw-history
+    bindkey '^xp' zaw-process
 fi
 

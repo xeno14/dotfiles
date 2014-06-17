@@ -91,6 +91,9 @@ endif
 "" texのconcealを無効化（#^ω^）
 let g:tex_conceal=''
 
+"" clipboardを有効
+set clipboard=unnamed
+
 
 "----------------------------------------------------
 " autocmd
@@ -110,6 +113,7 @@ endif
 "----------------------------------------------------
 " Neobundle
 "----------------------------------------------------
+
 let g:neobundle_default_git_protocol='https'
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -370,6 +374,14 @@ let g:unite_source_file_mru_limit = 100000
 
 nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
 inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+
+"" grep をagでする
+"" http://blog.monochromegane.com/blog/2013/09/18/ag-and-unite/
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 
 
