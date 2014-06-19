@@ -370,7 +370,8 @@ let g:quickrun_config = {
 "----------------------------------------------------
 let g:unite_source_session_enable_auto_save = 1
 let g:unite_source_history_yank_enable = 1
-let g:unite_source_file_mru_limit = 100000
+let g:unite_source_file_mru_limit = 1000
+let g:unite_enable_start_insert = 1
 
 nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
 inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
@@ -382,6 +383,8 @@ if executable('ag')
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
   let g:unite_source_grep_recursive_opt = ''
 endif
+
+
 
 
 
