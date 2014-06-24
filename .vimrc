@@ -111,7 +111,7 @@ endif
 
 
 "----------------------------------------------------
-" Neobundle
+" NeoBundle
 "----------------------------------------------------
 
 let g:neobundle_default_git_protocol='https'
@@ -122,13 +122,11 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'itchyny/lightline.vim'
-" エラーのハイライト
 NeoBundle 'cohama/vim-hier'
 NeoBundle 'xeno1991/previm'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'thinca/vim-splash'
-"NeoBundle 'mhinz/vim-startify'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
@@ -145,8 +143,11 @@ NeoBundle 'Shougo/vimproc', {
   \ }
 "NeoBundle 'scrooloose/syntastic'
 NeoBundle 'sudar/vim-arduino-syntax'
+NeoBundle 'sudo.vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'tsukkee/unite-tag'
+
 
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \ 'autoload' : {'filetypes' : 'cpp'}
@@ -487,3 +488,5 @@ function! Deadline (dir)
     execute ':cd '.pwd
 endfunction
 command! -nargs=? -bang -complete=dir Deadline call Deadline('<args>')
+
+
