@@ -1,0 +1,8 @@
+.vim
+.zsh
+.clang-format
+.gitconfig
+.gitignore
+.tmux.conf
+.vimrc
+.zshrc

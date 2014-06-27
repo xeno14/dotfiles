@@ -1,1 +1,0 @@
-/home/ryo/setting/dotfiles/.vim

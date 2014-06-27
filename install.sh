@@ -1,47 +1,66 @@
 #!/bin/bash
 
 
-#
-# create symbolic links to dotfiles/folders in this folder
-#  
+# get dotfiles dir as absolute path
+
+dotfiledir="$(cd $(dirname $0) && pwd)"
+installtxt="${dotfiledir}/install.txt"
 
 
-echo "Execute this script at dotfiles folder"
-echo "Are you sure to execute? [y/n]"
-read ans
+# confirmation
+# y : create link
+# n : exit
+# d : dryrun
 
-if [ $ans != "y" ]; then
-    echo "aborted."
-    exit 1
-fi
-
-
-for i in $(find $(pwd) -maxdepth 1 -mindepth 1); do
-	fname=$(basename $i)
-
-	if [ $fname != $(basename $0) -a $fname != ".git" ]; then
-		target=$HOME
-
-		if [ $(echo $fname | cut -c1) == "." ]; then
-			target=$target/$fname
-		else
-			target=$target/"."$fname
-		fi
-
-		#create backups
-		mv $target $target".bak" 
-
-		#create symbolic link
-		ln -s $i $target
-
-		if [ $? -eq 0 ]; then
-			echo "Link: "$target" -> "$fname
-		else
-			echo "Link: Error has occured. "$target" -> "$fname
-		fi
-	fi
+echo "Linking these files:"
+cat "${installtxt}" | while read line
+do
+  echo $line
 done
 
+echo "are you ready? [y/n/d]"
+read ans
+if [ "${ans}" = "y" ]; then
+  dryrunflag=false
+elif [ "${ans}" = "d" ]; then
+  dryrunflag=true
+else
+  echo "aborted."
+  exit 1
+fi
 
-git submodule init
-git submodule update
+run(){
+  if [ $dryrunflag = true ]; then
+    echo "${1}"       #dryrun
+  else
+    echo "${1}" | sh  #run
+  fi
+}
+
+run "pwd"
+
+
+# linking dotfiles to $HOME
+
+cat "${installtxt}" | while read line
+do
+  # if link already exists, remove it
+  # if file or directory exits, rename it with suffix ".backYYMMDD"
+  target="${HOME}/${line}"
+  source="${dotfiledir}/${line}"
+  overwriteflag=false
+  if [ -L "${target}" ]; then
+    echo -e "\e[33moverwrite link \"${target}\"\e[m"
+    run "rm \"${target}\""
+    overwriteflag=true
+  elif [ -f "${target}" -o -d "${HOME}/${line}" ]; then
+    target_back="${target}.back$(date +"%y%m%d")"
+    echo -e "\e[31mrenamed \"${target}\" to \"${target_back}\"\e[m"
+    run "mv \"${target}\" \"${target_back}\"" 
+  fi
+  # create link
+  if [ ! $overwriteflag  ]; then
+    echo -e "\e[32mlinked \"${source}\"\e[m"
+  fi
+  run "ln -s \"${source}\" \"${target}\""
+done
