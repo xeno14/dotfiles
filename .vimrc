@@ -36,7 +36,6 @@ highlight ColorColumn ctermbg=235 guibg=gray18
 
 
 
-
 "----------------------------------------------------
 " backup
 "----------------------------------------------------
@@ -134,20 +133,19 @@ NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
-    \ 'mac' : 'make -f make_mac.mak',
-    \ 'unix' : 'make -f make_unix.mak',
-  \ },
-  \ }
-"NeoBundle 'scrooloose/syntastic'
+      \ 'build' : {
+      \ 'windows' : 'make -f make_mingw32.mak',
+      \ 'cygwin' : 'make -f make_cygwin.mak',
+      \ 'mac' : 'make -f make_mac.mak',
+      \ 'unix' : 'make -f make_unix.mak',
+      \ },
+      \ }
 NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'sudo.vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tsukkee/unite-tag'
-
 
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \ 'autoload' : {'filetypes' : 'cpp'}
@@ -195,9 +193,49 @@ endif
 "----------------------------------------------------
 let g:lightline = {
       \ 'colorscheme': 'wombat',
-	  \ 'separator': { 'left': '', 'right': '' },
-	  \ 'subseparator': { 'left': '|', 'right': '|' }
+      \ 'active': {
+      \   'left': [ [ 'mode' ],
+      \               [ 'vcsinfo', 'readonly', 'filename' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&readonly?"RO":""}'
+      \ },
+      \ 'component_function': {
+      \   'vcsinfo': 'LightlineVCSinfo',
+      \   'filename' : 'LightlineFile',
+      \   'modified' : 'LightlineModified'
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '|', 'right': '|' }
       \ }
+
+"" VCSの表示
+function! LightlineVCSinfo()
+  "TODO svnやhgなどの対応
+  try
+    "git
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      let head=fugitive#head()
+      return  ''!=head ? '(git) '.head : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+"" ファイル名の表示
+function! LightlineFile()
+  let filename=expand('%:t')
+  if '' == filename
+    return '[No Name]'
+  else
+    return filename . ' ' . LightlineModified()
+endfunction
+
+"" modifyの表示
+function! LightlineModified()
+  return (&filetype=="help" ? "" : &modified ? "+" : &modifiable ? "" : "-")
+endfunction
 
 
 
@@ -351,27 +389,11 @@ let g:quickrun_config = {
 
 
 "----------------------------------------------------
-" synatastic 
-"----------------------------------------------------
-" let g:syntastic_auto_jump = 2
-" let g:syntastic_auto_loc_list=2
-" let g:syntastic_always_populate_loc_list = 1
-"
-" let g:syntastic_error_symbol = '✗'
-"
-" let g:syntastic_enable_signs=1
-" let g:syntastic_enable_highlighting = 0
-"
-" let g:syntastic_cpp_compiler = 'g++'
-" let g:syntastic_cpp_compiler_options = '-std=c++11'
-
-
-"----------------------------------------------------
 " Unite
 "----------------------------------------------------
 let g:unite_source_session_enable_auto_save = 1
 let g:unite_source_history_yank_enable = 1
-let g:unite_source_file_mru_limit = 1000
+let g:unite_source_file_mru_limit = 10000
 let g:unite_enable_start_insert = 1
 
 nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
@@ -384,8 +406,6 @@ if executable('ag')
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
   let g:unite_source_grep_recursive_opt = ''
 endif
-
-
 
 
 
@@ -495,15 +515,16 @@ command! -nargs=? -bang -complete=dir Deadline call Deadline('<args>')
 " auto clang-format
 "----------------------------------------------------
 "
-" function! s:clang_format()
-"   let now_line = line(".")
-"   exec ":%! clang-format"
-"   exec ":" . now_line
-" endfunction
-"
-" if executable('clang-format')
-"   augroup cpp_clang_format
-"     autocmd!
-"     autocmd BufWrite,FileWritePre,FileAppendPre *.[ch]pp call s:clang_format()
-"   augroup END
-" endif
+if executable('clang-format')
+  function! s:clang_format()
+    let now_line = line(".")
+    exec ":%! clang-format"
+    exec ":" . now_line
+  endfunction
+  command! -nargs=0 ClangFormatAll call s:clang_format()
+
+  augroup cpp_clang_format
+    autocmd!
+    autocmd BufWrite,FileWritePre,FileAppendPre *.[ch]pp call s:clang_format()
+  augroup END
+endif
