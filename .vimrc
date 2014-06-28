@@ -12,6 +12,7 @@ endif
 "----------------------------------------------------
 " appearance
 "----------------------------------------------------
+
 syntax on
 set laststatus=2
 set t_Co=256
@@ -23,7 +24,7 @@ colorscheme desert
 set textwidth=0
 if exists('&colorcolumn')
     set colorcolumn=+1
-    autocmd FileType sh,c,cpp,perl,vim,ruby,python,haskell,scheme setlocal textwidth=80
+    autocmd FileType sh,c,cpp,markdown,perl,vim,ruby,python,haskell,scheme setlocal textwidth=80
 endif
 
 
@@ -39,6 +40,7 @@ highlight ColorColumn ctermbg=235 guibg=gray18
 "----------------------------------------------------
 " backup
 "----------------------------------------------------
+
 set nobackup
 set writebackup
 
@@ -47,6 +49,7 @@ set writebackup
 "----------------------------------------------------
 " encoding
 "----------------------------------------------------
+
 set encoding=utf-8
 set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,euc-jp,sjis,cp932
 
@@ -55,6 +58,7 @@ set fileencodings=utf-8,ucs-bom,iso-2022-jp-3,iso-2022-jp,eucjp-ms,euc-jisx0213,
 "----------------------------------------------------
 " indent
 "----------------------------------------------------
+
 set autoindent
 set smartindent
 set tabstop=2
@@ -93,10 +97,15 @@ let g:tex_conceal=''
 "" clipboardを有効
 set clipboard=unnamed
 
+"" コマンド履歴の個数
+set history=500
+
+
 
 "----------------------------------------------------
 " autocmd
 "----------------------------------------------------
+
 if has("autocmd")
     " ファイルタイプ別インデント、プラグインを有効にする
     filetype plugin indent on
@@ -124,8 +133,8 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'cohama/vim-hier'
 NeoBundle 'xeno1991/previm'
 NeoBundle 'kmnk/vim-unite-giti'
+NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'thinca/vim-splash'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
@@ -142,10 +151,13 @@ NeoBundle 'Shougo/vimproc', {
       \ }
 NeoBundle 'sudar/vim-arduino-syntax'
 NeoBundle 'sudo.vim'
+NeoBundle 'vcscommand.vim'
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'thinca/vim-splash'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'violetyk/scratch-utility'
 
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \ 'autoload' : {'filetypes' : 'cpp'}
@@ -159,6 +171,7 @@ NeoBundleCheck
 "----------------------------------------------------
 " neocomplete
 "----------------------------------------------------
+
 let g:neocomplete#enable_at_startup = 1 
 let g:neocomplete#enable_auto_select = 1
 
@@ -191,11 +204,15 @@ endif
 "----------------------------------------------------
 " lightline
 "----------------------------------------------------
+
+"" statusline
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
-      \   'left': [ [ 'mode' ],
-      \               [ 'vcsinfo', 'readonly', 'filename' ] ]
+      \   'left': [ [ 'mode' ], [ 'vcsinfo', 'readonly', 'filename' ] ],
+		  \   'right': [ [ 'lineinfo' ],
+		  \              [ 'percent' ],
+		  \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component': {
       \   'readonly': '%{&readonly?"RO":""}'
@@ -203,11 +220,18 @@ let g:lightline = {
       \ 'component_function': {
       \   'vcsinfo': 'LightlineVCSinfo',
       \   'filename' : 'LightlineFile',
-      \   'modified' : 'LightlineModified'
+      \   'modified' : 'LightlineModified',
+      \   'cwd' : 'LightlineCwd'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '|', 'right': '|' }
       \ }
+
+"" tabline
+let g:lightline.tabline = { 'right' : [ ['cwd'] ] }
+let g:lightline.tab_component_function = {
+      \ 'cwd': 'LightlineCwd'
+\}
 
 "" VCSの表示
 function! LightlineVCSinfo()
@@ -237,11 +261,17 @@ function! LightlineModified()
   return (&filetype=="help" ? "" : &modified ? "+" : &modifiable ? "" : "-")
 endfunction
 
+"" カレントディレクトリ
+function! LightlineCwd()
+  return getcwd()
+endfunction
+
 
 
 "----------------------------------------------------
 " unite-outline
 "----------------------------------------------------
+
 command! -nargs=0 Outline call Outline()
 function! Outline()
 	:Unite -vertical -winwidth=30 outline -no-quit
@@ -272,26 +302,6 @@ function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
 
-" Set tabline.
-function! s:my_tabline()  "{{{
-  let s = ''
-  for i in range(1, tabpagenr('$'))
-    let bufnrs = tabpagebuflist(i)
-    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
-    let no = i  " display 0-origin tabpagenr.
-    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
-    let title = fnamemodify(bufname(bufnr), ':t')
-    let title = '[' . title . ']'
-    let s .= '%'.i.'T'
-    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
-    let s .= no . ':' . title
-    let s .= mod
-    let s .= '%#TabLineFill# '
-  endfor
-  let s .= '%#TabLineFill#%T%=%#TabLine#'
-  return s
-endfunction "}}}
-let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 set showtabline=2 " 常にタブラインを表示
 
 " The prefix key.
@@ -359,6 +369,7 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 "----------------------------------------------------
 " quickrun
 "----------------------------------------------------
+
 let g:quickrun_config = {
 \	'_' : {
 \       'hook/close_quickfix/enable_success' : 1,
@@ -391,9 +402,10 @@ let g:quickrun_config = {
 "----------------------------------------------------
 " Unite
 "----------------------------------------------------
+
 let g:unite_source_session_enable_auto_save = 1
 let g:unite_source_history_yank_enable = 1
-let g:unite_source_file_mru_limit = 10000
+let g:unite_source_file_mru_limit = 1000
 let g:unite_enable_start_insert = 1
 
 nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
@@ -514,7 +526,7 @@ command! -nargs=? -bang -complete=dir Deadline call Deadline('<args>')
 "----------------------------------------------------
 " auto clang-format
 "----------------------------------------------------
-"
+
 if executable('clang-format')
   function! s:clang_format()
     let now_line = line(".")
@@ -523,8 +535,21 @@ if executable('clang-format')
   endfunction
   command! -nargs=0 ClangFormatAll call s:clang_format()
 
-  augroup cpp_clang_format
-    autocmd!
-    autocmd BufWrite,FileWritePre,FileAppendPre *.[ch]pp call s:clang_format()
-  augroup END
+  " augroup cpp_clang_format
+  "   autocmd!
+  "   autocmd BufWrite,FileWritePre,FileAppendPre *.[ch]pp call s:clang_format()
+  " augroup END
 endif
+
+
+
+"----------------------------------------------------
+" scratch unitily
+"----------------------------------------------------
+
+"" todo take_over_filetypeが機能してない気がする
+let g:scratchSplitOption =
+      \ {
+      \   'vertical'           : 1,
+      \   'take_over_filetype' : 1
+      \ }
