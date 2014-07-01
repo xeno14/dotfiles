@@ -205,6 +205,9 @@ endif
 " lightline
 "----------------------------------------------------
 
+"" Unicodes depends on powerline patched fonts
+"" see https://github.com/Lokaltog/powerline-fonts
+
 "" statusline
 let g:lightline = {
       \ 'colorscheme': 'wombat',
@@ -215,7 +218,7 @@ let g:lightline = {
 		  \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component': {
-      \   'readonly': '%{&readonly?"RO":""}'
+      \   'readonly': '%{&readonly?"\ue0a2":""}'
       \ },
       \ 'component_function': {
       \   'vcsinfo': 'LightlineVCSinfo',
@@ -223,8 +226,8 @@ let g:lightline = {
       \   'modified' : 'LightlineModified',
       \   'cwd' : 'LightlineCwd'
       \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
       \ }
 
 "" tabline
@@ -240,7 +243,7 @@ function! LightlineVCSinfo()
     "git
     if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
       let head=fugitive#head()
-      return  ''!=head ? '(git) '.head : ''
+      return  ''!=head ? "\ue0a0 ".head : ''
     endif
   catch
   endtry
