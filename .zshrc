@@ -135,6 +135,13 @@ case "${OSTYPE}" in
 		;;
 esac
 
+## cmake-gui for mac
+case "${OSTYPE}" in
+	darwin*)
+    alias cmake-gui='open -a CMake'
+    ;;
+esac
+
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
