@@ -97,6 +97,9 @@ if is-at-least 4.3.11; then
 	zstyle ':completion:*' recent-dirs-insert both
 fi
 
+## report time when process takes time over 3
+REPORTTIME=3
+
 
 
 #--------------------------------------------------#
