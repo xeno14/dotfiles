@@ -145,6 +145,9 @@ case "${OSTYPE}" in
     ;;
 esac
 
+## git log peco
+alias -g C='`git log --oneline | peco | cut -d" " -f1`'
+
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
