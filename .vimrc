@@ -143,6 +143,7 @@ NeoBundle 'cohama/vim-hier'
 NeoBundle 'xeno1991/previm'
 NeoBundle 'kmnk/vim-unite-giti'
 NeoBundle 'LeafCage/yankround.vim'
+NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
@@ -150,6 +151,7 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
+NeoBundle 'Shougo/unite-build'
 NeoBundle 'Shougo/vimproc', {
       \ 'build' : {
       \ 'windows' : 'make -f make_mingw32.mak',
@@ -167,7 +169,12 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'violetyk/scratch-utility'
+NeoBundle 'osyo-manga/vim-marching'
 
+NeoBundleLazy "nvie/vim-flake8", {
+      \ "autoload": {
+      \   "filetypes": ["python", "python3", "djangohtml"]
+      \ }}
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \ 'autoload' : {'filetypes' : 'cpp'}
             \ }
@@ -184,7 +191,33 @@ NeoBundleCheck
 let g:neocomplete#enable_at_startup = 1 
 let g:neocomplete#enable_auto_select = 1
 
+"----------------------------------------------------
+" marching
+"----------------------------------------------------
 
+let g:marching_clang_command = "/usr/local/bin/clang"
+let g:marching_clang_command_option="-std=c++1y"
+
+let g:marching_include_paths = filter(
+\    split(glob('/usr/include/c++/*'), '\n') +
+\    split(glob('/usr/include/*/c++/*'), '\n') +
+\    split(glob('/usr/include/*/boost/*'), '\n') +
+\    split(glob('/usr/include/*/'), '\n'),
+\    'isdirectory(v:val)')
+
+let g:marching_enable_neocomplete = 1
+
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+
+let g:neocomplete#force_omni_input_patterns.cpp =
+    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+
+" 処理のタイミングを制御する
+" 短いほうがより早く補完ウィンドウが表示される
+" ただし、marching.vim 以外の処理にも影響するので注意する
+set updatetime=200
 
 "----------------------------------------------------
 " Neosnippet
@@ -286,7 +319,7 @@ endfunction
 
 command! -nargs=0 Outline call Outline()
 function! Outline()
-	:Unite -vertical -winwidth=30 outline -no-quit
+	:Unite -vertical -winwidth=30 outline
 endfunction
 
 
@@ -431,27 +464,19 @@ if executable('ag')
   let g:unite_source_grep_recursive_opt = ''
 endif
 
+function! s:unite_my_settings()
+  imap <buffer> <ESC><ESC> <Plug>(unite_exit)
+  nmap <buffer> <ESC><ESC> <Plug>(unite_exit)
+  nnoremap <silent><buffer><expr> v unite#do_action('vsplit')
+  nnoremap <silent><buffer><expr> s unite#do_action('split')
+endfunction
+augroup UniteMySettings
+  autocmd FileType unite call s:unite_my_settings()
+augroup END
 
-
-"----------------------------------------------------
-" Insert include guard to the current file
-"----------------------------------------------------
-command!  -nargs=0 IncGuard call IncludeGuard()
-function! IncludeGuard()
-	"カレントファイル名を取得
-	let name = fnamemodify(expand('%'),':t')	
-
-	"大文字にする
-	let name = toupper(name)
-	
-	"がーど
-	let included = substitute(name,'\.','_','g').'_INCLUDED__'
-
-	"書き込み
-	let res_head = '#ifndef '.included."\n#define ".included."\n\n"
-	let res_foot = "\n".'#endif //'.included."\n"
-	silent! execute '1s/^/\=res_head'
-	silent! execute '$s/$/\=res_foot'
+command! -nargs=0 Build call UniteBuild()
+function! UniteBuild()
+  :Unite build -buffer-name=BUILD -auto-resize -auto-preview -no-quit
 endfunction
 
 
