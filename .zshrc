@@ -21,9 +21,11 @@ setopt prompt_subst
 
 ## zsh-vcs-prompt
 ## https://github.com/yonchu/zsh-vcs-prompt
-source ~/.zsh/zsh-vcs-prompt/zshrc.sh
-ZSH_VCS_PROMPT_ENABLE_CACHING='true'
-ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
+if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
+  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
+  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+  ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
+fi
 
 
 ## PROMPT

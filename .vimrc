@@ -126,62 +126,70 @@ nnoremap j gj
 nnoremap k gk
 nnoremap <Down> gj
 nnoremap <Up>   gk
+nnoremap $ g$
+nnoremap 0 g0
 
 "----------------------------------------------------
 " NeoBundle
 "----------------------------------------------------
 
-let g:neobundle_default_git_protocol='https'
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+"" .vim/bundle以下にプラグインのディレクトリがあるかどうか
+function! NeobundleExists(plugin)
+  return isdirectory(expand('~/.vim/bundle/'.a:plugin))
+endfunction
+
+if NeobundleExists('neobundle.vim')
+  let g:neobundle_default_git_protocol='https'
+  if has('vim_starting')
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+  endif
+  call neobundle#rc(expand('~/.vim/bundle/'))
+  NeoBundleFetch 'Shougo/neobundle.vim'
+
+  NeoBundle 'itchyny/lightline.vim'
+  NeoBundle 'cohama/vim-hier'
+  NeoBundle 'xeno1991/previm'
+  NeoBundle 'kmnk/vim-unite-giti'
+  NeoBundle 'LeafCage/yankround.vim'
+  NeoBundle 'Lokaltog/vim-easymotion'
+  NeoBundle 'tyru/open-browser.vim'
+  NeoBundle 'Shougo/neocomplete.vim'
+  NeoBundle 'Shougo/neosnippet'
+  NeoBundle 'Shougo/neosnippet-snippets'
+  NeoBundle 'Shougo/neomru.vim'
+  NeoBundle 'Shougo/unite.vim'
+  NeoBundle 'Shougo/unite-outline'
+  NeoBundle 'Shougo/unite-build'
+  NeoBundle 'Shougo/vimproc', {
+        \ 'build' : {
+        \ 'windows' : 'make -f make_mingw32.mak',
+        \ 'cygwin' : 'make -f make_cygwin.mak',
+        \ 'mac' : 'make -f make_mac.mak',
+        \ 'unix' : 'make -f make_unix.mak',
+        \ },
+        \ }
+  NeoBundle 'sudar/vim-arduino-syntax'
+  NeoBundle 'sudo.vim'
+  NeoBundle 'vcscommand.vim'
+  NeoBundle 'thinca/vim-quickrun'
+  NeoBundle 'thinca/vim-splash'
+  NeoBundle 'tomtom/tcomment_vim'
+  NeoBundle 'tpope/vim-fugitive'
+  NeoBundle 'tsukkee/unite-tag'
+  NeoBundle 'violetyk/scratch-utility'
+  NeoBundle 'osyo-manga/vim-marching'
+
+  NeoBundleLazy "nvie/vim-flake8", {
+        \ "autoload": {
+        \   "filetypes": ["python", "python3", "djangohtml"]
+        \ }}
+  NeoBundleLazy 'vim-jp/cpp-vim', {
+              \ 'autoload' : {'filetypes' : 'cpp'}
+              \ }
+
+  filetype plugin on
+  NeoBundleCheck
 endif
-call neobundle#rc(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'cohama/vim-hier'
-NeoBundle 'xeno1991/previm'
-NeoBundle 'kmnk/vim-unite-giti'
-NeoBundle 'LeafCage/yankround.vim'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'Shougo/unite-build'
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \ 'windows' : 'make -f make_mingw32.mak',
-      \ 'cygwin' : 'make -f make_cygwin.mak',
-      \ 'mac' : 'make -f make_mac.mak',
-      \ 'unix' : 'make -f make_unix.mak',
-      \ },
-      \ }
-NeoBundle 'sudar/vim-arduino-syntax'
-NeoBundle 'sudo.vim'
-NeoBundle 'vcscommand.vim'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'thinca/vim-splash'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'violetyk/scratch-utility'
-NeoBundle 'osyo-manga/vim-marching'
-
-NeoBundleLazy "nvie/vim-flake8", {
-      \ "autoload": {
-      \   "filetypes": ["python", "python3", "djangohtml"]
-      \ }}
-NeoBundleLazy 'vim-jp/cpp-vim', {
-            \ 'autoload' : {'filetypes' : 'cpp'}
-            \ }
-
-filetype plugin on
-NeoBundleCheck
-
 
 
 "----------------------------------------------------
@@ -465,8 +473,8 @@ if executable('ag')
 endif
 
 function! s:unite_my_settings()
-  imap <buffer> <ESC><ESC> <Plug>(unite_exit)
-  nmap <buffer> <ESC><ESC> <Plug>(unite_exit)
+  imap <buffer> <ESC><ESC><ESC> <Plug>(unite_exit)
+  nmap <buffer> <ESC><ESC><ESC> <Plug>(unite_exit)
   nnoremap <silent><buffer><expr> v unite#do_action('vsplit')
   nnoremap <silent><buffer><expr> s unite#do_action('split')
 endfunction
