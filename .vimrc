@@ -129,6 +129,8 @@ nnoremap <Up>   gk
 nnoremap $ g$
 nnoremap 0 g0
 
+
+
 "----------------------------------------------------
 " NeoBundle
 "----------------------------------------------------
@@ -194,12 +196,15 @@ if NeobundleExists('neobundle.vim')
 endif
 
 
+
 "----------------------------------------------------
 " neocomplete
 "----------------------------------------------------
 
 let g:neocomplete#enable_at_startup = 1 
 let g:neocomplete#enable_auto_select = 1
+
+
 
 "----------------------------------------------------
 " marching
@@ -228,6 +233,8 @@ let g:neocomplete#force_omni_input_patterns.cpp =
 " 短いほうがより早く補完ウィンドウが表示される
 " ただし、marching.vim 以外の処理にも影響するので注意する
 set updatetime=200
+
+
 
 "----------------------------------------------------
 " Neosnippet
@@ -320,7 +327,18 @@ endfunction
 
 "" カレントディレクトリ
 function! LightlineCwd()
-  return getcwd()
+  let cwd=getcwd()
+  if winwidth(0)/2 > strlen(cwd)
+    return cwd
+  else
+    "" 画面の幅が小さい時には途中のディレクトリ名を頭文字だけで省略する
+    let splited = split(cwd, "/")
+    let res = ""
+    for str in splited
+      let res = res."/".str[0]
+    endfor
+    return res.splited[-1][1:]
+  endif
 endfunction
 
 
