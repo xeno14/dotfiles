@@ -205,6 +205,7 @@ if [ -f ~/.zsh/zaw/zaw.zsh ]; then
 	source ~/.zsh/zaw/zaw.zsh
 	bindkey '^@'  zaw-cdr
 	bindkey '^xh' zaw-history
-    bindkey '^xp' zaw-process
+  bindkey '^xp' zaw-process
+  bindkey '^xt' zaw-tmux
 fi
 
