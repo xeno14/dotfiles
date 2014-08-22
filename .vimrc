@@ -186,6 +186,8 @@ if NeobundleExists('neobundle.vim')
   NeoBundleLazy 'vim-jp/cpp-vim', {
               \ 'autoload' : {'filetypes' : 'cpp'}
               \ }
+  NeoBundleLazy 'hynek/vim-python-pep8-indent', {
+    \ "autoload": {"insert": 1, "filetypes": ["python", "python3", "djangohtml"]}}
 
   filetype plugin on
   NeoBundleCheck
@@ -600,3 +602,37 @@ let g:scratchSplitOption =
       \   'vertical'           : 1,
       \   'take_over_filetype' : 1
       \ }
+
+
+
+"----------------------------------------------------
+" vim-flake8
+"----------------------------------------------------
+
+let s:flake8Enabled = 1
+
+""" フラグが立ってればflake8する 
+function! Flake8Wrapper()
+  if s:flake8Enabled
+    call Flake8()
+  endif
+endfunction
+
+""" フラグon
+function! Flake8On()
+  let s:flake8Enabled = 1
+  call Flake8Wrapper()
+endfunction
+command! -nargs=0 Flake8On call Flake8On()
+
+""" フラグoff
+function! Flake8Off()
+  let s:flake8Enabled = 0
+  exec ":cclose"
+endfunction
+command! -nargs=0 Flake8Off call Flake8Off()
+
+augroup flake8
+  autocmd!
+  autocmd BufWrite,FileWritePre,FileAppendPre *.py call Flake8Wrapper()
+augroup END
