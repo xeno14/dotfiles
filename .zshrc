@@ -129,7 +129,7 @@ alias tmux='tmux -2'
 ## gvim (for OSX)
 case "${OSTYPE}" in
 	darwin*)
-		alias gvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/MacVim'
+		alias gvim='env LANG=ja_JP.UTF-8 open -a macvim'
 		;;
 esac
 

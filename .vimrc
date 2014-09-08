@@ -147,14 +147,13 @@ if NeobundleExists('neobundle.vim')
   endif
   call neobundle#rc(expand('~/.vim/bundle/'))
   NeoBundleFetch 'Shougo/neobundle.vim'
-
-  NeoBundle 'itchyny/lightline.vim'
+  
+  " NeoBundle 'aperezdc/vim-template'
   NeoBundle 'cohama/vim-hier'
-  NeoBundle 'xeno1991/previm'
+  NeoBundle 'itchyny/lightline.vim'
   NeoBundle 'kmnk/vim-unite-giti'
   NeoBundle 'LeafCage/yankround.vim'
   NeoBundle 'Lokaltog/vim-easymotion'
-  NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'Shougo/neocomplete.vim'
   NeoBundle 'Shougo/neosnippet'
   NeoBundle 'Shougo/neosnippet-snippets'
@@ -172,14 +171,16 @@ if NeobundleExists('neobundle.vim')
         \ }
   NeoBundle 'sudar/vim-arduino-syntax'
   NeoBundle 'sudo.vim'
-  NeoBundle 'vcscommand.vim'
   NeoBundle 'thinca/vim-quickrun'
   NeoBundle 'thinca/vim-splash'
   NeoBundle 'tomtom/tcomment_vim'
   NeoBundle 'tpope/vim-fugitive'
+  NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'tsukkee/unite-tag'
-  NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'osyo-manga/vim-marching'
+  NeoBundle 'violetyk/scratch-utility'
+  NeoBundle 'vcscommand.vim'
+  NeoBundle 'xeno1991/previm'
 
   NeoBundleLazy "nvie/vim-flake8", {
         \ "autoload": {
