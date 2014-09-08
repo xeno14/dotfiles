@@ -148,12 +148,12 @@ if NeobundleExists('neobundle.vim')
   call neobundle#rc(expand('~/.vim/bundle/'))
   NeoBundleFetch 'Shougo/neobundle.vim'
   
-  " NeoBundle 'aperezdc/vim-template'
   NeoBundle 'cohama/vim-hier'
   NeoBundle 'itchyny/lightline.vim'
   NeoBundle 'kmnk/vim-unite-giti'
   NeoBundle 'LeafCage/yankround.vim'
   NeoBundle 'Lokaltog/vim-easymotion'
+  NeoBundle 'mhinz/vim-signify'
   NeoBundle 'Shougo/neocomplete.vim'
   NeoBundle 'Shougo/neosnippet'
   NeoBundle 'Shougo/neosnippet-snippets'
@@ -178,6 +178,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'tsukkee/unite-tag'
   NeoBundle 'osyo-manga/vim-marching'
+  NeoBundle 'osyo-manga/vim-over'
   NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'vcscommand.vim'
   NeoBundle 'xeno1991/previm'
