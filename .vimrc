@@ -1,4 +1,3 @@
-
 "----------------------------------------------------
 " include
 "----------------------------------------------------
@@ -18,7 +17,6 @@ set laststatus=2
 set t_Co=256
 set ruler
 set number
-colorscheme desert
 
 "change the color of columns past 80th
 set textwidth=0
@@ -27,14 +25,13 @@ if exists('&colorcolumn')
     autocmd FileType sh,c,cpp,markdown,perl,vim,ruby,python,haskell,scheme setlocal textwidth=80
 endif
 
-
 set incsearch
 set hlsearch
 
-""" ハイライトの変更
-highlight QFError ctermbg=2
+" color
+colorscheme desert
+highlight QFError ctermbg=88
 highlight ColorColumn ctermbg=235 guibg=gray18
-
 
 
 "----------------------------------------------------
@@ -179,8 +176,8 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'tsukkee/unite-tag'
   NeoBundle 'osyo-manga/vim-marching'
   NeoBundle 'osyo-manga/vim-over'
-  NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'vcscommand.vim'
+  NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'xeno1991/previm'
 
   NeoBundleLazy "nvie/vim-flake8", {
@@ -205,6 +202,27 @@ endif
 
 let g:neocomplete#enable_at_startup = 1 
 let g:neocomplete#enable_auto_select = 1
+
+
+
+"---------------------------------------------------
+" vim-marching
+"----------------------------------------------------
+
+if has("macunix")
+  let g:marching_clang_command = "/usr/local/bin/clang"
+endif
+
+let g:marching#clang_command#options = {
+      \ "cpp" : "-std=gnu++1y"
+      \}
+let g:marching_include_paths = [
+      \ "/usr/local/include/boost"
+      \]
+let g:marching_enable_neocomplete = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
 
 
 
@@ -656,3 +674,24 @@ augroup flake8
   autocmd!
   autocmd BufWrite,FileWritePre,FileAppendPre *.py call Flake8Wrapper()
 augroup END
+
+
+
+"---------------------------------------------------
+" vim-marching
+"----------------------------------------------------
+
+if has("macunix")
+  let g:marching_clang_command = "/usr/local/bin/clang"
+endif
+
+let g:marching#clang_command#options = {
+      \ "cpp" : "-std=gnu++1y"
+      \}
+let g:marching_include_paths = [
+      \ "/usr/local/include/boost"
+      \]
+let g:marching_enable_neocomplete = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
