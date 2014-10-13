@@ -1,4 +1,12 @@
 
+function source_zshrc_local(){
+  local zsh_local="${HOME}/.zshrc.local"
+  if [ -f ${zsh_local} ]; then
+    source ${zsh_local}
+  fi
+}
+
+
 #--------------------------------------------------#
 # Environment variable configuration
 #--------------------------------------------------#
@@ -102,6 +110,7 @@ fi
 ## report time when process takes time over 3
 REPORTTIME=3
 
+setopt hist_ignore_all_dups
 
 
 #--------------------------------------------------#
@@ -209,3 +218,6 @@ if [ -f ~/.zsh/zaw/zaw.zsh ]; then
   bindkey '^xt' zaw-tmux
 fi
 
+
+
+source_zshrc_local
