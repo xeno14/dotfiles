@@ -174,6 +174,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'tsukkee/unite-tag'
+  NeoBundle 'rhysd/vim-clang-format'
   NeoBundle 'osyo-manga/vim-marching'
   NeoBundle 'osyo-manga/vim-over'
   NeoBundle 'vcscommand.vim'
@@ -611,26 +612,6 @@ command! -nargs=? -bang -complete=dir Deadline call Deadline('<args>')
 
 
 "----------------------------------------------------
-" auto clang-format
-"----------------------------------------------------
-
-if executable('clang-format')
-  function! s:clang_format()
-    let now_line = line(".")
-    exec ":%! clang-format"
-    exec ":" . now_line
-  endfunction
-  command! -nargs=0 ClangFormatAll call s:clang_format()
-
-  " augroup cpp_clang_format
-  "   autocmd!
-  "   autocmd BufWrite,FileWritePre,FileAppendPre *.[ch]pp call s:clang_format()
-  " augroup END
-endif
-
-
-
-"----------------------------------------------------
 " scratch unitily
 "----------------------------------------------------
 
@@ -651,7 +632,7 @@ let s:flake8Enabled = 1
 
 """ フラグが立ってればflake8する 
 function! Flake8Wrapper()
-  if s:flake8Enabled
+  if s:flake8Enabled && executable('flake8')
     call Flake8()
   endif
 endfunction
