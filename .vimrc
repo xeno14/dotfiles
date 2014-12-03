@@ -482,6 +482,10 @@ let g:quickrun_config = {
 \   'cpp/g++' : {
 \       'cmdopt' : '-std=c++11',
 \   },
+\   'cuda': {
+\       'command': 'nvcc',
+\       'exec': ['%c %s', './a.out']
+\   },
 \   'tex': {
 \       'command': 'platex',
 \       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
