@@ -3,6 +3,7 @@ path = ~/.gitconfig.local
 
 [merge]
 ff = false
+	tool = vimdiff
 
 [color]
 ui = auto
