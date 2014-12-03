@@ -11,6 +11,8 @@ if has("macunix")
 endif
 "hi ColorColumn guibg=#606060
 
+" font
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Semibold\ 10
 
 
 "----------------------------------------------------
