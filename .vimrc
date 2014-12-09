@@ -168,6 +168,7 @@ if NeobundleExists('neobundle.vim')
         \ }
   NeoBundle 'sudar/vim-arduino-syntax'
   NeoBundle 'sudo.vim'
+  NeoBundle 'termoshtt/unite-doxygen'
   NeoBundle 'thinca/vim-quickrun'
   NeoBundle 'thinca/vim-splash'
   NeoBundle 'tomtom/tcomment_vim'
@@ -175,7 +176,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'tyru/open-browser.vim'
   NeoBundle 'tsukkee/unite-tag'
   NeoBundle 'rhysd/vim-clang-format'
-  NeoBundle 'osyo-manga/vim-marching'
+  " NeoBundle 'osyo-manga/vim-marching'
   NeoBundle 'osyo-manga/vim-over'
   NeoBundle 'vcscommand.vim'
   NeoBundle 'violetyk/scratch-utility'
@@ -662,17 +663,24 @@ augroup END
 " vim-marching
 "----------------------------------------------------
 
-if has("macunix")
-  let g:marching_clang_command = "/usr/local/bin/clang"
-endif
+" if has("macunix")
+"   let g:marching_clang_command = "/usr/local/bin/clang"
+" endif
+"
+" let g:marching#clang_command#options = {
+"       \ "cpp" : "-std=gnu++1y"
+"       \}
+" let g:marching_include_paths = [
+"       \ "/usr/local/include/boost"
+"       \]
+" let g:marching_enable_neocomplete = 1
+" if !exists('g:neocomplete#force_omni_input_patterns')
+"   let g:neocomplete#force_omni_input_patterns = {}
+" endif
 
-let g:marching#clang_command#options = {
-      \ "cpp" : "-std=gnu++1y"
-      \}
-let g:marching_include_paths = [
-      \ "/usr/local/include/boost"
-      \]
-let g:marching_enable_neocomplete = 1
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
+
+
+"---------------------------------------------------
+" unite-doxygen
+"----------------------------------------------------
+command! -nargs=0 Doxygen :Unite doxygen
