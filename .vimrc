@@ -148,6 +148,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'cohama/vim-hier'
   NeoBundle 'itchyny/lightline.vim'
   NeoBundle 'kmnk/vim-unite-giti'
+  NeoBundle 'kakkyz81/evervim'
   NeoBundle 'LeafCage/yankround.vim'
   NeoBundle 'Lokaltog/vim-easymotion'
   NeoBundle 'mhinz/vim-signify'
