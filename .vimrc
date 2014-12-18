@@ -91,6 +91,8 @@ endif
 "" texのconcealを無効化（#^ω^）
 let g:tex_conceal=''
 
+set conceallevel=0
+
 "" clipboardを有効
 set clipboard=unnamed
 
@@ -484,6 +486,10 @@ let g:quickrun_config = {
 \	},
 \   'cpp/g++' : {
 \       'cmdopt' : '-std=c++11',
+\   },
+\   'cuda': {
+\       'command': 'nvcc',
+\       'exec': ['%c %s', './a.out']
 \   },
 \   'tex': {
 \       'command': 'platex',
