@@ -691,3 +691,10 @@ augroup END
 " unite-doxygen
 "----------------------------------------------------
 command! -nargs=0 Doxygen :Unite doxygen
+
+
+
+"---------------------------------------------------
+" vim-easymotion
+"----------------------------------------------------
+map <Space> <Plug>(easymotion-prefix)
