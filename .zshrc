@@ -35,10 +35,10 @@ if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
   ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
 fi
 
-
 ## PROMPT
 PROMPT=""
-PROMPT+="%F{yellow}[%~]%f "		#current directory
+PROMPT+="%(?.%F{green}^-^%f.%F{red}O_O%f) "
+PROMPT+="%F{yellow}[%~]%f "		  #current directory
 PROMPT+='$(vcs_super_info)'     #vcs info
 PROMPT+="
 "

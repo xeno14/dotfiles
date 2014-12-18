@@ -91,6 +91,8 @@ endif
 "" texのconcealを無効化（#^ω^）
 let g:tex_conceal=''
 
+set conceallevel=0
+
 "" clipboardを有効
 set clipboard=unnamed
 
