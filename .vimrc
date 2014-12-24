@@ -144,15 +144,16 @@ if NeobundleExists('neobundle.vim')
   if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim/
   endif
-  call neobundle#rc(expand('~/.vim/bundle/'))
+  call neobundle#begin(expand('~/.vim/bundle/'))
   NeoBundleFetch 'Shougo/neobundle.vim'
-  
+ 
   NeoBundle 'cohama/vim-hier'
   NeoBundle 'itchyny/lightline.vim'
   NeoBundle 'kmnk/vim-unite-giti'
   NeoBundle 'kakkyz81/evervim'
   NeoBundle 'LeafCage/yankround.vim'
   NeoBundle 'Lokaltog/vim-easymotion'
+  NeoBundle 'mfumi/ref-dicts-en'
   NeoBundle 'mhinz/vim-signify'
   NeoBundle 'Shougo/neocomplete.vim'
   NeoBundle 'Shougo/neosnippet'
@@ -173,10 +174,12 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'sudo.vim'
   NeoBundle 'termoshtt/unite-doxygen'
   NeoBundle 'thinca/vim-quickrun'
+  NeoBundle 'thinca/vim-ref'
   NeoBundle 'thinca/vim-splash'
   NeoBundle 'tomtom/tcomment_vim'
   NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'tyru/open-browser.vim'
+  NeoBundle 'tyru/vim-altercmd' 
   NeoBundle 'tsukkee/unite-tag'
   NeoBundle 'rhysd/vim-clang-format'
   " NeoBundle 'osyo-manga/vim-marching'
@@ -197,6 +200,8 @@ if NeobundleExists('neobundle.vim')
 
   filetype plugin on
   NeoBundleCheck
+
+  call neobundle#end()
 endif
 
 
@@ -698,3 +703,35 @@ command! -nargs=0 Doxygen :Unite doxygen
 " vim-easymotion
 "----------------------------------------------------
 map <Space> <Plug>(easymotion-prefix)
+
+
+"---------------------------------------------------
+" cplusplus.com
+"
+" Open cplusplus.com on browser with searching a word
+"----------------------------------------------------
+function! CppCom (kwd)
+  let uri='http://www.cplusplus.com/search.do?q='.a:kwd
+  call OpenBrowser(uri)
+endfunction
+command! -nargs=1 CppCom call CppCom('<args>')
+
+
+"---------------------------------------------------
+" c++ references on vim
+"
+" @see
+" http://blog.wonderrabbitproject.net/2014/12/vim-cpprefjp-cpluspluscom.html
+"----------------------------------------------------
+autocmd FileType ref-* nnoremap <buffer> <silent> q :<c-u>close<cr>
+
+let g:ref_source_webdict_sites = {
+      \   'cplusplus.com': { 'url': 'http://www.cplusplus.com/search.do?q=%s', },
+      \   'cpprefjp': { 'url': 'http://cpprefjp.github.io/reference/%s.html', },
+      \ }
+
+let g:ref_source_webdict_sites.default = 'cpluspluscom'
+
+call altercmd#load()
+CAlterCommand rcxx Ref webdict cplusplus.com
+CAlterCommand rcxxjp Ref webdict cpprefjp
