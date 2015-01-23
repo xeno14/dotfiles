@@ -1,0 +1,15 @@
+# ==== User definition ====
+snippet Test
+abbr Google Test Fixture class
+alias testing
+ class ${1:name}Test : public ::testing::Test {
+ protected:
+  $1Test () {}
+  ~$1Test() {}
+  virtual void SetUp() {
+    ${2:#:setup}
+  }
+  virtual void TearDown() {
+    ${3:#:teardown}
+  }
+ };

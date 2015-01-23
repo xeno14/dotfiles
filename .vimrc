@@ -288,6 +288,8 @@ if NeobundleExists('neosnippet')
   if has('conceal')
     set conceallevel=0 concealcursor=i
   endif
+
+  let g:neosnippet#snippets_directory = expand('~/.vim/snippet/')
 endif
 
 
