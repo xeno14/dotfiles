@@ -150,6 +150,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'cohama/vim-hier'
   NeoBundle 'itchyny/lightline.vim'
   NeoBundle 'itchyny/vim-cursorword'
+  NeoBundle 'haya14busa/incsearch.vim'
   NeoBundle 'kmnk/vim-unite-giti'
   NeoBundle 'kakkyz81/evervim'
   NeoBundle 'LeafCage/yankround.vim'
@@ -478,6 +479,8 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 " quickrun
 "----------------------------------------------------
 
+let g:cxx = has("macunix") ? "/usr/local/bin/g++-4.9" : "g++"
+
 let g:quickrun_config = {
 \	'_' : {
 \       'hook/close_quickfix/enable_success' : 1,
@@ -493,7 +496,8 @@ let g:quickrun_config = {
 \			executable('clang++') ? 'cpp/clang++'  : ' ',
 \	},
 \   'cpp/g++' : {
-\       'cmdopt' : '-std=c++11',
+\       'command' : cxx,
+\       'cmdopt' : '-std=c++14',
 \   },
 \   'cuda': {
 \       'command': 'nvcc',
@@ -738,3 +742,11 @@ let g:ref_source_webdict_sites.default = 'cpluspluscom'
 call altercmd#load()
 CAlterCommand rcxx Ref webdict cplusplus.com
 CAlterCommand rcxxjp Ref webdict cpprefjp
+
+
+"---------------------------------------------------
+" incsearch.vim
+"----------------------------------------------------
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
