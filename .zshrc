@@ -212,14 +212,31 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 #--------------------------------------------------#
 # zaw
 #--------------------------------------------------#
-if [ -f ~/.zsh/zaw/zaw.zsh ]; then
-	source ~/.zsh/zaw/zaw.zsh
-	bindkey '^@'  zaw-cdr
-	bindkey '^xh' zaw-history
-  bindkey '^xp' zaw-process
-  bindkey '^xt' zaw-tmux
+# if [ -f ~/.zsh/zaw/zaw.zsh ]; then
+# 	source ~/.zsh/zaw/zaw.zsh
+# 	bindkey '^@'  zaw-cdr
+# 	bindkey '^xh' zaw-history
+#   bindkey '^xp' zaw-process
+#   bindkey '^xt' zaw-tmux
+# fi
+
+
+
+#--------------------------------------------------#
+# anyframe
+#--------------------------------------------------#
+if [ -d ${HOME}/.zsh/anyframe ]; then
+  fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
+
+  autoload -Uz anyframe-init
+  anyframe-init
+
+  bindkey '^@'   anyframe-widget-cdr
+  bindkey '^xp'  anyframe-widget-kill
+  bindkey '^xh'  anyframe-widget-execute-history
+  bindkey '^[xh' anyframe-widget-put-history
 fi
 
 
-
+# this must be at the end of zshrc
 source_zshrc_local
