@@ -231,6 +231,7 @@ if [ -d ${HOME}/.zsh/anyframe ]; then
   autoload -Uz anyframe-init
   anyframe-init
 
+  bindkey '^x;'  anyframe-widgets
   bindkey '^@'   anyframe-widget-cdr
   bindkey '^xp'  anyframe-widget-kill
   bindkey '^xh'  anyframe-widget-execute-history
