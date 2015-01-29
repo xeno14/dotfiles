@@ -235,6 +235,7 @@ if [ -d ${HOME}/.zsh/anyframe ]; then
   bindkey '^xp'  anyframe-widget-kill
   bindkey '^xh'  anyframe-widget-execute-history
   bindkey '^[xh' anyframe-widget-put-history
+  bindkey '^xt'  anyframe-widget-tmux-attach
 fi
 
 
