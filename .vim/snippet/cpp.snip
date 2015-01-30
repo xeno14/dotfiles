@@ -13,3 +13,10 @@ alias testing
     ${3:#:teardown}
   }
  };
+
+snippet     TEST_F
+abbr test case
+alias testcase test_f
+ TEST_F(${1:fixture}Test, ${2:name}) {
+   ${3:test}
+ }
