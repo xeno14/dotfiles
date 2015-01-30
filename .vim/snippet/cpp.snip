@@ -19,4 +19,10 @@ abbr test case
 alias testcase test_f
  TEST_F(${1:fixture}Test, ${2:name}) {
    ${3:test}
+
+snippet     main2
+abbr        main with no args
+ int main() {
+ ${1}
+ return 0;
  }

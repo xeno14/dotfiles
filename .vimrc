@@ -131,6 +131,35 @@ nnoremap 0 g0
 
 
 "----------------------------------------------------
+" Configuration for C++
+"----------------------------------------------------
+
+function! s:cpp()
+    " インクルードパスを設定する
+    " gf などでヘッダーファイルを開きたい場合に影響する
+    if has("macunix")
+      setlocal path+=/usr/local/include/c++/4.8.0,/usr/local/include/boost
+    " else
+      " TODO path for linux 
+      " setlocal path+=/usr
+    endif
+
+    " 括弧を構成する設定に <> を追加する
+    " template<> を多用するのであれば
+    setlocal matchpairs+=<:>
+
+    " BOOST_PP_XXX 等のハイライトを行う
+    syntax match boost_pp /BOOST_PP_[A-z0-9_]*/
+    highlight link boost_pp cppStatement
+endfunction
+
+augroup vimrc-cpp
+    autocmd!
+    " filetype=cpp が設定された場合に関数を呼ぶ
+    autocmd FileType cpp call s:cpp()
+augroup END
+
+"----------------------------------------------------
 " NeoBundle
 "----------------------------------------------------
 
@@ -149,6 +178,8 @@ if NeobundleExists('neobundle.vim')
  
   NeoBundle 'cohama/vim-hier'
   NeoBundle 'itchyny/lightline.vim'
+  NeoBundle 'itchyny/vim-cursorword'
+  NeoBundle 'haya14busa/incsearch.vim'
   NeoBundle 'kmnk/vim-unite-giti'
   NeoBundle 'kakkyz81/evervim'
   NeoBundle 'LeafCage/yankround.vim'
@@ -183,7 +214,9 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'tsukkee/unite-tag'
   NeoBundle 'rhysd/vim-clang-format'
   " NeoBundle 'osyo-manga/vim-marching'
+  NeoBundle 'osyo-manga/shabadou.vim'
   NeoBundle 'osyo-manga/vim-over'
+  NeoBundle 'osyo-manga/vim-watchdogs'
   NeoBundle 'vcscommand.vim'
   NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'xeno1991/previm'
@@ -477,6 +510,8 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 " quickrun
 "----------------------------------------------------
 
+let g:cxx = has("macunix") ? "/usr/local/bin/g++-4.9" : "g++"
+
 let g:quickrun_config = {
 \	'_' : {
 \       'hook/close_quickfix/enable_success' : 1,
@@ -492,7 +527,8 @@ let g:quickrun_config = {
 \			executable('clang++') ? 'cpp/clang++'  : ' ',
 \	},
 \   'cpp/g++' : {
-\       'cmdopt' : '-std=c++11',
+\       'command' : cxx,
+\       'cmdopt' : '-std=c++14',
 \   },
 \   'cuda': {
 \       'command': 'nvcc',
@@ -505,6 +541,15 @@ let g:quickrun_config = {
 \   'plaintex': {
 \       'command': 'platex',
 \       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
+\   },
+\   "cpp/watchdogs_checker" : {
+\       "type" : "watchdogs_checker/g++",
+\   },
+\   "watchdogs_checker/g++" : {
+\       "cmdopt" : "-Wall",
+\   },
+\   "watchdogs_checker/clang++" : {
+\       "cmdopt" : "-Wall",
 \   },
 \}
 
@@ -737,3 +782,17 @@ let g:ref_source_webdict_sites.default = 'cpluspluscom'
 call altercmd#load()
 CAlterCommand rcxx Ref webdict cplusplus.com
 CAlterCommand rcxxjp Ref webdict cpprefjp
+
+
+"---------------------------------------------------
+" incsearch.vim
+"----------------------------------------------------
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+
+"---------------------------------------------------
+" watchdogs_checker
+"----------------------------------------------------
+let g:watchdogs_check_BufWritePost_enable = 1
