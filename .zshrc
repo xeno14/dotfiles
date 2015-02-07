@@ -242,3 +242,11 @@ fi
 
 # this must be at the end of zshrc
 source_zshrc_local
+
+
+#--------------------------------------------------#
+# bd
+#--------------------------------------------------#
+if [ -f ${HOME}/.zsh/zsh-bd/bd.zsh ]; then
+  source ${HOME}/.zsh/zsh-bd/bd.zsh
+fi

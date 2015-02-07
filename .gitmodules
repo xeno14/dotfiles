@@ -10,3 +10,6 @@
 [submodule ".zsh/anyframe"]
 	path = .zsh/anyframe
 	url = https://github.com/xeno1991/anyframe
+[submodule ".zsh/zsh-bd"]
+	path = .zsh/zsh-bd
+	url = https://github.com/Tarrasch/zsh-bd
