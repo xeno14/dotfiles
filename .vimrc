@@ -795,4 +795,4 @@ map g/ <Plug>(incsearch-stay)
 "---------------------------------------------------
 " watchdogs_checker
 "----------------------------------------------------
-let g:watchdogs_check_BufWritePost_enable = 1
+" let g:watchdogs_check_BufWritePost_enable = 1
