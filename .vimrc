@@ -207,6 +207,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'thinca/vim-quickrun'
   NeoBundle 'thinca/vim-ref'
   NeoBundle 'thinca/vim-splash'
+  NeoBundle 'thinca/vim-template'
   NeoBundle 'tomtom/tcomment_vim'
   NeoBundle 'tpope/vim-fugitive'
   NeoBundle 'tyru/open-browser.vim'
@@ -796,3 +797,22 @@ map g/ <Plug>(incsearch-stay)
 " watchdogs_checker
 "----------------------------------------------------
 " let g:watchdogs_check_BufWritePost_enable = 1
+
+
+"---------------------------------------------------
+" vim-template
+"----------------------------------------------------
+" Define keywords for replacement
+autocmd User plugin-template-loaded call s:template_keywords()
+function! s:template_keywords()
+  :silent! %s/<+FILE NAME+>/\=expand('%:t')/g
+  :silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
+  "bar_test.cpp -> bar  bar_test.py -> bar
+  :silent! %s/<+TEST TARGET+>/\=split(expand('%:t'), '_test')[0]/g
+endfunction
+
+" Move cursor
+autocmd User plugin-template-loaded
+\    if search('<+CURSOR+>')
+\  |   execute 'normal! "_da>'
+\  | endif

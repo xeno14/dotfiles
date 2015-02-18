@@ -173,6 +173,8 @@ alias :e='vim'
 
 alias calc='emacs -f full-calc'
 
+## ipython-notebook
+alias ipynb="cd ${IPYNB_ROOT} && ipython notebook --matplotlib inline"
 
 #--------------------------------------------------#
 # Color Configuration
