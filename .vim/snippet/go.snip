@@ -1,0 +1,12 @@
+# ==== User definition ====
+snippet generator
+ func ${1}() <-chan ${2} {
+		ch := make(chan $2)
+		go func() {
+			${3}
+			close(ch)
+		}()
+		return ch
+ }
+
+# vim: set noexpandtab

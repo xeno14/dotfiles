@@ -1,41 +1,44 @@
 # ==== User definition ====
+
 snippet Test
 abbr Google Test Fixture class
 alias testing
  class ${1:name}Test : public ::testing::Test {
  protected:
-  $1Test () {}
-  ~$1Test() {}
-  virtual void SetUp() {
-    ${2:#:setup}
-  }
-  virtual void TearDown() {
-    ${3:#:teardown}
-  }
+ 	$1Test () {}
+ 	~$1Test() {}
+ 	virtual void SetUp() {
+ 		${2:#:setup}
+ 	}
+ 	virtual void TearDown() {
+ 		${3:#:teardown}
+ 	}
  };
 
 snippet     TEST_F
 abbr test case
 alias testcase test_f
  TEST_F(${1:fixture}Test, ${2:name}) {
-   ${3:test}
+ 	${3:test}
 
 snippet     main2
 abbr        main with no args
  int main() {
- ${1}
- return 0;
+ 	${1}
+ 	return 0;
  }
 
 snippet sfinae
 abbr SFINAE
 alias SFINAE
  struct ${1} {
-   template <class T>
-   static auto check(T* t) -> decltype(
-     ${2},
-     std::true_type());
+ 	template <class T>
+ 	static auto check(T* t) -> decltype(
+ 		${2},
+ 		std::true_type());
  
-   template <class T>
-   static auto check(...) -> std::false_type;
+ 	template <class T>
+ 	static auto check(...) -> std::false_type;
  };
+
+# vim: set noexpandtab
