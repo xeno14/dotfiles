@@ -233,10 +233,10 @@ if [ -d ${HOME}/.zsh/anyframe ]; then
   autoload -Uz anyframe-init
   anyframe-init
 
-  bindkey '^x;'  anyframe-widgets
+  bindkey '^x;'  anyframe-widget-select-widget
   bindkey '^@'   anyframe-widget-cdr
   bindkey '^xp'  anyframe-widget-kill
-  bindkey '^xh'  anyframe-widget-execute-history
+  bindkey '^xh'  anyframe-widget-put-history
   bindkey '^[xh' anyframe-widget-put-history
   bindkey '^xt'  anyframe-widget-tmux-attach
 fi
@@ -252,3 +252,15 @@ source_zshrc_local
 if [ -f ${HOME}/.zsh/zsh-bd/bd.zsh ]; then
   source ${HOME}/.zsh/zsh-bd/bd.zsh
 fi
+
+
+#--------------------------------------------------#
+# cdup
+#--------------------------------------------------#
+function cdup() {
+  echo
+  cd ..
+  zle reset-prompt
+}
+zle -N cdup
+bindkey '^^' cdup
