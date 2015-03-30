@@ -94,7 +94,7 @@ let g:tex_conceal=''
 set conceallevel=0
 
 "" clipboardを有効
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 "" コマンド履歴の個数
 set history=500
