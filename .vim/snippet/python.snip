@@ -1,0 +1,11 @@
+# ==== User definition ====
+snippet     gflags
+abbr        gflags
+ import gflags
+ 
+ FLAGS = gflags.FLAGS
+
+ def main(argv):
+	argv = FLAGS(argv)
+
+# vim: set noexpandtab
