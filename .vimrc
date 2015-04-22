@@ -24,6 +24,7 @@ if exists('&colorcolumn')
     set colorcolumn=+1
     autocmd FileType sh,c,cpp,markdown,perl,vim,ruby,python,haskell,scheme setlocal textwidth=80
 endif
+autocmd BufRead *.md set textwidth=0
 
 set incsearch
 set hlsearch

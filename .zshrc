@@ -88,9 +88,9 @@ bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
 
 ## Command history configuration
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTFILE=${HOME}/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=100000
 setopt hist_ignore_dups # ignore duplication command history list
 setopt share_history # share command history data
 
