@@ -568,6 +568,7 @@ let g:unite_enable_start_insert = 1
 
 nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
 inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+nnoremap <C-g> :Unite grep -auto-preview -auto-resize<CR><CR>
 
 "" grep をagでする
 "" http://blog.monochromegane.com/blog/2013/09/18/ag-and-unite/
@@ -633,43 +634,6 @@ function! Temp (file_t)
     endif
 endfunction
 command! -nargs=? -bang -complete=syntax Temp call Temp('<args>') 
-
-
-
-"----------------------------------------------------
-" QuitYank
-"   exit with yank all lines in the file
-"----------------------------------------------------
-
-function! QuitYank ()
-    execute ':%yank'
-    execute ':q!'
-endfunction
-command! -nargs=0 QuitYank call QuitYank()
-
-
-
-"----------------------------------------------------
-" Deadline 
-"   grep DEADLINE and show them in quickfix
-"----------------------------------------------------
-
-function! Deadline (dir)
-    let pwd=expand("%:h")
-    echo pwd
-
-    let targetdir=pwd
-
-    if a:dir != ''
-        let targetdir=a:dir
-    endif
-
-    execute ':cd '.a:dir
-    "recursive grep
-    execute ':vim DEADLINE **/* | copen'
-    execute ':cd '.pwd
-endfunction
-command! -nargs=? -bang -complete=dir Deadline call Deadline('<args>')
 
 
 
