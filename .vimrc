@@ -249,58 +249,6 @@ let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_auto_select = 1
 
 
-
-"---------------------------------------------------
-" vim-marching
-"----------------------------------------------------
-
-if has("macunix")
-  let g:marching_clang_command = "/usr/local/bin/clang"
-endif
-
-let g:marching#clang_command#options = {
-      \ "cpp" : "-std=gnu++1y"
-      \}
-let g:marching_include_paths = [
-      \ "/usr/local/include/boost"
-      \]
-let g:marching_enable_neocomplete = 1
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-
-
-"----------------------------------------------------
-" marching
-"----------------------------------------------------
-
-let g:marching_clang_command = "/usr/local/bin/clang"
-let g:marching_clang_command_option="-std=c++1y"
-
-let g:marching_include_paths = filter(
-\    split(glob('/usr/include/c++/*'), '\n') +
-\    split(glob('/usr/include/*/c++/*'), '\n') +
-\    split(glob('/usr/include/*/boost/*'), '\n') +
-\    split(glob('/usr/include/*/'), '\n'),
-\    'isdirectory(v:val)')
-
-let g:marching_enable_neocomplete = 1
-
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-let g:neocomplete#force_omni_input_patterns.cpp =
-    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-
-" 処理のタイミングを制御する
-" 短いほうがより早く補完ウィンドウが表示される
-" ただし、marching.vim 以外の処理にも影響するので注意する
-set updatetime=200
-
-
-
 "----------------------------------------------------
 " Neosnippet
 "----------------------------------------------------
@@ -685,27 +633,6 @@ augroup END
 
 
 "---------------------------------------------------
-" vim-marching
-"----------------------------------------------------
-
-" if has("macunix")
-"   let g:marching_clang_command = "/usr/local/bin/clang"
-" endif
-"
-" let g:marching#clang_command#options = {
-"       \ "cpp" : "-std=gnu++1y"
-"       \}
-" let g:marching_include_paths = [
-"       \ "/usr/local/include/boost"
-"       \]
-" let g:marching_enable_neocomplete = 1
-" if !exists('g:neocomplete#force_omni_input_patterns')
-"   let g:neocomplete#force_omni_input_patterns = {}
-" endif
-
-
-
-"---------------------------------------------------
 " unite-doxygen
 "----------------------------------------------------
 command! -nargs=0 Doxygen :Unite doxygen
@@ -771,6 +698,7 @@ map g/ <Plug>(incsearch-stay)
 autocmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
   :silent! %s/<+FILE NAME+>/\=expand('%:t')/g
+  :silent! %s/<+NAME+>/\=expand('%:r')/g
   :silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
   "bar_test.cpp -> bar  bar_test.py -> bar
   :silent! %s/<+TEST TARGET+>/\=split(expand('%:t'), '_test')[0]/g
