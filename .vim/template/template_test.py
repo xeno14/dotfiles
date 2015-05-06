@@ -16,3 +16,7 @@ class SomeTest(unittest.TestCase):
 
     def test_something(self):
         <+CURSOR+>
+
+
+if __name__ == '__main__':
+    unittest.main()

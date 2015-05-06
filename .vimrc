@@ -24,6 +24,7 @@ if exists('&colorcolumn')
     set colorcolumn=+1
     autocmd FileType sh,c,cpp,markdown,perl,vim,ruby,python,haskell,scheme setlocal textwidth=80
 endif
+autocmd BufRead *.md set textwidth=0
 
 set incsearch
 set hlsearch
@@ -251,58 +252,6 @@ endif
 
 let g:neocomplete#enable_at_startup = 1 
 let g:neocomplete#enable_auto_select = 1
-
-
-
-"---------------------------------------------------
-" vim-marching
-"----------------------------------------------------
-
-if has("macunix")
-  let g:marching_clang_command = "/usr/local/bin/clang"
-endif
-
-let g:marching#clang_command#options = {
-      \ "cpp" : "-std=gnu++1y"
-      \}
-let g:marching_include_paths = [
-      \ "/usr/local/include/boost"
-      \]
-let g:marching_enable_neocomplete = 1
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-
-
-"----------------------------------------------------
-" marching
-"----------------------------------------------------
-
-let g:marching_clang_command = "/usr/local/bin/clang"
-let g:marching_clang_command_option="-std=c++1y"
-
-let g:marching_include_paths = filter(
-\    split(glob('/usr/include/c++/*'), '\n') +
-\    split(glob('/usr/include/*/c++/*'), '\n') +
-\    split(glob('/usr/include/*/boost/*'), '\n') +
-\    split(glob('/usr/include/*/'), '\n'),
-\    'isdirectory(v:val)')
-
-let g:marching_enable_neocomplete = 1
-
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-let g:neocomplete#force_omni_input_patterns.cpp =
-    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-
-" 処理のタイミングを制御する
-" 短いほうがより早く補完ウィンドウが表示される
-" ただし、marching.vim 以外の処理にも影響するので注意する
-set updatetime=200
-
 
 
 "----------------------------------------------------
@@ -572,6 +521,7 @@ let g:unite_enable_start_insert = 1
 
 nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
 inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+nnoremap <C-g> :Unite grep -auto-preview -auto-resize<CR><CR>
 
 "" grep をagでする
 "" http://blog.monochromegane.com/blog/2013/09/18/ag-and-unite/
@@ -641,43 +591,6 @@ command! -nargs=? -bang -complete=syntax Temp call Temp('<args>')
 
 
 "----------------------------------------------------
-" QuitYank
-"   exit with yank all lines in the file
-"----------------------------------------------------
-
-function! QuitYank ()
-    execute ':%yank'
-    execute ':q!'
-endfunction
-command! -nargs=0 QuitYank call QuitYank()
-
-
-
-"----------------------------------------------------
-" Deadline 
-"   grep DEADLINE and show them in quickfix
-"----------------------------------------------------
-
-function! Deadline (dir)
-    let pwd=expand("%:h")
-    echo pwd
-
-    let targetdir=pwd
-
-    if a:dir != ''
-        let targetdir=a:dir
-    endif
-
-    execute ':cd '.a:dir
-    "recursive grep
-    execute ':vim DEADLINE **/* | copen'
-    execute ':cd '.pwd
-endfunction
-command! -nargs=? -bang -complete=dir Deadline call Deadline('<args>')
-
-
-
-"----------------------------------------------------
 " scratch unitily
 "----------------------------------------------------
 
@@ -721,27 +634,6 @@ augroup flake8
   autocmd!
   autocmd BufWrite,FileWritePre,FileAppendPre *.py call Flake8Wrapper()
 augroup END
-
-
-
-"---------------------------------------------------
-" vim-marching
-"----------------------------------------------------
-
-" if has("macunix")
-"   let g:marching_clang_command = "/usr/local/bin/clang"
-" endif
-"
-" let g:marching#clang_command#options = {
-"       \ "cpp" : "-std=gnu++1y"
-"       \}
-" let g:marching_include_paths = [
-"       \ "/usr/local/include/boost"
-"       \]
-" let g:marching_enable_neocomplete = 1
-" if !exists('g:neocomplete#force_omni_input_patterns')
-"   let g:neocomplete#force_omni_input_patterns = {}
-" endif
 
 
 
@@ -811,6 +703,7 @@ map g/ <Plug>(incsearch-stay)
 autocmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
   :silent! %s/<+FILE NAME+>/\=expand('%:t')/g
+  :silent! %s/<+NAME+>/\=expand('%:r')/g
   :silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
   "bar_test.cpp -> bar  bar_test.py -> bar
   :silent! %s/<+TEST TARGET+>/\=split(expand('%:t'), '_test')[0]/g

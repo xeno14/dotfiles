@@ -88,9 +88,9 @@ bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
 
 ## Command history configuration
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTFILE=${HOME}/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=100000
 setopt hist_ignore_dups # ignore duplication command history list
 setopt share_history # share command history data
 
@@ -194,6 +194,8 @@ function extract() {
 	case $1 in
 		*.tar.gz|*.tgz) tar xzvf $1;;
 		*.tar.xz) tar Jxvf $1;;
+    *.tar.lz) tar --lzip -xvf $1;;
+    *.7z) 7z x $1;;
     *.xz) xz -dv $1;;
 		*.zip) unzip $1;;
 		*.lzh) lha e $1;;
