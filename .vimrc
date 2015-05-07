@@ -228,6 +228,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'vcscommand.vim'
   NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'xeno1991/previm'
+  NeoBundle 'xeno1991/unite-template'
 
   NeoBundleLazy "nvie/vim-flake8", {
         \ "autoload": {
