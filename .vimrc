@@ -95,7 +95,12 @@ let g:tex_conceal=''
 set conceallevel=0
 
 "" clipboardを有効
-set clipboard=unnamedplus
+
+if has("macunix")
+  set clipboard=unnamed
+else
+  set clipboard=unnamedplus
+endif
 
 "" コマンド履歴の個数
 set history=500
