@@ -236,7 +236,7 @@ if [ -d ${HOME}/.zsh/anyframe ]; then
   anyframe-init
 
   bindkey '^x;'  anyframe-widget-select-widget
-  bindkey '^]'   anyframe-widget-cdr
+  bindkey '^^'   anyframe-widget-cdr
   bindkey '^xp'  anyframe-widget-kill
   bindkey '^xh'  anyframe-widget-put-history
   bindkey '^[xh' anyframe-widget-put-history
@@ -265,4 +265,4 @@ function cdup() {
   zle reset-prompt
 }
 zle -N cdup
-bindkey '^^' cdup
+bindkey '^[^' cdup

@@ -521,8 +521,8 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_file_mru_limit = 1000
 let g:unite_enable_start_insert = 1
 
-nnoremap <C-]> :Unite -direction=botright window buffer file file_mru<CR>
-inoremap <C-]> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+nnoremap <C-^> :Unite -direction=botright window buffer file file_mru<CR>
+inoremap <C-^> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
 nnoremap <C-g> :Unite grep -auto-preview -auto-resize<CR><CR>
 
 "" grep をagでする
