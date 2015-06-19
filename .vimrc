@@ -225,6 +225,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'osyo-manga/vim-over'
   NeoBundle 'osyo-manga/vim-watchdogs'
   NeoBundle 'rhysd/wandbox-vim'
+  NeoBundle 'rhysd/conflict-marker.vim'
   NeoBundle 'vcscommand.vim'
   NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'xeno1991/previm'
