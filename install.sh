@@ -64,3 +64,8 @@ do
   fi
   run "ln -s \"${source}\" \"${target}\""
 done
+
+# Show message about dependency
+echo "Insall dependencies"
+echo "peco https://github.com/peco/peco"
+[ $(uname) = Darwin ] && echo "reattach-to-user-namespace"
