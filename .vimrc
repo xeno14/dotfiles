@@ -107,6 +107,10 @@ set history=500
 
 source $VIMRUNTIME/macros/matchit.vim
 
+"" ビープの設定
+set visualbell t_vb=""
+set noerrorbells
+
 "----------------------------------------------------
 " autocmd
 "----------------------------------------------------
