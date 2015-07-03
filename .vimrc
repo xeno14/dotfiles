@@ -105,7 +105,7 @@ endif
 "" コマンド履歴の個数
 set history=500
 
-
+source $VIMRUNTIME/macros/matchit.vim
 
 "----------------------------------------------------
 " autocmd
@@ -197,6 +197,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'mfumi/ref-dicts-en'
   NeoBundle 'mhinz/vim-signify'
   NeoBundle 'Shougo/neocomplete.vim'
+  NeoBundle 'Shougo/neocomplcache.vim'
   NeoBundle 'Shougo/neosnippet'
   NeoBundle 'Shougo/neosnippet-snippets'
   NeoBundle 'Shougo/neomru.vim'
