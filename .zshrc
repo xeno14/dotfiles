@@ -216,13 +216,10 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 #--------------------------------------------------#
 # zaw
 #--------------------------------------------------#
-# if [ -f ~/.zsh/zaw/zaw.zsh ]; then
-# 	source ~/.zsh/zaw/zaw.zsh
-# 	bindkey '^@'  zaw-cdr
-# 	bindkey '^xh' zaw-history
-#   bindkey '^xp' zaw-process
-#   bindkey '^xt' zaw-tmux
-# fi
+if [ -f ~/.zsh/zaw/zaw.zsh ]; then
+	source ~/.zsh/zaw/zaw.zsh
+  bindkey '^xg' zaw-git-status
+fi
 
 
 
@@ -235,7 +232,7 @@ if [ -d ${HOME}/.zsh/anyframe ]; then
   autoload -Uz anyframe-init
   anyframe-init
 
-  bindkey '^x;'  anyframe-widget-select-widget
+  bindkey '^x:'  anyframe-widget-select-widget
   bindkey '^^'   anyframe-widget-cdr
   bindkey '^xp'  anyframe-widget-kill
   bindkey '^xh'  anyframe-widget-put-history
