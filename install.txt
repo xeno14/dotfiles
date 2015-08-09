@@ -1,4 +1,5 @@
 .vim
+.nvim
 .zsh
 .clang-format
 .gitconfig
