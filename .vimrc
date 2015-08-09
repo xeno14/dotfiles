@@ -478,7 +478,7 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 " quickrun
 "----------------------------------------------------
 
-let g:cxx = has("macunix") ? "/usr/local/bin/g++-4.9" : "g++"
+let g:cxx = has("macunix") ? "/usr/local/bin/g++-5" : "g++"
 
 let g:quickrun_config = {
 \	'_' : {
