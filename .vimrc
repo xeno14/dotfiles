@@ -504,11 +504,11 @@ let g:quickrun_config = {
 \   },
 \   'tex': {
 \       'command': 'platex',
-\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
+\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi']
 \   },
 \   'plaintex': {
 \       'command': 'platex',
-\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
+\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi']
 \   },
 \   "cpp/watchdogs_checker" : {
 \       "type" : "watchdogs_checker/g++",
