@@ -162,6 +162,7 @@ esac
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
+alias ks="sl"
 
 alias du="du -h"
 alias df="df -h"
@@ -219,6 +220,7 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 if [ -f ~/.zsh/zaw/zaw.zsh ]; then
 	source ~/.zsh/zaw/zaw.zsh
   bindkey '^xg' zaw-git-status
+  bindkey '^xt' zaw-tmux
 fi
 
 
@@ -237,7 +239,6 @@ if [ -d ${HOME}/.zsh/anyframe ]; then
   bindkey '^xp'  anyframe-widget-kill
   bindkey '^xh'  anyframe-widget-put-history
   bindkey '^[xh' anyframe-widget-put-history
-  bindkey '^xt'  anyframe-widget-tmux-attach
 fi
 
 
