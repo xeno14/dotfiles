@@ -703,10 +703,12 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 
+
 "---------------------------------------------------
 " watchdogs_checker
 "----------------------------------------------------
 " let g:watchdogs_check_BufWritePost_enable = 1
+
 
 
 "---------------------------------------------------
@@ -728,3 +730,26 @@ autocmd User plugin-template-loaded
 \    if search('<+CURSOR+>')
 \  |   execute 'normal! "_da>'
 \  | endif
+
+
+
+"---------------------------------------------------
+" unite-tag
+"
+" @see http://d.hatena.ne.jp/osyo-manga/20120205/1328368314
+"----------------------------------------------------
+
+" neocomplcache が作成した tag ファイルのパスを tags に追加する
+function! s:TagsUpdate()
+    " include している tag ファイルが毎回同じとは限らないので毎回初期化
+    setlocal tags=
+    for filename in neocomplcache#sources#include_complete#get_include_files(bufnr('%'))
+        execute "setlocal tags+=".neocomplcache#cache#encode_name('tags_output', filename)
+    endfor
+endfunction
+
+command! -nargs=? PopupTags
+      \ call <SID>TagsUpdate()
+      \ |Unite tag:<args>
+
+noremap <silent> <C-]> :<C-u>execute "PopupTags ".expand('<cword>')<CR>
