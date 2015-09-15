@@ -720,6 +720,7 @@ function! s:template_keywords()
   :silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
   "bar_test.cpp -> bar  bar_test.py -> bar
   :silent! %s/<+TEST TARGET+>/\=split(expand('%:t'), '_test')[0]/g
+  :silent! %s/<+MAIN TARGET+>/\=split(expand('%:t'), '_main')[0]/g
 endfunction
 
 " Move cursor
