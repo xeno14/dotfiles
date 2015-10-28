@@ -218,6 +218,7 @@ if NeobundleExists('neobundle.vim')
         \ }
   NeoBundle 'sudar/vim-arduino-syntax'
   NeoBundle 'sudo.vim'
+  NeoBundle 'termoshtt/unite-bibtex'
   NeoBundle 'termoshtt/unite-doxygen'
   NeoBundle 'thinca/vim-quickrun'
   NeoBundle 'thinca/vim-ref'
