@@ -189,7 +189,7 @@ if NeobundleExists('neobundle.vim')
   call neobundle#begin(expand('~/.vim/bundle/'))
 
   NeoBundleFetch 'Shougo/neobundle.vim'
- 
+  NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'cohama/vim-hier'
   NeoBundle 'itchyny/lightline.vim'
   NeoBundle 'itchyny/vim-cursorword'
