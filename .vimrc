@@ -238,6 +238,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'rhysd/conflict-marker.vim'
   NeoBundle 'vcscommand.vim'
   NeoBundle 'violetyk/scratch-utility'
+  NeoBundle 'vim-scripts/gnuplot.vim'
   NeoBundle 'xeno1991/previm'
   NeoBundle 'xeno1991/unite-template'
   NeoBundle 'xeno1991/easy-constructor.vim'
