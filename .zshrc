@@ -10,7 +10,9 @@ function source_zshrc_local(){
 #--------------------------------------------------#
 # Environment variable configuration
 #--------------------------------------------------#
-export LANG=ja_JP.UTF-8
+# export LANG=en_US.UTF-8
+typeset -U path
+fpath=(${HOME}/.zsh/completion $fpath)
 
 #--------------------------------------------------#
 # Prompt
