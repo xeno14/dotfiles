@@ -10,7 +10,9 @@ function source_zshrc_local(){
 #--------------------------------------------------#
 # Environment variable configuration
 #--------------------------------------------------#
-export LANG=ja_JP.UTF-8
+# export LANG=en_US.UTF-8
+typeset -U path
+fpath=(${HOME}/.zsh/completion $fpath)
 
 #--------------------------------------------------#
 # Prompt
@@ -264,6 +266,38 @@ function cdup() {
 }
 zle -N cdup
 bindkey '^[^' cdup
+
+
+#--------------------------------------------------#
+# ipynb selector
+#
+# TODO: unify zaw or peco
+#--------------------------------------------------#
+function check_notebook_dir() {
+  if [ -z $notebook_dir ]; then
+    echo "\$notebook_dir is empty"
+    return 1
+  fi
+}
+
+function ipynb_select() {
+  check_notebook_dir
+  echo $(find $notebook_dir -name "*.ipynb" | grep -v ".ipynb_checkpoints" | peco)
+}
+
+function ipynb_path_to_url() {
+  check_notebook_dir
+  target=${1#${notebook_dir}/*}
+  if [ -z $target ]; then
+    echo "Invalid notebook $target"
+    return 1
+  fi
+  echo "http://localhost:8888/notebooks/${target}"
+}
+
+function ipynb_open() {
+  firefox $(ipynb_path_to_url $(ipynb_select))
+}
 
 
 #--------------------------------------------------#
