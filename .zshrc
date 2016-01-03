@@ -35,7 +35,7 @@ if ! zplug check --verbose; then
         echo; zplug install
     fi
 fi
-zplug load
+zplug load --verbose
 
 
   #--------------------------------------------------#
@@ -51,7 +51,7 @@ zplug load
   # anyframe
   #--------------------------------------------------#
   if zplug check "mollifier/anyframe"; then
-    fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
+    fpath=(${HOME}/.zplug/repos/mollifier/anyframe(N-/) $fpath)
 
     autoload -Uz anyframe-init
     anyframe-init
