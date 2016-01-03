@@ -220,17 +220,6 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 
 #--------------------------------------------------#
-# zaw
-#--------------------------------------------------#
-if [ -f ~/.zsh/zaw/zaw.zsh ]; then
-	source ~/.zsh/zaw/zaw.zsh
-  bindkey '^xg' zaw-git-status
-  bindkey '^xt' zaw-tmux
-fi
-
-
-
-#--------------------------------------------------#
 # anyframe
 #--------------------------------------------------#
 if [ -d ${HOME}/.zsh/anyframe ]; then
@@ -301,3 +290,22 @@ function ipynb_path_to_url() {
 function ipynb_open() {
   firefox $(ipynb_path_to_url $(ipynb_select))
 }
+
+
+#--------------------------------------------------#
+# zplug
+#--------------------------------------------------#
+source ~/.zplug/zplug
+
+zplug "zsh-users/zaw", of:zaw.zsh
+
+zplug load
+
+
+  #--------------------------------------------------#
+  # zaw
+  #--------------------------------------------------#
+  if zplug check "zsh-users/zaw"; then
+    bindkey '^xg' zaw-git-status
+    bindkey '^xt' zaw-tmux
+  fi
