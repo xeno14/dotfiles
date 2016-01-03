@@ -219,21 +219,6 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 
 
-#--------------------------------------------------#
-# anyframe
-#--------------------------------------------------#
-if [ -d ${HOME}/.zsh/anyframe ]; then
-  fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
-
-  autoload -Uz anyframe-init
-  anyframe-init
-
-  bindkey '^x:'  anyframe-widget-select-widget
-  bindkey '^\'   anyframe-widget-cdr
-  bindkey '^xp'  anyframe-widget-kill
-  bindkey '^xh'  anyframe-widget-put-history
-  bindkey '^[xh' anyframe-widget-put-history
-fi
 
 
 # this must be at the end of zshrc
@@ -298,6 +283,7 @@ function ipynb_open() {
 source ~/.zplug/zplug
 
 zplug "zsh-users/zaw", of:zaw.zsh
+zplug "mollifier/anyframe"
 
 zplug load
 
@@ -308,4 +294,21 @@ zplug load
   if zplug check "zsh-users/zaw"; then
     bindkey '^xg' zaw-git-status
     bindkey '^xt' zaw-tmux
+  fi
+
+
+  #--------------------------------------------------#
+  # anyframe
+  #--------------------------------------------------#
+  if zplug check "mollifier/anyframe"; then
+    fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
+
+    autoload -Uz anyframe-init
+    anyframe-init
+
+    bindkey '^x:'  anyframe-widget-select-widget
+    bindkey '^\'   anyframe-widget-cdr
+    bindkey '^xp'  anyframe-widget-kill
+    bindkey '^xh'  anyframe-widget-put-history
+    bindkey '^[xh' anyframe-widget-put-history
   fi
