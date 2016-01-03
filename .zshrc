@@ -1,106 +1,8 @@
-
-function source_zshrc_local(){
-  local zsh_local="${HOME}/.zshrc.local"
-  if [ -f ${zsh_local} ]; then
-    source ${zsh_local}
-  fi
-}
-
-
 #--------------------------------------------------#
 # Environment variable configuration
 #--------------------------------------------------#
-# export LANG=en_US.UTF-8
 typeset -U path
 fpath=(${HOME}/.zsh/completion $fpath)
-
-
-
-#--------------------------------------------------#
-# zplug
-#
-# https://github.com/b4b4r07/zplug
-#--------------------------------------------------#
-source ~/.zplug/zplug
-
-# plugin
-zplug "mollifier/anyframe"
-zplug "yonchu/zsh-vcs-prompt", of:zshrc.sh
-zplug "zsh-users/zaw", of:zaw.zsh
-
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-zplug load --verbose
-
-
-  #--------------------------------------------------#
-  # zaw
-  #--------------------------------------------------#
-  if zplug check "zsh-users/zaw"; then
-    bindkey '^xg' zaw-git-status
-    bindkey '^xt' zaw-tmux
-  fi
-
-
-  #--------------------------------------------------#
-  # anyframe
-  #--------------------------------------------------#
-  if zplug check "mollifier/anyframe"; then
-    fpath=(${HOME}/.zplug/repos/mollifier/anyframe(N-/) $fpath)
-
-    autoload -Uz anyframe-init
-    anyframe-init
-
-    bindkey '^x:'  anyframe-widget-select-widget
-    bindkey '^\'   anyframe-widget-cdr
-    bindkey '^xp'  anyframe-widget-kill
-    bindkey '^xh'  anyframe-widget-put-history
-    bindkey '^[xh' anyframe-widget-put-history
-  fi
-
-
-  #--------------------------------------------------#
-  # zsh-vcs-prompt
-  #--------------------------------------------------#
-  if zplug check "yonchu/zsh-vcs-prompt"; then
-    ZSH_VCS_PROMPT_ENABLE_CACHING='true'
-    ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
-  fi
-
-
-
-#--------------------------------------------------#
-# Prompt
-#--------------------------------------------------#
-
-setopt prompt_subst
-
-## visualize vi mode
-# function zle-line-init zle-keymap-select {
-#     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-#     RPS2=$PS1
-#     zle reset-prompt
-# }
-# zle -N zle-line-init
-# zle -N zle-keymap-select
-
-
-## PROMPT
-PROMPT=""
-PROMPT+="%(?.%F{green}^-^%f.%F{red}O_O%f) "
-PROMPT+="%F{yellow}[%~]%f "		  #current directory
-if zplug check "yonchu/zsh-vcs-prompt"; then
-  PROMPT+='$(vcs_super_info)'     #vcs info
-fi
-PROMPT+="
-"
-PROMPT+="[%n@%m]$ "
-PROMPT2="$ "
 
 
 
@@ -125,7 +27,6 @@ setopt noautoremoveslash
 
 ## no beep sound when complete list displayed
 setopt nolistbeep
-
 ## match capital and lower both
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
@@ -156,6 +57,7 @@ autoload -U compinit
 compinit -u
 
 ## enable cdr
+autoload -Uz is-at-least
 if is-at-least 4.3.11; then
 	autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 	add-zsh-hook chpwd chpwd_recent_dirs
@@ -248,6 +150,95 @@ zstyle ':completion:*' list-colors ${LS_COLORS}
 
 
 #--------------------------------------------------#
+# zplug
+#
+# https://github.com/b4b4r07/zplug
+#--------------------------------------------------#
+source ~/.zplug/zplug
+
+# plugin
+zplug "mollifier/anyframe"
+zplug "yonchu/zsh-vcs-prompt", of:zshrc.sh
+zplug "zsh-users/zaw", of:zaw.zsh
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load --verbose
+
+
+  #--------------------------------------------------#
+  # zaw
+  #--------------------------------------------------#
+  if zplug check "zsh-users/zaw"; then
+    bindkey '^xg' zaw-git-status
+    bindkey '^xt' zaw-tmux
+  fi
+
+
+  #--------------------------------------------------#
+  # anyframe
+  #--------------------------------------------------#
+  if zplug check "mollifier/anyframe"; then
+    fpath=(${HOME}/.zplug/repos/mollifier/anyframe(N-/) $fpath)
+
+    autoload -Uz anyframe-init
+    anyframe-init
+
+    bindkey '^x:'  anyframe-widget-select-widget
+    bindkey '^\'   anyframe-widget-cdr
+    bindkey '^xp'  anyframe-widget-kill
+    bindkey '^xh'  anyframe-widget-put-history
+    bindkey '^[xh' anyframe-widget-put-history
+  fi
+
+
+  #--------------------------------------------------#
+  # zsh-vcs-prompt
+  #--------------------------------------------------#
+  if zplug check "yonchu/zsh-vcs-prompt"; then
+    ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+    ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
+  fi
+
+
+
+#--------------------------------------------------#
+# Prompt
+#--------------------------------------------------#
+
+setopt prompt_subst
+
+## visualize vi mode
+# function zle-line-init zle-keymap-select {
+#     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+#     RPS2=$PS1
+#     zle reset-prompt
+# }
+# zle -N zle-line-init
+# zle -N zle-keymap-select
+
+
+## PROMPT
+PROMPT=""
+PROMPT+="%(?.%F{green}^-^%f.%F{red}O_O%f) "
+PROMPT+="%F{yellow}[%~]%f "		  #current directory
+if zplug check "yonchu/zsh-vcs-prompt"; then
+  PROMPT+='$(vcs_super_info)'     #vcs info
+fi
+PROMPT+="
+"
+PROMPT+="[%n@%m]$ "
+PROMPT2="$ "
+
+
+
+
+#--------------------------------------------------#
 # extract compressed files
 #--------------------------------------------------#
 
@@ -271,10 +262,6 @@ function extract() {
 	esac
 }
 alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
-
-
-
-
 
 
 
@@ -310,9 +297,11 @@ function ipynb_open() {
 }
 
 
+
 #--------------------------------------------------#
 # the end of .zshrc
 #--------------------------------------------------#
-
-# this must be at the end of zshrc
-source_zshrc_local
+local zsh_local="${HOME}/.zshrc.local"
+if [ -f ${zsh_local} ]; then
+  source ${zsh_local}
+fi
