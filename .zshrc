@@ -23,11 +23,19 @@ fpath=(${HOME}/.zsh/completion $fpath)
 #--------------------------------------------------#
 source ~/.zplug/zplug
 
+# plugin
 zplug "mollifier/anyframe"
 zplug "yonchu/zsh-vcs-prompt", of:zshrc.sh
 zplug "zsh-users/zaw", of:zaw.zsh
 
-zplug load --verbose
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load
 
 
   #--------------------------------------------------#
