@@ -65,6 +65,13 @@ do
   run "ln -s \"${source}\" \"${target}\""
 done
 
+# Install dependencies
+if [ $dryrunflag = false ]; then
+  # install zplug
+  # https://github.com/b4b4r07/zplug
+  curl -fLo ~/.zplug/zplug --create-dirs git.io/zplug
+fi
+
 # Show message about dependency
 echo "Insall dependencies"
 echo "peco https://github.com/peco/peco"
