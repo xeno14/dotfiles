@@ -104,13 +104,6 @@ case "${OSTYPE}" in
 		;;
 esac
 
-## smartgit
-case "${OSTYPE}" in
-	linux*)
-		alias smartgit='/opt/smartgithg-5_0_9/bin/smartgithg.sh > /dev/null 2>&1 &'
-		;;
-esac
-
 ## cmake-gui for mac
 case "${OSTYPE}" in
 	darwin*)
@@ -118,13 +111,10 @@ case "${OSTYPE}" in
     ;;
 esac
 
-## git log peco
-# alias -g C='`git log --oneline | peco | cut -d" " -f1`'
-
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
-alias ks="sl"
+# alias ks="sl"
 
 alias du="du -h"
 alias df="df -h"
@@ -136,8 +126,7 @@ alias :e='vim'
 
 alias calc='emacs -f full-calc'
 
-## ipython-notebook
-alias ipynb="cd ${IPYNB_ROOT} && ipython notebook --matplotlib inline"
+
 
 #--------------------------------------------------#
 # Color Configuration
@@ -160,6 +149,7 @@ source ~/.zplug/zplug
 zplug "mollifier/anyframe"
 zplug "yonchu/zsh-vcs-prompt", of:zshrc.sh
 zplug "zsh-users/zaw", of:zaw.zsh
+zplug "zsh-users/zsh-syntax-highlighting", nice:10
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -304,4 +294,8 @@ function ipynb_open() {
 local zsh_local="${HOME}/.zshrc.local"
 if [ -f ${zsh_local} ]; then
   source ${zsh_local}
+fi
+
+if zplug check "zsh-users/zsh-syntax-highlighting"; then
+  source ~/.zplug/repos/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
