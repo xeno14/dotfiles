@@ -225,25 +225,6 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 source_zshrc_local
 
 
-#--------------------------------------------------#
-# bd
-#--------------------------------------------------#
-if [ -f ${HOME}/.zsh/zsh-bd/bd.zsh ]; then
-  source ${HOME}/.zsh/zsh-bd/bd.zsh
-fi
-
-
-#--------------------------------------------------#
-# cdup
-#--------------------------------------------------#
-function cdup() {
-  echo
-  cd ..
-  zle reset-prompt
-}
-zle -N cdup
-bindkey '^[^' cdup
-
 
 #--------------------------------------------------#
 # ipynb selector
@@ -282,8 +263,8 @@ function ipynb_open() {
 #--------------------------------------------------#
 source ~/.zplug/zplug
 
-zplug "zsh-users/zaw", of:zaw.zsh
 zplug "mollifier/anyframe"
+zplug "zsh-users/zaw", of:zaw.zsh
 
 zplug load
 
