@@ -14,6 +14,66 @@ function source_zshrc_local(){
 typeset -U path
 fpath=(${HOME}/.zsh/completion $fpath)
 
+
+
+#--------------------------------------------------#
+# zplug
+#
+# https://github.com/b4b4r07/zplug
+#--------------------------------------------------#
+source ~/.zplug/zplug
+
+# plugin
+zplug "mollifier/anyframe"
+zplug "yonchu/zsh-vcs-prompt", of:zshrc.sh
+zplug "zsh-users/zaw", of:zaw.zsh
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load
+
+
+  #--------------------------------------------------#
+  # zaw
+  #--------------------------------------------------#
+  if zplug check "zsh-users/zaw"; then
+    bindkey '^xg' zaw-git-status
+    bindkey '^xt' zaw-tmux
+  fi
+
+
+  #--------------------------------------------------#
+  # anyframe
+  #--------------------------------------------------#
+  if zplug check "mollifier/anyframe"; then
+    fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
+
+    autoload -Uz anyframe-init
+    anyframe-init
+
+    bindkey '^x:'  anyframe-widget-select-widget
+    bindkey '^\'   anyframe-widget-cdr
+    bindkey '^xp'  anyframe-widget-kill
+    bindkey '^xh'  anyframe-widget-put-history
+    bindkey '^[xh' anyframe-widget-put-history
+  fi
+
+
+  #--------------------------------------------------#
+  # zsh-vcs-prompt
+  #--------------------------------------------------#
+  if zplug check "yonchu/zsh-vcs-prompt"; then
+    ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+    ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
+  fi
+
+
+
 #--------------------------------------------------#
 # Prompt
 #--------------------------------------------------#
@@ -29,19 +89,14 @@ setopt prompt_subst
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 
-## zsh-vcs-prompt
-## https://github.com/yonchu/zsh-vcs-prompt
-if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
-  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
-  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
-  ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
-fi
 
 ## PROMPT
 PROMPT=""
 PROMPT+="%(?.%F{green}^-^%f.%F{red}O_O%f) "
 PROMPT+="%F{yellow}[%~]%f "		  #current directory
-PROMPT+='$(vcs_super_info)'     #vcs info
+if zplug check "yonchu/zsh-vcs-prompt"; then
+  PROMPT+='$(vcs_super_info)'     #vcs info
+fi
 PROMPT+="
 "
 PROMPT+="[%n@%m]$ "
@@ -219,53 +274,8 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 
 
-#--------------------------------------------------#
-# zaw
-#--------------------------------------------------#
-if [ -f ~/.zsh/zaw/zaw.zsh ]; then
-	source ~/.zsh/zaw/zaw.zsh
-  bindkey '^xg' zaw-git-status
-  bindkey '^xt' zaw-tmux
-fi
 
 
-
-#--------------------------------------------------#
-# anyframe
-#--------------------------------------------------#
-if [ -d ${HOME}/.zsh/anyframe ]; then
-  fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
-
-  autoload -Uz anyframe-init
-  anyframe-init
-
-  bindkey '^x:'  anyframe-widget-select-widget
-  bindkey '^\'   anyframe-widget-cdr
-  bindkey '^xp'  anyframe-widget-kill
-  bindkey '^xh'  anyframe-widget-put-history
-  bindkey '^[xh' anyframe-widget-put-history
-fi
-
-
-
-#--------------------------------------------------#
-# bd
-#--------------------------------------------------#
-if [ -f ${HOME}/.zsh/zsh-bd/bd.zsh ]; then
-  source ${HOME}/.zsh/zsh-bd/bd.zsh
-fi
-
-
-#--------------------------------------------------#
-# cdup
-#--------------------------------------------------#
-function cdup() {
-  echo
-  cd ..
-  zle reset-prompt
-}
-zle -N cdup
-bindkey '^[^' cdup
 
 
 #--------------------------------------------------#
