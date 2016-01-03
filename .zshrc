@@ -14,6 +14,58 @@ function source_zshrc_local(){
 typeset -U path
 fpath=(${HOME}/.zsh/completion $fpath)
 
+
+
+#--------------------------------------------------#
+# zplug
+#
+# https://github.com/b4b4r07/zplug
+#--------------------------------------------------#
+source ~/.zplug/zplug
+
+zplug "mollifier/anyframe"
+zplug "yonchu/zsh-vcs-prompt", of:zshrc.sh
+zplug "zsh-users/zaw", of:zaw.zsh
+
+zplug load --verbose
+
+
+  #--------------------------------------------------#
+  # zaw
+  #--------------------------------------------------#
+  if zplug check "zsh-users/zaw"; then
+    bindkey '^xg' zaw-git-status
+    bindkey '^xt' zaw-tmux
+  fi
+
+
+  #--------------------------------------------------#
+  # anyframe
+  #--------------------------------------------------#
+  if zplug check "mollifier/anyframe"; then
+    fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
+
+    autoload -Uz anyframe-init
+    anyframe-init
+
+    bindkey '^x:'  anyframe-widget-select-widget
+    bindkey '^\'   anyframe-widget-cdr
+    bindkey '^xp'  anyframe-widget-kill
+    bindkey '^xh'  anyframe-widget-put-history
+    bindkey '^[xh' anyframe-widget-put-history
+  fi
+
+
+  #--------------------------------------------------#
+  # zsh-vcs-prompt
+  #--------------------------------------------------#
+  if zplug check "yonchu/zsh-vcs-prompt"; then
+    ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+    ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
+  fi
+
+
+
 #--------------------------------------------------#
 # Prompt
 #--------------------------------------------------#
@@ -29,19 +81,14 @@ setopt prompt_subst
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 
-## zsh-vcs-prompt
-## https://github.com/yonchu/zsh-vcs-prompt
-if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
-  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
-  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
-  ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
-fi
 
 ## PROMPT
 PROMPT=""
 PROMPT+="%(?.%F{green}^-^%f.%F{red}O_O%f) "
 PROMPT+="%F{yellow}[%~]%f "		  #current directory
-PROMPT+='$(vcs_super_info)'     #vcs info
+if zplug check "yonchu/zsh-vcs-prompt"; then
+  PROMPT+='$(vcs_super_info)'     #vcs info
+fi
 PROMPT+="
 "
 PROMPT+="[%n@%m]$ "
@@ -256,40 +303,3 @@ function ipynb_path_to_url() {
 function ipynb_open() {
   firefox $(ipynb_path_to_url $(ipynb_select))
 }
-
-
-#--------------------------------------------------#
-# zplug
-#--------------------------------------------------#
-source ~/.zplug/zplug
-
-zplug "mollifier/anyframe"
-zplug "zsh-users/zaw", of:zaw.zsh
-
-zplug load
-
-
-  #--------------------------------------------------#
-  # zaw
-  #--------------------------------------------------#
-  if zplug check "zsh-users/zaw"; then
-    bindkey '^xg' zaw-git-status
-    bindkey '^xt' zaw-tmux
-  fi
-
-
-  #--------------------------------------------------#
-  # anyframe
-  #--------------------------------------------------#
-  if zplug check "mollifier/anyframe"; then
-    fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
-
-    autoload -Uz anyframe-init
-    anyframe-init
-
-    bindkey '^x:'  anyframe-widget-select-widget
-    bindkey '^\'   anyframe-widget-cdr
-    bindkey '^xp'  anyframe-widget-kill
-    bindkey '^xh'  anyframe-widget-put-history
-    bindkey '^[xh' anyframe-widget-put-history
-  fi
