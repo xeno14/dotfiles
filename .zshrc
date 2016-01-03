@@ -245,9 +245,6 @@ if [ -d ${HOME}/.zsh/anyframe ]; then
 fi
 
 
-# this must be at the end of zshrc
-source_zshrc_local
-
 
 #--------------------------------------------------#
 # bd
@@ -267,3 +264,11 @@ function cdup() {
 }
 zle -N cdup
 bindkey '^[^' cdup
+
+
+#--------------------------------------------------#
+# the end of .zshrc
+#--------------------------------------------------#
+
+# this must be at the end of zshrc
+source_zshrc_local
