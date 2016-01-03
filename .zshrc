@@ -146,7 +146,7 @@ zstyle ':completion:*' list-colors ${LS_COLORS}
 source ~/.zplug/zplug
 
 # plugin
-zplug "mollifier/anyframe"
+zplug "xeno1991/anyframe"
 zplug "yonchu/zsh-vcs-prompt", of:zshrc.sh
 zplug "zsh-users/zaw", of:zaw.zsh
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
@@ -173,8 +173,8 @@ zplug load --verbose
   #--------------------------------------------------#
   # anyframe
   #--------------------------------------------------#
-  if zplug check "mollifier/anyframe"; then
-    fpath=(${HOME}/.zplug/repos/mollifier/anyframe(N-/) $fpath)
+  if zplug check "xeno1991/anyframe"; then
+    fpath=(${HOME}/.zplug/repos/xeno1991/anyframe(N-/) $fpath)
 
     autoload -Uz anyframe-init
     anyframe-init
