@@ -137,7 +137,7 @@ nnoremap <Down> gj
 nnoremap <Up>   gk
 nnoremap $ g$
 nnoremap 0 g0
-
+let mapleader = "\<Space>"
 
 
 "----------------------------------------------------
@@ -491,6 +491,8 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 let g:cxx = has("macunix") ? "/usr/local/bin/g++-5" : "g++"
 
+nmap <Leader>r <Plug>(quickrun)
+
 let g:quickrun_config = {
 \	'_' : {
 \       'hook/close_quickfix/enable_success' : 1,
@@ -514,12 +516,23 @@ let g:quickrun_config = {
 \       'exec': ['%c %s', './a.out']
 \   },
 \   'tex': {
-\       'command': 'platex',
-\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi']
-\   },
-\   'plaintex': {
-\       'command': 'platex',
-\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi']
+\       'command' : 'latexmk',
+\       'outputter' : 'error',
+\       'outputter/error/success' : 'null',
+\       'outputter/error/error' : 'quickfix',
+\       'srcfile' : expand("%"),
+\       'cmdopt' : '-pv',
+\       'hook/sweep/files' : [
+\                            '%S:p:r.aux',
+\                            '%S:p:r.bbl',
+\                            '%S:p:r.blg',
+\                            '%S:p:r.dvi',
+\                            '%S:p:r.fdb_latexmk',
+\                            '%S:p:r.fls',
+\                            '%S:p:r.log',
+\                            '%S:p:r.out'
+\                            ],
+\       'exec': '%c %o %a %s',
 \   },
 \   "cpp/watchdogs_checker" : {
 \       "type" : "watchdogs_checker/g++",
