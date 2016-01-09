@@ -268,7 +268,14 @@ endif
 "----------------------------------------------------
 
 let g:neocomplete#enable_at_startup = 1 
+let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#enable_auto_select = 1
+
+"https://github.com/STAR-ZERO/dotfiles/blob/master/.vim/config/neocomplete.vim#L9
+function! s:my_crinsert()
+  return pumvisible() ? neocomplete#close_popup() : "\<Cr>"
+endfunction
+inoremap <silent> <CR> <C-R>=<SID>my_crinsert()<CR>
 
 
 "----------------------------------------------------
