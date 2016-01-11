@@ -521,7 +521,6 @@ let g:quickrun_config = {
 \       'outputter/error/success' : 'null',
 \       'outputter/error/error' : 'quickfix',
 \       'srcfile' : expand("%"),
-\       'cmdopt' : '-pv',
 \       'hook/sweep/files' : [
 \                            '%S:p:r.aux',
 \                            '%S:p:r.bbl',
@@ -777,3 +776,7 @@ command! -nargs=? PopupTags
       \ |Unite tag:<args>
 
 noremap <silent> <C-]> :<C-u>execute "PopupTags ".expand('<cword>')<CR>
+
+" labelを取ってくる関数
+command! Ref
+      \ :Unite tag -default-action=append
