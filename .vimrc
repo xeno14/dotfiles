@@ -30,7 +30,7 @@ set incsearch
 set hlsearch
 
 " color
-colorscheme desert
+" colorscheme desert
 highlight QFError ctermbg=88
 highlight ColorColumn ctermbg=235 guibg=gray18
 
@@ -780,3 +780,12 @@ noremap <silent> <C-]> :<C-u>execute "PopupTags ".expand('<cword>')<CR>
 " labelを取ってくる関数
 command! Ref
       \ :Unite tag -default-action=append
+
+
+
+"---------------------------------------------------
+" unite-bibtex
+"----------------------------------------------------
+
+command! Cite
+    \ :Unite bibtex -default-action=append
