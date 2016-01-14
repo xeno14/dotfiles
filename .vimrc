@@ -30,7 +30,7 @@ set incsearch
 set hlsearch
 
 " color
-" colorscheme desert
+colorscheme desert
 highlight QFError ctermbg=88
 highlight ColorColumn ctermbg=235 guibg=gray18
 
