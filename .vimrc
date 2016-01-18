@@ -30,7 +30,7 @@ set incsearch
 set hlsearch
 
 " color
-" colorscheme desert
+colorscheme desert
 highlight QFError ctermbg=88
 highlight ColorColumn ctermbg=235 guibg=gray18
 
@@ -237,6 +237,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'osyo-manga/vim-watchdogs'
   NeoBundle 'rhysd/wandbox-vim'
   NeoBundle 'rhysd/conflict-marker.vim'
+  NeoBundle 'soramugi/auto-ctags.vim'
   NeoBundle 'vcscommand.vim'
   NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'vim-scripts/gnuplot.vim'
@@ -789,3 +790,9 @@ command! Ref
 
 command! Cite
     \ :Unite bibtex -default-action=append
+
+
+"---------------------------------------------------
+" auto-ctags.vim
+"----------------------------------------------------
+let g:auto_ctags = 1
