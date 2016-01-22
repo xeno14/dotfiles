@@ -237,6 +237,7 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'osyo-manga/vim-watchdogs'
   NeoBundle 'rhysd/wandbox-vim'
   NeoBundle 'rhysd/conflict-marker.vim'
+  NeoBundle 'soramugi/auto-ctags.vim'
   NeoBundle 'vcscommand.vim'
   NeoBundle 'violetyk/scratch-utility'
   NeoBundle 'vim-scripts/gnuplot.vim'
@@ -715,9 +716,9 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites.default = 'cpluspluscom'
 
-call altercmd#load()
-CAlterCommand rcxx Ref webdict cplusplus.com
-CAlterCommand rcxxjp Ref webdict cpprefjp
+" call altercmd#load()
+" CAlterCommand rcxx Ref webdict cplusplus.com
+" CAlterCommand rcxxjp Ref webdict cpprefjp
 
 
 "---------------------------------------------------
@@ -800,3 +801,9 @@ command! Cite
 "----------------------------------------------------
 map y <Plug>(operator-flashy)
 nmap Y <Plug>(operator-flashy)$
+
+
+"---------------------------------------------------
+" auto-ctags.vim
+"----------------------------------------------------
+let g:auto_ctags = 1
