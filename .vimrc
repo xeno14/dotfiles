@@ -244,6 +244,8 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'xeno1991/oxford.vim'
   NeoBundle 'xeno1991/previm'
   NeoBundle 'xeno1991/unite-template'
+  NeoBundle 'kana/vim-operator-user'
+  NeoBundle 'haya14busa/vim-operator-flashy'
 
   NeoBundleLazy "nvie/vim-flake8", {
         \ "autoload": {
@@ -786,6 +788,15 @@ command! Ref
 "---------------------------------------------------
 " unite-bibtex
 "----------------------------------------------------
-
 command! Cite
     \ :Unite bibtex -default-action=append
+
+
+
+"---------------------------------------------------
+" vim-operator-flashy
+"
+" https://github.com/haya14busa/vim-operator-flashy
+"----------------------------------------------------
+map y <Plug>(operator-flashy)
+nmap Y <Plug>(operator-flashy)$
