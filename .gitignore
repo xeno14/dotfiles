@@ -99,3 +99,6 @@ target/
 *.exe
 *.out
 *.app
+
+
+tags
