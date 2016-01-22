@@ -714,9 +714,9 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites.default = 'cpluspluscom'
 
-call altercmd#load()
-CAlterCommand rcxx Ref webdict cplusplus.com
-CAlterCommand rcxxjp Ref webdict cpprefjp
+" call altercmd#load()
+" CAlterCommand rcxx Ref webdict cplusplus.com
+" CAlterCommand rcxxjp Ref webdict cpprefjp
 
 
 "---------------------------------------------------
