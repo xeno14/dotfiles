@@ -141,16 +141,17 @@ zstyle ':completion:*' list-colors ${LS_COLORS}
 #--------------------------------------------------#
 # zplug
 #
-# https://github.com/b4b4r07/zplug
+# https://github.com/zplug/zplug
 #--------------------------------------------------#
 source ~/.zplug/zplug
 
 # plugin
 zplug "xeno1991/anyframe"
-zplug "xeno1991/ipynbselect", of:ipynbselect.zsh
-zplug "yonchu/zsh-vcs-prompt", of:zshrc.sh
-zplug "zsh-users/zaw", of:zaw.zsh
+zplug "xeno1991/ipynbselect", use:ipynbselect.zsh
+zplug "yonchu/zsh-vcs-prompt", use:zshrc.sh
+zplug "zsh-users/zaw", use:zaw.zsh
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zplug/zplug"
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
