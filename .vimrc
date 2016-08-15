@@ -137,7 +137,7 @@ nnoremap <Down> gj
 nnoremap <Up>   gk
 nnoremap $ g$
 nnoremap 0 g0
-
+let mapleader = "\<Space>"
 
 
 "----------------------------------------------------
@@ -189,7 +189,8 @@ if NeobundleExists('neobundle.vim')
   call neobundle#begin(expand('~/.vim/bundle/'))
 
   NeoBundleFetch 'Shougo/neobundle.vim'
- 
+  NeoBundle 'andviro/flake8-vim'
+  NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'cohama/vim-hier'
   NeoBundle 'itchyny/lightline.vim'
   NeoBundle 'itchyny/vim-cursorword'
@@ -218,6 +219,7 @@ if NeobundleExists('neobundle.vim')
         \ }
   NeoBundle 'sudar/vim-arduino-syntax'
   NeoBundle 'sudo.vim'
+  NeoBundle 'termoshtt/unite-bibtex'
   NeoBundle 'termoshtt/unite-doxygen'
   NeoBundle 'thinca/vim-quickrun'
   NeoBundle 'thinca/vim-ref'
@@ -235,11 +237,16 @@ if NeobundleExists('neobundle.vim')
   NeoBundle 'osyo-manga/vim-watchdogs'
   NeoBundle 'rhysd/wandbox-vim'
   NeoBundle 'rhysd/conflict-marker.vim'
+  NeoBundle 'soramugi/auto-ctags.vim'
   NeoBundle 'vcscommand.vim'
   NeoBundle 'violetyk/scratch-utility'
+  NeoBundle 'vim-scripts/gnuplot.vim'
+  NeoBundle 'xeno1991/easy-constructor.vim'
+  NeoBundle 'xeno1991/oxford.vim'
   NeoBundle 'xeno1991/previm'
   NeoBundle 'xeno1991/unite-template'
-  NeoBundle 'xeno1991/easy-constructor.vim'
+  NeoBundle 'kana/vim-operator-user'
+  NeoBundle 'haya14busa/vim-operator-flashy'
 
   NeoBundleLazy "nvie/vim-flake8", {
         \ "autoload": {
@@ -264,7 +271,14 @@ endif
 "----------------------------------------------------
 
 let g:neocomplete#enable_at_startup = 1 
+let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#enable_auto_select = 1
+
+"https://github.com/STAR-ZERO/dotfiles/blob/master/.vim/config/neocomplete.vim#L9
+function! s:my_crinsert()
+  return pumvisible() ? neocomplete#close_popup() : "\<Cr>"
+endfunction
+inoremap <silent> <CR> <C-R>=<SID>my_crinsert()<CR>
 
 
 "----------------------------------------------------
@@ -480,6 +494,8 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 let g:cxx = has("macunix") ? "/usr/local/bin/g++-5" : "g++"
 
+nmap <Leader>r <Plug>(quickrun)
+
 let g:quickrun_config = {
 \	'_' : {
 \       'hook/close_quickfix/enable_success' : 1,
@@ -503,12 +519,22 @@ let g:quickrun_config = {
 \       'exec': ['%c %s', './a.out']
 \   },
 \   'tex': {
-\       'command': 'platex',
-\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
-\   },
-\   'plaintex': {
-\       'command': 'platex',
-\       'exec': ['%c -interaction=nonstopmode %s', 'dvipdfmx %s:r.dvi', pdfopener.' %s:r.pdf']
+\       'command' : 'latexmk',
+\       'outputter' : 'error',
+\       'outputter/error/success' : 'null',
+\       'outputter/error/error' : 'quickfix',
+\       'srcfile' : expand("%"),
+\       'hook/sweep/files' : [
+\                            '%S:p:r.aux',
+\                            '%S:p:r.bbl',
+\                            '%S:p:r.blg',
+\                            '%S:p:r.dvi',
+\                            '%S:p:r.fdb_latexmk',
+\                            '%S:p:r.fls',
+\                            '%S:p:r.log',
+\                            '%S:p:r.out'
+\                            ],
+\       'exec': '%c %o %a %s',
 \   },
 \   "cpp/watchdogs_checker" : {
 \       "type" : "watchdogs_checker/g++",
@@ -532,8 +558,8 @@ let g:unite_source_history_yank_enable = 1
 let g:unite_source_file_mru_limit = 1000
 let g:unite_enable_start_insert = 1
 
-nnoremap <C-^> :Unite -direction=botright window buffer file file_mru<CR>
-inoremap <C-^> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+nnoremap <C-\> :Unite -direction=botright window buffer file file_mru<CR>
+inoremap <C-\> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
 nnoremap <C-g> :Unite grep -auto-preview -auto-resize<CR><CR>
 
 "" grep をagでする
@@ -690,9 +716,9 @@ let g:ref_source_webdict_sites = {
 
 let g:ref_source_webdict_sites.default = 'cpluspluscom'
 
-call altercmd#load()
-CAlterCommand rcxx Ref webdict cplusplus.com
-CAlterCommand rcxxjp Ref webdict cpprefjp
+" call altercmd#load()
+" CAlterCommand rcxx Ref webdict cplusplus.com
+" CAlterCommand rcxxjp Ref webdict cpprefjp
 
 
 "---------------------------------------------------
@@ -703,10 +729,12 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 
+
 "---------------------------------------------------
 " watchdogs_checker
 "----------------------------------------------------
 " let g:watchdogs_check_BufWritePost_enable = 1
+
 
 
 "---------------------------------------------------
@@ -720,6 +748,7 @@ function! s:template_keywords()
   :silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
   "bar_test.cpp -> bar  bar_test.py -> bar
   :silent! %s/<+TEST TARGET+>/\=split(expand('%:t'), '_test')[0]/g
+  :silent! %s/<+MAIN TARGET+>/\=split(expand('%:t'), '_main')[0]/g
 endfunction
 
 " Move cursor
@@ -727,3 +756,54 @@ autocmd User plugin-template-loaded
 \    if search('<+CURSOR+>')
 \  |   execute 'normal! "_da>'
 \  | endif
+
+
+
+"---------------------------------------------------
+" unite-tag
+"
+" @see http://d.hatena.ne.jp/osyo-manga/20120205/1328368314
+"----------------------------------------------------
+
+" neocomplcache が作成した tag ファイルのパスを tags に追加する
+function! s:TagsUpdate()
+    " include している tag ファイルが毎回同じとは限らないので毎回初期化
+    setlocal tags=
+    for filename in neocomplcache#sources#include_complete#get_include_files(bufnr('%'))
+        execute "setlocal tags+=".neocomplcache#cache#encode_name('tags_output', filename)
+    endfor
+endfunction
+
+command! -nargs=? PopupTags
+      \ call <SID>TagsUpdate()
+      \ |Unite tag:<args>
+
+noremap <silent> <C-]> :<C-u>execute "PopupTags ".expand('<cword>')<CR>
+
+" labelを取ってくる関数
+command! Ref
+      \ :Unite tag -default-action=append
+
+
+
+"---------------------------------------------------
+" unite-bibtex
+"----------------------------------------------------
+command! Cite
+    \ :Unite bibtex -default-action=append
+
+
+
+"---------------------------------------------------
+" vim-operator-flashy
+"
+" https://github.com/haya14busa/vim-operator-flashy
+"----------------------------------------------------
+map y <Plug>(operator-flashy)
+nmap Y <Plug>(operator-flashy)$
+
+
+"---------------------------------------------------
+" auto-ctags.vim
+"----------------------------------------------------
+let g:auto_ctags = 1

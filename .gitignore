@@ -26,8 +26,8 @@ develop-eggs/
 dist/
 downloads/
 eggs/
-lib/
-lib64/
+lib/python*
+lib64/python*
 parts/
 sdist/
 var/
@@ -99,3 +99,6 @@ target/
 *.exe
 *.out
 *.app
+
+
+tags

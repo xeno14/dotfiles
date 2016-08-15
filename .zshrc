@@ -1,55 +1,21 @@
-
-function source_zshrc_local(){
-  local zsh_local="${HOME}/.zshrc.local"
-  if [ -f ${zsh_local} ]; then
-    source ${zsh_local}
-  fi
-}
-
-
 #--------------------------------------------------#
 # Environment variable configuration
 #--------------------------------------------------#
-export LANG=ja_JP.UTF-8
+typeset -U path
+fpath=(${HOME}/.zsh/completion $fpath)
 
-#--------------------------------------------------#
-# Prompt
-#--------------------------------------------------#
 
-setopt prompt_subst
-
-## visualize vi mode
-# function zle-line-init zle-keymap-select {
-#     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-#     RPS2=$PS1
-#     zle reset-prompt
-# }
-# zle -N zle-line-init
-# zle -N zle-keymap-select
-
-## zsh-vcs-prompt
-## https://github.com/yonchu/zsh-vcs-prompt
-if [ -f ~/.zsh/zsh-vcs-prompt/zshrc.sh ]; then
-  source ~/.zsh/zsh-vcs-prompt/zshrc.sh
-  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
-  ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
-fi
-
-## PROMPT
-PROMPT=""
-PROMPT+="%(?.%F{green}^-^%f.%F{red}O_O%f) "
-PROMPT+="%F{yellow}[%~]%f "		  #current directory
-PROMPT+='$(vcs_super_info)'     #vcs info
-PROMPT+="
-"
-PROMPT+="[%n@%m]$ "
-PROMPT2="$ "
-
+# pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 
 #--------------------------------------------------#
 # Options
 #--------------------------------------------------#
+#
+export TERM=xterm-256color
 
 ## auto change directory
 setopt auto_cd
@@ -68,7 +34,6 @@ setopt noautoremoveslash
 
 ## no beep sound when complete list displayed
 setopt nolistbeep
-
 ## match capital and lower both
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
@@ -99,6 +64,7 @@ autoload -U compinit
 compinit -u
 
 ## enable cdr
+autoload -Uz is-at-least
 if is-at-least 4.3.11; then
 	autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 	add-zsh-hook chpwd chpwd_recent_dirs
@@ -106,6 +72,9 @@ if is-at-least 4.3.11; then
 	zstyle ':chpwd:*' recent-dirs-default yes
 	zstyle ':completion:*' recent-dirs-insert both
 fi
+
+## zmv
+autoload -Uz zmv
 
 ## report time when process takes time over 3
 REPORTTIME=3
@@ -142,13 +111,6 @@ case "${OSTYPE}" in
 		;;
 esac
 
-## smartgit
-case "${OSTYPE}" in
-	linux*)
-		alias smartgit='/opt/smartgithg-5_0_9/bin/smartgithg.sh > /dev/null 2>&1 &'
-		;;
-esac
-
 ## cmake-gui for mac
 case "${OSTYPE}" in
 	darwin*)
@@ -156,12 +118,10 @@ case "${OSTYPE}" in
     ;;
 esac
 
-## git log peco
-# alias -g C='`git log --oneline | peco | cut -d" " -f1`'
-
 alias la="ls -a"
 alias lf="ls -F"
 alias ll="ls -l"
+# alias ks="sl"
 
 alias du="du -h"
 alias df="df -h"
@@ -173,8 +133,7 @@ alias :e='vim'
 
 alias calc='emacs -f full-calc'
 
-## ipython-notebook
-alias ipynb="cd ${IPYNB_ROOT} && ipython notebook --matplotlib inline"
+
 
 #--------------------------------------------------#
 # Color Configuration
@@ -183,6 +142,98 @@ alias ipynb="cd ${IPYNB_ROOT} && ipython notebook --matplotlib inline"
 export LSCOLORS=gxfxcxdxbxegedabagacad
 export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ':completion:*' list-colors ${LS_COLORS}
+
+
+
+#--------------------------------------------------#
+# zplug
+#
+# https://github.com/zplug/zplug
+#--------------------------------------------------#
+source ~/.zplug/zplug
+
+# plugin
+zplug "xeno1991/anyframe"
+zplug "xeno1991/ipynbselect", use:ipynbselect.zsh
+zplug "yonchu/zsh-vcs-prompt", use:zshrc.sh
+zplug "zsh-users/zaw", use:zaw.zsh
+zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zplug/zplug"
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load --verbose
+
+
+  #--------------------------------------------------#
+  # zaw
+  #--------------------------------------------------#
+  if zplug check "zsh-users/zaw"; then
+    bindkey '^xg' zaw-git-status
+    bindkey '^xt' zaw-tmux
+  fi
+
+
+  #--------------------------------------------------#
+  # anyframe
+  #--------------------------------------------------#
+  if zplug check "xeno1991/anyframe"; then
+    fpath=(${HOME}/.zplug/repos/xeno1991/anyframe(N-/) $fpath)
+
+    autoload -Uz anyframe-init
+    anyframe-init
+
+    bindkey '^x:'  anyframe-widget-select-widget
+    bindkey '^\'   anyframe-widget-cdr
+    bindkey '^xp'  anyframe-widget-kill
+    bindkey '^xh'  anyframe-widget-put-history
+    bindkey '^[xh' anyframe-widget-put-history
+  fi
+
+
+  #--------------------------------------------------#
+  # zsh-vcs-prompt
+  #--------------------------------------------------#
+  if zplug check "yonchu/zsh-vcs-prompt"; then
+    ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+    ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
+  fi
+
+
+
+#--------------------------------------------------#
+# Prompt
+#--------------------------------------------------#
+
+setopt prompt_subst
+
+## visualize vi mode
+# function zle-line-init zle-keymap-select {
+#     RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+#     RPS2=$PS1
+#     zle reset-prompt
+# }
+# zle -N zle-line-init
+# zle -N zle-keymap-select
+
+
+## PROMPT
+PROMPT=""
+PROMPT+="%(?.%F{green}^-^%f.%F{red}O_O%f) "
+PROMPT+="%F{yellow}[%~]%f "		  #current directory
+if zplug check "yonchu/zsh-vcs-prompt"; then
+  PROMPT+='$(vcs_super_info)'     #vcs info
+fi
+PROMPT+="
+"
+PROMPT+="[%n@%m]$ "
+PROMPT2="$ "
+
 
 
 
@@ -214,52 +265,13 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 
 #--------------------------------------------------#
-# zaw
+# the end of .zshrc
 #--------------------------------------------------#
-if [ -f ~/.zsh/zaw/zaw.zsh ]; then
-	source ~/.zsh/zaw/zaw.zsh
-  bindkey '^xg' zaw-git-status
+local zsh_local="${HOME}/.zshrc.local"
+if [ -f ${zsh_local} ]; then
+  source ${zsh_local}
 fi
 
-
-
-#--------------------------------------------------#
-# anyframe
-#--------------------------------------------------#
-if [ -d ${HOME}/.zsh/anyframe ]; then
-  fpath=(${HOME}/.zsh/anyframe(N-/) $fpath)
-
-  autoload -Uz anyframe-init
-  anyframe-init
-
-  bindkey '^x:'  anyframe-widget-select-widget
-  bindkey '^^'   anyframe-widget-cdr
-  bindkey '^xp'  anyframe-widget-kill
-  bindkey '^xh'  anyframe-widget-put-history
-  bindkey '^[xh' anyframe-widget-put-history
-  bindkey '^xt'  anyframe-widget-tmux-attach
+if zplug check "zsh-users/zsh-syntax-highlighting"; then
+  source ~/.zplug/repos/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
-
-
-# this must be at the end of zshrc
-source_zshrc_local
-
-
-#--------------------------------------------------#
-# bd
-#--------------------------------------------------#
-if [ -f ${HOME}/.zsh/zsh-bd/bd.zsh ]; then
-  source ${HOME}/.zsh/zsh-bd/bd.zsh
-fi
-
-
-#--------------------------------------------------#
-# cdup
-#--------------------------------------------------#
-function cdup() {
-  echo
-  cd ..
-  zle reset-prompt
-}
-zle -N cdup
-bindkey '^[^' cdup

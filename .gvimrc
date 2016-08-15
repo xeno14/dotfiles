@@ -1,7 +1,18 @@
 "----------------------------------------------------
+" include
+"----------------------------------------------------
+
+if filereadable(expand('~/.gvimrc.local'))
+  source ~/.gvimrc.local
+endif
+
+"----------------------------------------------------
 " appearance
 "----------------------------------------------------
-colorscheme desert
+syntax enable
+set background=dark
+colorscheme solarized
+
 set columns=80
 set lines=60
 
