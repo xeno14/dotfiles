@@ -70,6 +70,10 @@ if [ $dryrunflag = false ]; then
   # install zplug
   # https://github.com/b4b4r07/zplug
   curl -fLo ~/.zplug/zplug --create-dirs git.io/zplug
+
+  # install dein.vim
+  curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh 
+  sh install.sh ${HOME}/.config/nvim/dein
 fi
 
 # Show message about dependency
