@@ -51,6 +51,10 @@ repo =  'tsukkee/unite-tag'
 on_source = ['unite.vim']
 
 [[plugins]]
+repo      = 'Shougo/neoyank.vim'
+on_source = ['unite.vim']
+
+[[plugins]]
 repo =  'rhysd/wandbox-vim'
 on_ft = ["c", "cpp"]
 
