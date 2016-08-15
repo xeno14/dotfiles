@@ -5,10 +5,17 @@ typeset -U path
 fpath=(${HOME}/.zsh/completion $fpath)
 
 
+# pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 
 #--------------------------------------------------#
 # Options
 #--------------------------------------------------#
+#
+export TERM=xterm-256color
 
 ## auto change directory
 setopt auto_cd
