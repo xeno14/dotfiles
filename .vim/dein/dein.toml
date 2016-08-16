@@ -181,3 +181,23 @@ repo =  'vim-scripts/mpi.vim'
 
 [[plugins]]
 repo =  'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'thinca/vim-template'
+hook_add = '''
+    autocmd User plugin-template-loaded call s:template_keywords()
+    function! s:template_keywords()
+      :silent! %s/<+FILE NAME+>/\=expand('%:t')/g
+      :silent! %s/<+NAME+>/\=expand('%:r')/g
+      :silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
+      "bar_test.cpp -> bar  bar_test.py -> bar
+      :silent! %s/<+TEST TARGET+>/\=split(expand('%:t'), '_test')[0]/g
+      :silent! %s/<+MAIN TARGET+>/\=split(expand('%:t'), '_main')[0]/g
+    endfunction
+
+    " Move cursor
+    autocmd User plugin-template-loaded
+    \    if search('<+CURSOR+>')
+    \  |   execute 'normal! "_da>'
+    \  | endif
+'''
