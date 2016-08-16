@@ -85,6 +85,10 @@ nnoremap $ g$
 nnoremap 0 g0
 let mapleader = "\<Space>"
 
+" clipboard
+if has("macunix")
+ set clipboard=unnamed,unnamedplus
+endif
 
 
 "----------------------------------------------------
