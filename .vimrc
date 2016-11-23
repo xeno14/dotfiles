@@ -125,3 +125,11 @@ map <silent> [Tag]p :tabprevious<CR>
 if has('nvim') && filereadable(expand('.config/nvim/init.vim.local'))
   source ~/.config/nvim/init.vim.local
 endif
+
+
+
+"----------------------------------------------------
+" golang
+"----------------------------------------------------
+autocmd FileType go :highlight goErr cterm=bold ctermfg=214
+autocmd FileType go :match goErr /\<err\>/

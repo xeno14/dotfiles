@@ -67,3 +67,29 @@ on_ft = ["c", "cpp"]
 [[plugins]]
 repo =  'cespare/vim-toml'
 on_ft = 'toml'
+
+
+[[plugins]]
+repo =  'fatih/vim-go'
+on_ft = 'go'
+hook_add = '''
+    let g:go_highlight_functions = 1
+    let g:go_highlight_methods = 1
+    let g:go_highlight_structs = 1
+'''
+
+
+[[plugins]]
+repo =  'lervag/vimtex'
+on_ft = 'tex'
+hook_add = '''
+  let g:tex_flavor='latex'
+  let g:vimtex_latexmk_options = '-pdfdvi'
+  let g:tex_conceal = ''
+  let g:vimtex_imaps_enabled = 0
+  " viewer
+  let g:vimtex_view_general_viewer
+  \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+  let g:vimtex_view_general_options = '@line @pdf @tex'
+  autocmd FileType tex syntax spell toplevel
+'''

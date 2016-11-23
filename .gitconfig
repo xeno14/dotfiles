@@ -12,6 +12,7 @@ ui = auto
 editor  = vim
 pager   = less -R
 excludesfile = ~/.gitignore
+	autocrlf = input
 
 [alias]
 br      = branch
