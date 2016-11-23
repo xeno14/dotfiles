@@ -275,3 +275,5 @@ fi
 if zplug check "zsh-users/zsh-syntax-highlighting"; then
   source ~/.zplug/repos/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

@@ -1,0 +1,7 @@
+dein/repos
+dein/rollbacks
+dein/temp
+dein/merged
+dein/.dein
+
+.init.vim-rplugin~
