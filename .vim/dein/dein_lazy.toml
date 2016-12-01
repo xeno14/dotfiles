@@ -3,8 +3,15 @@ repo = 'Shougo/neocomplete.vim'
 on_i = 1
 
 
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_path = '.*'
+
+
 [[plugins]]
 repo   = 'Shougo/unite.vim'
+depens = "neomru.vim"
 hook_add = '''
     let g:unite_source_session_enable_auto_save = 1
     let g:unite_source_history_yank_enable = 1
@@ -13,6 +20,8 @@ hook_add = '''
 
     nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
     inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+    nnoremap <C-\> :Unite -direction=botright window buffer file file_mru<CR>
+    inoremap <C-\> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
     nnoremap <C-g> :Unite grep -auto-preview -auto-resize<CR><CR>
 
     function! s:unite_my_settings()
