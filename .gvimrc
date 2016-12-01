@@ -11,7 +11,7 @@ endif
 "----------------------------------------------------
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme desert
 
 set columns=80
 set lines=60
@@ -21,9 +21,6 @@ if has("macunix")
 	autocmd GUIEnter * set transparency=2
 endif
 "hi ColorColumn guibg=#606060
-
-" font
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Semibold\ 10
 
 
 "----------------------------------------------------

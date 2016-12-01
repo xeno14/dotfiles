@@ -3,4 +3,21 @@
 snippet partial differentiate
 abbr partiald
   \frac{\partial ${1}}{\partial ${2}}
+
+
+snippet     subfigure
+  \begin{figure}[htbp]
+    \centering
+    \subfigure[${1}] {
+      \includegraphics[clip,width=0.45\columnwidth]{${2}}%
+      \label{${3}}
+    }
+    \subfigure[${4}]{
+      \includegraphics[clip,width=0.45\columnwidth]{${5}}%
+      \label{${6}}
+    }
+    \caption{${7}}
+    \label{${8}}
+  \end{figure}
+  
 # vim: set noexpandtab

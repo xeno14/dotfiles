@@ -146,9 +146,6 @@ hook_add =
 
 
 [[plugins]]
-repo =  'kakkyz81/evervim'
-
-[[plugins]]
 repo =  'sudo.vim'
 
 [[plugins]]
@@ -209,3 +206,6 @@ hook_add = '''
     \  |   execute 'normal! "_da>'
     \  | endif
 '''
+
+[[plugins]]
+repo = 'altercation/vim-colors-solarized'
