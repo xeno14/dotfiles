@@ -163,7 +163,7 @@ else
   zplug "xeno1991/ipynbselect", use:ipynbselect.zsh
   zplug "yonchu/zsh-vcs-prompt", use:zshrc.sh
   zplug "zsh-users/zaw", use:zaw.zsh
-  zplug "zsh-users/zsh-syntax-highlighting", nice:10
+  zplug "zsh-users/zsh-syntax-highlighting", defer:2
   zplug "zplug/zplug"
 
   # Install plugins if there are plugins that have not been installed
