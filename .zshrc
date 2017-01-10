@@ -150,59 +150,65 @@ zstyle ':completion:*' list-colors ${LS_COLORS}
 #
 # https://github.com/zplug/zplug
 #--------------------------------------------------#
-source ~/.zplug/zplug
+local zplug_init_zsh=$HOME/.zplug/init.zsh
+if [ ! -f $zplug_init_zsh ]; then
+  echo '${zplug_init_zsh} not found!'
+else
+  source ~/.zplug/init.zsh
 
-# plugin
-zplug "xeno1991/anyframe"
-zplug "xeno1991/ipynbselect", use:ipynbselect.zsh
-zplug "yonchu/zsh-vcs-prompt", use:zshrc.sh
-zplug "zsh-users/zaw", use:zaw.zsh
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
-zplug "zplug/zplug"
+  # plugin
+  zplug "xeno1991/anyframe"
+  zplug "xeno1991/ipynbselect", use:ipynbselect.zsh
+  zplug "yonchu/zsh-vcs-prompt", use:zshrc.sh
+  zplug "zsh-users/zaw", use:zaw.zsh
+  zplug "zsh-users/zsh-syntax-highlighting", nice:10
+  zplug "zplug/zplug"
 
-# Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  # Install plugins if there are plugins that have not been installed
+  if ! zplug check --verbose; then
+      printf "Install? [y/N]: "
+      if read -q; then
+          echo; zplug install
+      fi
+  fi
+  zplug load --verbose
+  
 fi
-zplug load --verbose
 
 
-  #--------------------------------------------------#
-  # zaw
-  #--------------------------------------------------#
-  if zplug check "zsh-users/zaw"; then
-    bindkey '^xg' zaw-git-status
-    bindkey '^xt' zaw-tmux
-  fi
+#--------------------------------------------------#
+# zaw
+#--------------------------------------------------#
+if zplug check "zsh-users/zaw"; then
+  bindkey '^xg' zaw-git-status
+  bindkey '^xt' zaw-tmux
+fi
 
 
-  #--------------------------------------------------#
-  # anyframe
-  #--------------------------------------------------#
-  if zplug check "xeno1991/anyframe"; then
-    fpath=(${HOME}/.zplug/repos/xeno1991/anyframe(N-/) $fpath)
+#--------------------------------------------------#
+# anyframe
+#--------------------------------------------------#
+if zplug check "xeno1991/anyframe"; then
+  fpath=(${HOME}/.zplug/repos/xeno1991/anyframe(N-/) $fpath)
 
-    autoload -Uz anyframe-init
-    anyframe-init
+  autoload -Uz anyframe-init
+  anyframe-init
 
-    bindkey '^x:'  anyframe-widget-select-widget
-    bindkey '^@'   anyframe-widget-cdr
-    bindkey '^xp'  anyframe-widget-kill
-    bindkey '^xh'  anyframe-widget-put-history
-    bindkey '^[xh' anyframe-widget-put-history
-  fi
+  bindkey '^x:'  anyframe-widget-select-widget
+  bindkey '^@'   anyframe-widget-cdr
+  bindkey '^xp'  anyframe-widget-kill
+  bindkey '^xh'  anyframe-widget-put-history
+  bindkey '^[xh' anyframe-widget-put-history
+fi
 
 
-  #--------------------------------------------------#
-  # zsh-vcs-prompt
-  #--------------------------------------------------#
-  if zplug check "yonchu/zsh-vcs-prompt"; then
-    ZSH_VCS_PROMPT_ENABLE_CACHING='true'
-    ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
-  fi
+#--------------------------------------------------#
+# zsh-vcs-prompt
+#--------------------------------------------------#
+if zplug check "yonchu/zsh-vcs-prompt"; then
+  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+  ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
+fi
 
 
 
