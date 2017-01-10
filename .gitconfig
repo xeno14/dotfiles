@@ -41,3 +41,6 @@ lga     = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
+[user]
+	email = integral14@gmail.com
+	name = Ryo Murakami
