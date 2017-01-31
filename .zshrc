@@ -173,7 +173,7 @@ else
           echo; zplug install
       fi
   fi
-  zplug load --verbose
+  zplug load
   
 fi
 

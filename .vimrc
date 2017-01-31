@@ -89,7 +89,9 @@ let mapleader = "\<Space>"
 
 " clipboard
 if has("macunix")
- set clipboard=unnamed,unnamedplus
+  set clipboard=unnamed,unnamedplus
+else
+  set clipboard=unnamedplus
 endif
 
 

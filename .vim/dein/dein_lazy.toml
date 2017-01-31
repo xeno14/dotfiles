@@ -133,8 +133,14 @@ hook_add = '''
   let g:tex_conceal = ''
   let g:vimtex_imaps_enabled = 0
   " viewer
-  let g:vimtex_view_general_viewer
-  \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+  if has('win32')
+   echo "PDF viewer is not set."
+  elseif has('mac')
+    let g:vimtex_view_general_viewer
+    \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+  else
+    let g:vimtex_view_general_viewer = 'evince'
+  endif
   let g:vimtex_view_general_options = '@line @pdf @tex'
   autocmd FileType tex syntax spell toplevel
 '''
