@@ -137,3 +137,38 @@ endif
 "----------------------------------------------------
 autocmd FileType go :highlight goErr cterm=bold ctermfg=214
 autocmd FileType go :match goErr /\<err\>/
+
+
+
+"----------------------------------------------------
+" keymapping
+"----------------------------------------------------
+nnoremap <F9> :QuickRun<CR>
+inoremap <F9> <ESC>:QuickRun<CR>
+nnoremap <A-w> :w<CR>
+inoremap <A-w> <ESC>:w<CR>
+nnoremap <A-Up> <C-y>
+nnoremap <A-Down> <C-e>
+
+" 日本語入力がオンのままでも使えるコマンド(Enterキーは必要)
+nnoremap あ a
+nnoremap い i
+nnoremap う u
+nnoremap お o
+nnoremap っd dd
+nnoremap っy yy
+
+" Unite
+nnoremap <C-g> :Outline<CR>
+inoremap <C-g> <ESC>:Outline<CR>
+nnoremap <A-b> :Unite -direction=botright window buffer file file_mru<CR>
+inoremap <A-b> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+nnoremap <C-@> :Unite -direction=botright window buffer file file_mru<CR>
+inoremap <C-@> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+nnoremap <C-\> :Unite -direction=botright window buffer file file_mru<CR>
+inoremap <C-\> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
+
+" Python debug
+nnoremap <F13> iimport pdb; pdb.set_trace()<CR>
+inoremap <F13> import pdb; pdb.set_trace()<CR>
+
