@@ -121,6 +121,7 @@ hook_add = '''
 
 [[plugins]]
 repo =  'haya14busa/incsearch.vim'
+if   = '''!has('nvim')'''
 hook_add =
 '''
     map /  <Plug>(incsearch-forward)
@@ -163,12 +164,13 @@ repo =  'vim-scripts/mpi.vim'
 [[plugins]]
 repo =  'thinca/vim-quickrun'
 hook_add = '''
-  let g:quickrun_config = {
-  \   "cpp/g++" : {
-  \       "cmdopt" : "-std=c++14",
-  \       "hook/time/enable" : 1
-  \   },
-  \}
+  let g:quickrun_config = {}
+  let g:quickrun_config['cpp/clang++'] = {
+      \ 'cmdopt': '-std=c++14',
+      \ 'type': 'cpp/clang++'
+    \ }
+  let g:quickrun_config['cpp'] = {'type': 'cpp/clang++'}
+
 '''
 
 [[plugins]]

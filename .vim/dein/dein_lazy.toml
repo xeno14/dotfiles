@@ -6,6 +6,8 @@ hook_add = '''
   let g:neocomplete#enable_at_startup = 1 
   let g:neocomplete#enable_smart_case = 1
   let g:neocomplete#enable_auto_select = 1
+  let g:neocomplete#min_keyword_length = 3
+  let g:neocomplete#auto_completion_start_length = 1
 
   if !exists('g:neocomplete#force_omni_input_patterns')
     let g:neocomplete#force_omni_input_patterns = {} 
@@ -38,11 +40,6 @@ hook_add = '''
   let g:clang_cpp_options = '-std=c++1z -stdlib=libc++'
   let g:clang_format_exec = 'clang-format'
 '''
-
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-on_path = '.*'
 
 
 [[plugins]]
@@ -144,3 +141,13 @@ hook_add = '''
   let g:vimtex_view_general_options = '@line @pdf @tex'
   autocmd FileType tex syntax spell toplevel
 '''
+
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = 'python'
+
+
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+on_ft = 'python'
