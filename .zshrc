@@ -83,6 +83,12 @@ REPORTTIME=3
 
 setopt hist_ignore_all_dups
 
+#--------------------------------------------------#
+# key binding
+#--------------------------------------------------#
+bindkey "^[OH" beginning-of-line  # home
+bindkey "^[OF" end-of-line        # end
+bindkey "^[[3~" delete-char       # del
 
 #--------------------------------------------------#
 # Alias configuration

@@ -172,3 +172,20 @@ inoremap <C-\> <ESC>:Unite -direction=botright window buffer file file_mru<CR>
 nnoremap <F13> iimport pdb; pdb.set_trace()<CR>
 inoremap <F13> import pdb; pdb.set_trace()<CR>
 
+" chdir
+" http://vim-jp.org/vim-users-jp/2009/09/08/Hack-69.html
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
+function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+        lcd %:p:h
+    else
+        execute 'lcd' . a:directory
+    endif
+
+    if a:bang == ''
+        pwd
+    endif
+endfunction
+
+" Change current directory.
+nnoremap <silent> <Space>cd :<C-u>CD<CR>

@@ -131,7 +131,7 @@ hook_add =
 
 
 [[plugins]]
-repo =  'sudo.vim'
+repo =  'vim-scripts/sudo.vim'
 
 [[plugins]]
 repo =  'tomtom/tcomment_vim'
@@ -149,7 +149,7 @@ repo =  'tyru/vim-altercmd'
 repo =  'osyo-manga/vim-over'
 
 [[plugins]]
-repo =  'vcscommand.vim'
+repo =  'vim-scripts/vcscommand.vim'
 
 [[plugins]]
 repo =  'violetyk/scratch-utility'
@@ -195,3 +195,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'altercation/vim-colors-solarized'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'

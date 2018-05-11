@@ -5,7 +5,7 @@ on_i = 1
 hook_add = '''
   let g:neocomplete#enable_at_startup = 1 
   let g:neocomplete#enable_smart_case = 1
-  let g:neocomplete#enable_auto_select = 1
+  let g:neocomplete#enable_auto_select = 0
   let g:neocomplete#min_keyword_length = 3
   let g:neocomplete#auto_completion_start_length = 1
 
@@ -32,9 +32,10 @@ if  = '''executable('clang')'''
 hook_add = '''
   let g:clang_auto = 0
   let g:clang_complete_auto = 0
-  let g:clang_auto_select = 1
+  let g:clang_auto_select = 0
   let g:clang_use_library = 1
 
+  let g:clang_c_completeopt   = 'menuone'
   let g:clang_cpp_completeopt = 'menuone'
   let g:clang_exec = 'clang'
   let g:clang_cpp_options = '-std=c++1z -stdlib=libc++'
