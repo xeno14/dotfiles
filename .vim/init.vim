@@ -1,1 +1,1 @@
-../../.vimrc
+/home/ryo/.vimrc

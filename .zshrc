@@ -165,7 +165,7 @@ else
   source ~/.zplug/init.zsh
 
   # plugin
-  zplug "xeno1991/anyframe"
+  zplug "mollifier/anyframe"
   zplug "xeno1991/ipynbselect", use:ipynbselect.zsh
   zplug "yonchu/zsh-vcs-prompt", use:zshrc.sh
   zplug "zsh-users/zaw", use:zaw.zsh

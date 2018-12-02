@@ -11,7 +11,7 @@ cat $installtxt | while read line; do
 done
 
 # zplug
-curl -sL zplug.sh/installer | zsh
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
 
 # dein.vim
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh 
