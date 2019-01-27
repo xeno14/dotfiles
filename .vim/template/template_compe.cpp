@@ -11,9 +11,11 @@
 #include <functional>
 #include <iomanip>
 #include <iostream>
+#include <limits>
 #include <list>
 #include <map>
 #include <numeric>
+#include <queue>
 #include <set>
 #include <sstream>
 #include <stack>
@@ -43,6 +45,7 @@ template <class T> inline string to_string(T x) {
 }
 
 typedef unsigned long long ull;
+typedef long long ll;
 typedef unsigned long ul;
 
 int main() {
