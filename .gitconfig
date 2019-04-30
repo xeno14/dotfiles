@@ -45,3 +45,6 @@ lga     = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 [user]
 	email = integral14@gmail.com
 	name = Ryo Murakami
+
+[core]
+  excludesfile = ~/.gitignore_global
