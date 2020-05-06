@@ -43,7 +43,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~'
 
 ## Keybind configuration vi like
-bindkey -v
+# bindkey -v
 
 ## HISTORICAL BACKWARD/FORWARD SEARCH WITH LINEHEAD STRING BINDED TO ^P/^N
 autoload history-search-end
@@ -152,72 +152,58 @@ export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46
 zstyle ':completion:*' list-colors ${LS_COLORS}
 
 
-
 #--------------------------------------------------#
-# zplug
-#
-# https://github.com/zplug/zplug
+# zinit
 #--------------------------------------------------#
-local zplug_init_zsh=$HOME/.zplug/init.zsh
-if [ ! -f $zplug_init_zsh ]; then
-  echo '${zplug_init_zsh} not found!'
-else
-  source ~/.zplug/init.zsh
-
-  # plugin
-  zplug "mollifier/anyframe"
-  zplug "xeno1991/ipynbselect", use:ipynbselect.zsh
-  zplug "yonchu/zsh-vcs-prompt", use:zshrc.sh
-  zplug "zsh-users/zaw", use:zaw.zsh
-  zplug "zsh-users/zsh-syntax-highlighting", defer:2
-  zplug "zplug/zplug"
-
-  # Install plugins if there are plugins that have not been installed
-  if ! zplug check --verbose; then
-      printf "Install? [y/N]: "
-      if read -q; then
-          echo; zplug install
-      fi
-  fi
-  zplug load
-  
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk
 
-#--------------------------------------------------#
-# zaw
-#--------------------------------------------------#
-if zplug check "zsh-users/zaw"; then
-  bindkey '^xg' zaw-git-status
-  bindkey '^xt' zaw-tmux
-fi
+### plugins
+zinit light "mollifier/anyframe"
+zinit light "yonchu/zsh-vcs-prompt" #, use:zshrc.sh
+zinit light "zsh-users/zsh-syntax-highlighting"
+# zinit light "zsh-users/zaw", use:zaw.zsh
 
 
 #--------------------------------------------------#
 # anyframe
 #--------------------------------------------------#
-if zplug check "xeno1991/anyframe"; then
-  fpath=(${HOME}/.zplug/repos/xeno1991/anyframe(N-/) $fpath)
+fpath=(${HOME}/.zinit/plugins/mollifier---anyframe(N-/) $fpath)
 
-  autoload -Uz anyframe-init
-  anyframe-init
+autoload -Uz anyframe-init
+anyframe-init
 
-  bindkey '^x:'  anyframe-widget-select-widget
-  bindkey '^@'   anyframe-widget-cdr
-  bindkey '^xp'  anyframe-widget-kill
-  bindkey '^xh'  anyframe-widget-put-history
-  bindkey '^[xh' anyframe-widget-put-history
-fi
+bindkey '^x:'  anyframe-widget-select-widget
+bindkey '^x/'  anyframe-widget-cdr
+bindkey '^xp'  anyframe-widget-kill
+bindkey '^xh'  anyframe-widget-put-history
 
 
 #--------------------------------------------------#
 # zsh-vcs-prompt
 #--------------------------------------------------#
-if zplug check "yonchu/zsh-vcs-prompt"; then
-  ZSH_VCS_PROMPT_ENABLE_CACHING='true'
-  ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
-fi
+ZSH_VCS_PROMPT_ENABLE_CACHING='true'
+ZSH_VCS_PROMPT_UNTRACKED_SIGIL='？'
 
+
+#--------------------------------------------------#
+# zaw
+#--------------------------------------------------#
+# if zplug check "zsh-users/zaw"; then
+#   bindkey '^xg' zaw-git-status
+#   bindkey '^xt' zaw-tmux
+# fi
 
 
 #--------------------------------------------------#
@@ -240,15 +226,11 @@ setopt prompt_subst
 PROMPT=""
 PROMPT+="%(?.%F{green}^-^%f.%F{red}O_O%f) "
 PROMPT+="%F{yellow}[%~]%f "		  #current directory
-if zplug check "yonchu/zsh-vcs-prompt"; then
-  PROMPT+='$(vcs_super_info)'     #vcs info
-fi
+PROMPT+='$(vcs_super_info)'     #vcs info
 PROMPT+="
 "
 PROMPT+="[%n@%m]$ "
 PROMPT2="$ "
-
-
 
 
 #--------------------------------------------------#
@@ -278,16 +260,11 @@ alias -s {gz,tgz,zip,lzh,bz2,tbz,Z,tar,arj,xz}=extract
 
 
 
-#--------------------------------------------------#
-# the end of .zshrc
-#--------------------------------------------------#
 local zsh_local="${HOME}/.zshrc.local"
 if [ -f ${zsh_local} ]; then
   source ${zsh_local}
 fi
 
-if zplug check "zsh-users/zsh-syntax-highlighting"; then
-  source ~/.zplug/repos/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
