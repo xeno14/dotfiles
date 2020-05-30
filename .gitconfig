@@ -27,7 +27,7 @@ dfc     = diff --cached
 dfs     = diff -C --stat
 gca     = gc --aggressive
 pl      = pull
-ps      = push
+ps      = push origin HEAD
 pst     = push --tags
 sb      = show-branch
 sh      = show
@@ -43,8 +43,8 @@ lga     = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
 [user]
-	email = integral14@gmail.com
-	name = Ryo Murakami
+	email = integral14.dev@gmail.com
+	name = xeno14
 
 [core]
   excludesfile = ~/.gitignore_global
