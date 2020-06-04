@@ -1,50 +1,52 @@
 [include]
-path = ~/.gitconfig.local
+  path = ~/.gitconfig.local
 
 [merge]
-ff = false
-	tool = vimdiff
+  ff = false
+  tool = vimdiff
 
 [color]
-ui = auto
+  ui = auto
 
 [core]
-editor  = vim
-pager   = less -R
-excludesfile = ~/.gitignore
-	autocrlf = input
+  editor  = vim
+  pager   = less -R
+  excludesfile = ~/.gitignore
+  autocrlf = input
 
 [alias]
-br      = branch
-cl      = clone
-cm      = commit
-co      = checkout
-cob     = checkout -b
-cod     = checkout develop
-com     = checkout master
-df      = diff
-dfc     = diff --cached
-dfs     = diff -C --stat
-gca     = gc --aggressive
-pl      = pull
-ps      = push origin HEAD
-pst     = push --tags
-sb      = show-branch
-sh      = show
-sm      = submodule
-smst    = submodule status
-smsync  = submodule sync
-st      = status
-l       = log
-lg      = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
-lga     = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
-	delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+  br      = branch
+  cl      = clone
+  cm      = commit
+  co      = checkout
+  cob     = checkout -b
+  cod     = checkout develop
+  com     = checkout master
+  df      = diff
+  dfc     = diff --cached
+  dfs     = diff -C --stat
+  gca     = gc --aggressive
+  pl      = pull
+  ps      = push origin HEAD
+  pst     = push --tags
+  sb      = show-branch
+  sh      = show
+  sm      = submodule
+  smst    = submodule status
+  smsync  = submodule sync
+  st      = status
+  l       = log
+  lg      = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+  lga     = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)<%an>%Creset' --abbrev-commit --date=relative
+  delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
 [user]
-	email = integral14.dev@gmail.com
-	name = xeno14
+  email = integral14.dev@gmail.com
+  name = xeno14
 
 [core]
   excludesfile = ~/.gitignore_global
+[pull]
+  rebase = true
