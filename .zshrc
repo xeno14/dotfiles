@@ -268,3 +268,9 @@ fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+
+open () { explorer.exe "$(wslpath -w "$(realpath "$1")")"  }
+
+if type most > /dev/null 2>&1; then
+  export PAGER="most"
+fi

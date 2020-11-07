@@ -12,7 +12,7 @@
   editor  = vim
   pager   = less -R
   excludesfile = ~/.gitignore
-  autocrlf = input
+	autocrlf = false
 
 [alias]
   br      = branch
@@ -46,7 +46,5 @@
   email = integral14.dev@gmail.com
   name = xeno14
 
-[core]
-  excludesfile = ~/.gitignore_global
 [pull]
   rebase = true
