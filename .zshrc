@@ -83,6 +83,9 @@ REPORTTIME=3
 
 setopt hist_ignore_all_dups
 
+# Disable beep.
+unsetopt beep
+
 #--------------------------------------------------#
 # key binding
 #--------------------------------------------------#
@@ -274,3 +277,4 @@ open () { explorer.exe "$(wslpath -w "$(realpath "$1")")"  }
 if type most > /dev/null 2>&1; then
   export PAGER="most"
 fi
+

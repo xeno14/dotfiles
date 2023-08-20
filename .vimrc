@@ -94,6 +94,9 @@ else
   set clipboard=unnamedplus
 endif
 
+" Disable beep.
+set visualbell
+set t_vb=
 
 "----------------------------------------------------
 " tab
