@@ -1,50 +1,50 @@
-"----------------------------------------------------
-" dein
-"----------------------------------------------------
-
-"dein Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
-endif
-
-
-let s:dein_dir = expand('~/.vim/dein')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-
-if !isdirectory(s:dein_repo_dir)
-  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-endif
-
-execute 'set runtimepath^=' . s:dein_repo_dir
-
-
-" Required:
-call dein#begin(s:dein_dir)
-
-" Let dein manage dein
-" Required:
-call dein#add('Shougo/dein.vim')
-
-" Add or remove your plugins here:
-
-let s:toml      = s:dein_dir . '/dein.toml'
-let s:lazy_toml = s:dein_dir . '/dein_lazy.toml'
-
-call dein#load_toml(s:toml,      {'lazy': 0})
-call dein#load_toml(s:lazy_toml, {'lazy': 1})
-
-" Required:
-call dein#end()
-
-" Required:
-filetype plugin indent on
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
-"End dein Scripts-------------------------
+" "----------------------------------------------------
+" " dein
+" "----------------------------------------------------
+" 
+" "dein Scripts-----------------------------
+" if &compatible
+"   set nocompatible               " Be iMproved
+" endif
+" 
+" 
+" let s:dein_dir = expand('~/.vim/dein')
+" let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+" 
+" if !isdirectory(s:dein_repo_dir)
+"   execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+" endif
+" 
+" execute 'set runtimepath^=' . s:dein_repo_dir
+" 
+" 
+" " Required:
+" call dein#begin(s:dein_dir)
+" 
+" " Let dein manage dein
+" " Required:
+" call dein#add('Shougo/dein.vim')
+" 
+" " Add or remove your plugins here:
+" 
+" let s:toml      = s:dein_dir . '/dein.toml'
+" let s:lazy_toml = s:dein_dir . '/dein_lazy.toml'
+" 
+" call dein#load_toml(s:toml,      {'lazy': 0})
+" call dein#load_toml(s:lazy_toml, {'lazy': 1})
+" 
+" " Required:
+" call dein#end()
+" 
+" " Required:
+" filetype plugin indent on
+" 
+" " If you want to install not installed plugins on startup.
+" if dein#check_install()
+"   call dein#install()
+" endif
+" 
+" "End dein Scripts-------------------------
 
 
 
